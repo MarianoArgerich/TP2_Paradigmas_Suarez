@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.entrega_1.tablero_test;
 
-import edu.fiuba.algo3.modelo.Message;
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Acido;
 import edu.fiuba.algo3.modelo.casillas.Agua;
