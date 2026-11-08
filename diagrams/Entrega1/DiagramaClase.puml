@@ -1,0 +1,118 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Tablero {
+        - casillas: Casilla[][]
+        - unidades: List<Unidad>
+        
+        + Tablero(mapa:Casilla[][])
+        + casillaIgualQue(x: int, y: int, comparar: Casilla): boolean
+        + colocarUnidad(coordenadas: Posicion, unidad: Unidad): void
+        + moverUnidad(direccion: Direccion, distancia: int, coordenadaActual: Posicion, unidad: Unidad): void
+        -removerUnidad(coordenadas: Posicion, unidad: Unidad): void
+        -coordenadaValida(coordenadas: Posicion): void
+        
+}
+
+abstract class Casilla <<abstract>> {
+        - unidad: Unidad
+        
+        - estaOcupada():boolean
+        + ocupar(unidad: Unidad):void
+        + descocupar():void
+}
+
+interface Ocupante {
+        
+        + recibirDanio():void
+        + empujar():void
+}
+
+class Unidad {
+        - posicion: Posicion
+        
+        + obtenerPosicionActual():Posicion
+        + setPosicion(posicion: Posicion):void
+        
+}
+
+class Posicion {
+        - x: int
+        - y: int
+        
+        + Posicion(x: int, y: int)
+        + getX():int
+        + getY():int
+        + desplazar(deltaX: int, deltaY: int): Posicion
+        + siguienteEn(direccion: Direccion): Posicion
+        + equals(o: Object): boolean
+}
+
+interface Direccion {
+
+       +calcularSiguientePosicion(posicion: Posicion): Posicion
+}
+
+class Acido extends Casilla {
+        
+}
+
+class Agua extends Casilla {
+        
+}
+
+class Suelo extends Casilla {
+        
+}
+
+class Edificio extends Casilla implements Ocupante {
+       - vida: int
+
+       +ocupar(unidad: Unidad):void 
+}
+
+class Montania extends Casilla implements Ocupante {
+
+       +ocupar(unidad: Unidad):void 
+}
+
+
+
+
+class Abajo implements Direccion {
+
+}
+class Izquierda implements Direccion {
+
+}
+class Derecha implements Direccion {
+
+}
+class Arriba implements Direccion {
+
+}
+
+class Mech extends Unidad{
+
+}
+
+class Vek extends Unidad{
+
+}
+
+class Combate extends Mech{
+
+}
+
+Tablero"1" o-- "1..*"Casilla
+Tablero"1" o-- "1..*"Unidad
+Tablero ..> Direccion
+Tablero ..> Posicion
+
+Casilla"1" o-- "0..1"Unidad
+Unidad"1" o-- "1"Posicion
+
+Posicion ..> Direccion
+Direccion ..> Posicion
+@enduml
+
