@@ -1,15 +1,22 @@
 package edu.fiuba.algo3.modelo.casillas;
-import edu.fiuba.algo3.modelo.ocupantes.Ocupante;
+import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Casilla {
 
-    private Ocupante ocupante = null;
+    private Unidad unidad = null;
 
-    public boolean estaOcupada() {
-        return ocupante != null;
+    private boolean estaOcupada() {
+        return unidad != null;
     }
 
-    public void ocupar(Ocupante ocupante){
-        this.ocupante = ocupante;
+    public void ocupar(Unidad unidad){
+        if(estaOcupada()){
+            throw new RuntimeException("casilla ocupada");
+        }
+        this.unidad = unidad;
+    }
+
+    public void desocupar() {
+        this.unidad = null;
     }
 }
