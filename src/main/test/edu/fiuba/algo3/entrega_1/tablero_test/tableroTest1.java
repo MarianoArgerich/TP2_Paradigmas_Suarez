@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class tablero_test_1 {
+public class tableroTest1 {
     @Test
     public void tableroSeCargaConDimensiones8x8() {
 

@@ -14,7 +14,6 @@ public class Edificio extends Casilla implements Ocupante{
 
     @Override
     public void empujar() {
-        return;
     }
 
     @Override

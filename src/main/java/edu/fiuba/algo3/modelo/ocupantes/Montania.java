@@ -7,12 +7,10 @@ public class Montania extends Casilla implements Ocupante {
 
     @Override
     public void recibirDanio() {
-        return;
     }
 
     @Override
     public void empujar() {
-        return;
     }
 
     @Override

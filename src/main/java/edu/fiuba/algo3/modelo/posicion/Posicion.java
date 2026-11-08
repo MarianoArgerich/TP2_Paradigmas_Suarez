@@ -2,9 +2,6 @@ package edu.fiuba.algo3.modelo.posicion;
 
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class Posicion {
     private final int x;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Tablero {
 
-    private Casilla[][] casillas = null;
+    private Casilla[][] casillas;
     private List<Unidad> unidades = new ArrayList<>();
 
     public Tablero(Casilla[][] mapa){

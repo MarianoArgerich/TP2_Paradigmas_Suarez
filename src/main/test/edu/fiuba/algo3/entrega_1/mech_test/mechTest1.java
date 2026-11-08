@@ -11,12 +11,10 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class mech_test_1 {
+public class mechTest1 {
 
     private Tablero tablero;
     private Unidad mech;
