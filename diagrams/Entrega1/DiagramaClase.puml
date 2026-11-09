@@ -4,79 +4,105 @@
 class Tablero {
         - casillas: Casilla[][]
         - unidades: List<Unidad>
-        
+
         + Tablero(mapa:Casilla[][])
         + casillaIgualQue(x: int, y: int, comparar: Casilla): boolean
         + colocarUnidad(coordenadas: Posicion, unidad: Unidad): void
         + moverUnidad(direccion: Direccion, distancia: int, coordenadaActual: Posicion, unidad: Unidad): void
-        -removerUnidad(coordenadas: Posicion, unidad: Unidad): void
-        -coordenadaValida(coordenadas: Posicion): void
-        
+        + aplicarGolpe(posicion:Posicion, danio: int, direccion: Direccion):void
+        + empujarDesde(origen:Posicion, direccion:Direccion):void
+        - casillaEn(posicion: Posicion): Casilla
+        - esCoordenadaValida(posicion: Posicion): boolean
+
 }
 
 abstract class Casilla <<abstract>> {
         - unidad: Unidad
-        
+        - posicion: Posicion
+
+        + Casilla(posicion: Posicion)
         - estaOcupada():boolean
+        + recibirGolpe(dano: int, direccion: Direccion, tablero: Tablero):void
+        + recibirEmpuje(casilla: Casilla):void
+        + recibirDanoPorColision():void
+        + transferirUnidadA(casillaDestino: Casilla): void
         + ocupar(unidad: Unidad):void
         + descocupar():void
+        + validarPaso():void
 }
 
-interface Ocupante {
-        
-        + recibirDanio():void
-        + empujar():void
-}
 
 class Unidad {
-        - posicion: Posicion
-        
-        + obtenerPosicionActual():Posicion
-        + setPosicion(posicion: Posicion):void
-        
+        # yaSeMovio: boolean
+        # posicion: Posicion
+        - vidaMaxima: int
+        - movimiento: int
+        - vidaActual: int
+
+        + Unidad(vidaMaxima: int, movimiento: int)
+        + Unidad(posicion: Posicion, vidaMaxima: int, movimiento: int)
+        + moverA(nuevaPosicion: Posicion):void
+        + estaEn(posicion: Posicion):boolean
+        + mover(direccion: Direccion, distancia: int, tablero: Tablero):void
+        + obtenerVidaActual():int
+        + recibirGolpe(danio: int, posicion: Posicion, direccion: Direccion, tablero: Tablero, casilla: Casilla):void
+        + recibirDano(danio: int, casilla: Casilla): void
+
 }
 
 class Posicion {
         - x: int
         - y: int
-        
+
         + Posicion(x: int, y: int)
         + getX():int
         + getY():int
         + desplazar(deltaX: int, deltaY: int): Posicion
         + siguienteEn(direccion: Direccion): Posicion
         + equals(o: Object): boolean
+        + calcularDireccionHacia(objetivo: Posicion): Direccion
 }
 
 interface Direccion {
 
-       +calcularSiguientePosicion(posicion: Posicion): Posicion
+       + calcularSiguientePosicion(posicion: Posicion): Posicion
+}
+
+interface Arma {
+
+       + ejecutarAtaque(origen: Posicion, objetivo: Posicion, tablero: Tablero):void
+}
+
+class Puno implements Arma {
+        - danio: int
 }
 
 class Acido extends Casilla {
-        
+       + Acido(posicion: Posicion)
 }
 
 class Agua extends Casilla {
-        
+       + Agua(posicion: Posicion)
 }
 
 class Suelo extends Casilla {
-        
+       + Suelo(posicion: Posicion)
 }
 
-class Edificio extends Casilla implements Ocupante {
+class Edificio extends Casilla {
        - vida: int
 
-       +ocupar(unidad: Unidad):void 
+       + Edificio(posicion: Posicion)
+       + validarPaso():void
+       + ocupar(unidad: Unidad):void
+       + recibirEmpuje(casillaOrigen: Casilla):void
 }
 
-class Montania extends Casilla implements Ocupante {
+class Montania extends Casilla {
 
-       +ocupar(unidad: Unidad):void 
+       + Montania(posicion: Posicion)
+       + ocupar(unidad: Unidad):void
 }
-
-
 
 
 class Abajo implements Direccion {
@@ -93,15 +119,26 @@ class Arriba implements Direccion {
 }
 
 class Mech extends Unidad{
+        # arma: Arma
+        # yaAtaco: boolean
 
+        + Mech(vidaMax: int, movimiento: int, arma: Arma)
+        + Mech(posicion: Posicion, vidaMax: int, movimiento: int, arma: Arma)
+        + atacar(posicionObjetivo: Posicion, tablero: Tablero): void
 }
 
 class Vek extends Unidad{
 
+        + Vek(vidaMax: int, movimiento: int)
 }
 
 class Combate extends Mech{
+        + Combate()
+        + Combate(posicion:Posicion)
+}
 
+class Luciernaga extends Vek{
+        + Luciernaga()
 }
 
 Tablero"1" o-- "1..*"Casilla
@@ -110,9 +147,19 @@ Tablero ..> Direccion
 Tablero ..> Posicion
 
 Casilla"1" o-- "0..1"Unidad
+Casilla"1" o-- "1"Posicion
+Casilla ..> Direccion
 Unidad"1" o-- "1"Posicion
+Unidad ..> Direccion
+
 
 Posicion ..> Direccion
-Direccion ..> Posicion
-@enduml
+Mech o-- Arma
 
+
+
+
+
+
+
+@enduml
