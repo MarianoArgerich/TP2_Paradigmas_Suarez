@@ -8,8 +8,4 @@ public class Combate extends Mech {
     public Combate() {
         super(3, 3, new Puno());
     }
-
-    public Combate(Posicion posicion) {
-        super(posicion, 3, 3, new Puno());
-    }
 }
