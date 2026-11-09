@@ -63,4 +63,8 @@ public abstract class Casilla {
             throw new RuntimeException("Paso bloqueado: Casilla ocupada");
         }
     }
+
+    public boolean detieneDisparo() {
+        return estaOcupada();
+    }
 }

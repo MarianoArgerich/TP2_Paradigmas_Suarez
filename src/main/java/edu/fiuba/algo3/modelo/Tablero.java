@@ -2,7 +2,6 @@ package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.ocupantes.Ocupante;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -95,20 +94,14 @@ public class Tablero {
         }
     }
 
-    public Ocupante primerBlancoDesde(Posicion origen, Direccion direccion) {
-        Posicion actual = origen.siguienteEn(direccion);
-        while (estaDentro(actual)) {
-            Ocupante blanco = casillas[actual.getX()][actual.getY()].obtenerBlanco();
-            if (blanco != null) {
-                return blanco;
+    public void aplicarGolpeEnLinea(Posicion origen, int dano, Direccion direccion) {
+        Posicion actual = direccion.calcularSiguientePosicion(origen);
+        while (esCoordenadaValida(actual)) {
+            if (casillaEn(actual).detieneDisparo()) {
+                aplicarGolpe(actual, dano, direccion);
+                return;
             }
-            actual = actual.siguienteEn(direccion);
+            actual = direccion.calcularSiguientePosicion(actual);
         }
-        return null;
-    }
-
-    private boolean estaDentro(Posicion p) {
-        return p.getX() >= 0 && p.getX() < casillas.length
-                && p.getY() >= 0 && p.getY() < casillas[0].length;
     }
 }

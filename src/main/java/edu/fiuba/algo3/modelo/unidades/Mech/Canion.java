@@ -1,19 +1,15 @@
 package edu.fiuba.algo3.modelo.unidades.Mech;
 
-import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.ocupantes.Ocupante;
+import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Arma.DisparoCanion;
 
 public class Canion extends Mech {
 
     public Canion() {
-        super(3);
+        super(3, 3, new DisparoCanion());
     }
 
-    public void atacar(Direccion direccion, Tablero tablero) {
-        Ocupante blanco = tablero.primerBlancoDesde(obtenerPosicionActual(), direccion);
-        if (blanco != null) {
-            blanco.recibirDanio(1);
-        }
+    public Canion(Posicion posicion) {
+        super(posicion, 3, 3, new DisparoCanion());
     }
 }
