@@ -11,12 +11,12 @@ public class Mech extends Unidad {
     protected Arma arma;
     protected boolean yaAtaco;
 
-    public Mech(Posicion posicion, int vidaMax, int movimiento, Arma arma) {
-        super(posicion, vidaMax, movimiento);
+
+    public Mech(int vidaMax, int movimiento, Arma arma){
+        super(vidaMax, movimiento);
         this.arma = arma;
         this.yaAtaco = false;
     }
-
 
     public void atacar(Posicion posicionObjetivo, Tablero tablero) {
         if (this.yaAtaco) {
