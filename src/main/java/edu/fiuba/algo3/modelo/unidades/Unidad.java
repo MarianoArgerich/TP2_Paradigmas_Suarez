@@ -3,10 +3,12 @@ package edu.fiuba.algo3.modelo.unidades;
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.YaSeMovioException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 public class Unidad {
 
+    protected boolean yaSeMovio;
     protected Posicion posicion;
     private final int vidaMax;
     private int movimiento;
@@ -38,7 +40,16 @@ public class Unidad {
         if (this.posicion == null){
             throw new RuntimeException("La unidad no está en el tablero");
         }
-        tablero.moverUnidad(this,this.posicion, direccion, distancia);
+
+
+        if (this.yaSeMovio) {
+            throw new YaSeMovioException("El Mech no debería poder moverse dos veces en un turno");
+        }
+
+        tablero.moverUnidad(this, this.posicion, direccion, distancia);
+
+
+        this.yaSeMovio = true;
     }
 
     public int obtenerVidaActual() {
