@@ -1,8 +1,9 @@
-package edu.fiuba.algo3.entrega_1.mech_test;
+package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Suelo;
+import edu.fiuba.algo3.modelo.direccion.Abajo;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
 import edu.fiuba.algo3.modelo.ocupantes.Edificio;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -11,20 +12,20 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class mechTest1 {
 
+    private Casilla[][] mapa;
     private Tablero tablero;
     private Unidad mech;
 
     @BeforeEach
     public void setUp() {
-        Casilla[][] mapa = new Casilla[8][8];
+        mapa = new Casilla[8][8];
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
-                mapa[i][j] = new Suelo();
+                mapa[i][j] = new Suelo(new Posicion(i, j));
             }
         }
         tablero = new Tablero(mapa);
@@ -37,7 +38,7 @@ public class mechTest1 {
         Posicion coordenadas = new Posicion(0,0);
         tablero.colocarUnidad(coordenadas, mech);
 
-        assertThrows(RuntimeException.class, () -> tablero.moverUnidad(new Arriba(), 4, coordenadas, mech));
+        assertThrows(RuntimeException.class, () -> mech.mover(new Arriba(), 4, tablero));
     }
 
     @Test
@@ -45,37 +46,34 @@ public class mechTest1 {
         Posicion coordenadas = new Posicion(7,7);
         tablero.colocarUnidad(coordenadas, mech);
 
-        tablero.moverUnidad(new Arriba(), 3, coordenadas, mech);
+        mech.mover(new Abajo(), 3, tablero);
 
-        assertEquals(coordenadas, mech.obtenerPosicionActual());
+        assertTrue(mech.estaEn(coordenadas));
 
     }
 
     @Test
     public void testMechNoPuedeAtravesarUnidades(){
-        tablero.colocarUnidad(new Posicion(1,1), mech);
+        Posicion posicionInicial = new Posicion(1,1);
+        tablero.colocarUnidad(posicionInicial, mech);
         tablero.colocarUnidad(new Posicion(1, 2), new Combate());
 
-        tablero.moverUnidad(new Arriba(), 2, mech.obtenerPosicionActual(), mech);
-        assertEquals(new Posicion(1, 1), mech.obtenerPosicionActual());
+        mech.mover(new Abajo(), 2, tablero);
+
+        assertTrue(mech.estaEn(posicionInicial));
     }
 
     @Test
     public void testMechNoPuedeAtravesarObstaculos(){
 
-        Casilla[][] mapa = new Casilla[8][8];
-        for (int i=0; i<8; i++){
-            for (int j=0; j<8; j++){
-                mapa[i][j] = new Suelo();
-            }
-        }
-        mapa[1][2] = new Edificio();
+        mapa[1][2] = new Edificio(new Posicion(1, 2));
         tablero = new Tablero(mapa);
 
-        tablero.colocarUnidad(new Posicion(1,1), mech);
+        Posicion posicionInicial = new Posicion(1,1);
+        tablero.colocarUnidad(posicionInicial, mech);
 
-        tablero.moverUnidad(new Arriba(), 2, mech.obtenerPosicionActual(), mech);
-        assertEquals(new Posicion(1, 1), mech.obtenerPosicionActual());
+        mech.mover(new Abajo(), 2, tablero);
+        assertTrue(mech.estaEn(posicionInicial));
     }
 
 }
