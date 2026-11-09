@@ -13,26 +13,42 @@ class Tablero {
         + empujarDesde(origen:Posicion, direccion:Direccion):void
         - casillaEn(posicion: Posicion): Casilla
         - esCoordenadaValida(posicion: Posicion): boolean
+        + destruirCasilla(posicion: Posicion):void
 
 }
 
 abstract class Casilla <<abstract>> {
-        - unidad: Unidad
+
         - posicion: Posicion
 
         + Casilla(posicion: Posicion)
+
+
+}
+
+
+abstract class Transitable extends Casilla{
+        - unidad: Unidad
+
         - estaOcupada():boolean
-        + recibirGolpe(dano: int, direccion: Direccion, tablero: Tablero):void
-        + recibirEmpuje(casilla: Casilla):void
-        + recibirDanoPorColision():void
+        + unidadRecibirDanio(dano: int, direccion: Direccion, tablero: Tablero):void
+        + unidadRecibirEmpuje(casilla: Casilla):void
+        + unidadRecibirDanoPorColision():void
         + transferirUnidadA(casillaDestino: Casilla): void
         + ocupar(unidad: Unidad):void
         + descocupar():void
         + validarPaso():void
+
+}
+
+abstract class Obstaculo extends Casilla{
+        - vida: int
+
+        + recibirDanio(danio: int, tablero:Tablero):void
 }
 
 
-class Unidad {
+abstract class Unidad {
         # yaSeMovio: boolean
         # posicion: Posicion
         - vidaMaxima: int
@@ -50,7 +66,7 @@ class Unidad {
 
 }
 
-class Posicion {
+abstract class Posicion {
         - x: int
         - y: int
 
@@ -77,31 +93,28 @@ class Puno implements Arma {
         - danio: int
 }
 
-class Acido extends Casilla {
+class Acido extends Transitable {
        + Acido(posicion: Posicion)
 }
 
-class Agua extends Casilla {
+class Agua extends Transitable {
        + Agua(posicion: Posicion)
 }
 
-class Suelo extends Casilla {
+class Suelo extends Transitable {
        + Suelo(posicion: Posicion)
 }
 
-class Edificio extends Casilla {
-       - vida: int
+class Edificio extends Obstaculo {
 
        + Edificio(posicion: Posicion)
-       + validarPaso():void
-       + ocupar(unidad: Unidad):void
-       + recibirEmpuje(casillaOrigen: Casilla):void
+       + recibirDanio(danio: int, tablero:Tablero):void
+
 }
 
-class Montania extends Casilla {
+class Montania extends Obstaculo {
 
        + Montania(posicion: Posicion)
-       + ocupar(unidad: Unidad):void
 }
 
 
@@ -118,16 +131,15 @@ class Arriba implements Direccion {
 
 }
 
-class Mech extends Unidad{
+abstract class Mech extends Unidad{
         # arma: Arma
         # yaAtaco: boolean
 
-        + Mech(vidaMax: int, movimiento: int, arma: Arma)
         + Mech(posicion: Posicion, vidaMax: int, movimiento: int, arma: Arma)
         + atacar(posicionObjetivo: Posicion, tablero: Tablero): void
 }
 
-class Vek extends Unidad{
+abstract class Vek extends Unidad{
 
         + Vek(vidaMax: int, movimiento: int)
 }
@@ -146,8 +158,8 @@ Tablero"1" o-- "1..*"Unidad
 Tablero ..> Direccion
 Tablero ..> Posicion
 
-Casilla"1" o-- "0..1"Unidad
-Casilla"1" o-- "1"Posicion
+Transitable"1" o-- "0..1"Unidad
+
 Casilla ..> Direccion
 Unidad"1" o-- "1"Posicion
 Unidad ..> Direccion
