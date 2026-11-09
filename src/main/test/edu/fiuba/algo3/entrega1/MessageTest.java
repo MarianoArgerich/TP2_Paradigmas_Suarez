@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega1;
 
 import edu.fiuba.algo3.modelo.Message;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.posicion;
 
-import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.direccion.*;
 
 
 public class Posicion {
@@ -20,7 +20,7 @@ public class Posicion {
         return direccion.calcularSiguientePosicion(this);
     }
 
-    public int getX(){
+    public int getX() {
         return x;
     }
 
@@ -33,5 +33,21 @@ public class Posicion {
         if (o == null || getClass() != o.getClass()) return false;
         Posicion posicion = (Posicion) o;
         return x == posicion.x && y == posicion.y;
+    }
+
+    public Direccion calcularDireccionHacia(Posicion objetivo) {
+        int deltaX = objetivo.getX() - this.x;
+        int deltaY = objetivo.getY() - this.y;
+
+        if (deltaY < 0){
+            return new Arriba();
+        }
+        if (deltaY > 0){
+            return new Abajo();
+        }
+        if (deltaX > 0){
+            return new Derecha();
+        }
+        return new Izquierda();
     }
 }
