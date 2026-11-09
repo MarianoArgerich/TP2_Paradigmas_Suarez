@@ -135,7 +135,7 @@ abstract class Mech extends Unidad{
         # arma: Arma
         # yaAtaco: boolean
 
-        + Mech(posicion: Posicion, vidaMax: int, movimiento: int, arma: Arma)
+        + Mech(vidaMax: int, movimiento: int, arma: Arma)
         + atacar(posicionObjetivo: Posicion, tablero: Tablero): void
 }
 
