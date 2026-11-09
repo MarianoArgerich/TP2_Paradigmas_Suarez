@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.casillas;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.ocupantes.Ocupante;
 
 public abstract class Casilla {
 
@@ -18,5 +19,9 @@ public abstract class Casilla {
 
     public void desocupar() {
         this.unidad = null;
+    }
+
+    public Ocupante obtenerBlanco() {
+        return unidad;
     }
 }

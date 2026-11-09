@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.ocupantes.Ocupante;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -74,5 +75,22 @@ public class Tablero {
         if (x > 8 || x < 0 || y > 8 || y < 0){
             throw new RuntimeException("Coordenada no valida");
         }
+    }
+
+    public Ocupante primerBlancoDesde(Posicion origen, Direccion direccion) {
+        Posicion actual = origen.siguienteEn(direccion);
+        while (estaDentro(actual)) {
+            Ocupante blanco = casillas[actual.getX()][actual.getY()].obtenerBlanco();
+            if (blanco != null) {
+                return blanco;
+            }
+            actual = actual.siguienteEn(direccion);
+        }
+        return null;
+    }
+
+    private boolean estaDentro(Posicion p) {
+        return p.getX() >= 0 && p.getX() < casillas.length
+                && p.getY() >= 0 && p.getY() < casillas[0].length;
     }
 }

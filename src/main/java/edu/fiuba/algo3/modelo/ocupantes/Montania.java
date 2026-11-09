@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 public class Montania extends Casilla implements Ocupante {
 
     @Override
-    public void recibirDanio() {
+    public void recibirDanio(int cantidad) {
     }
 
     @Override
@@ -14,7 +14,12 @@ public class Montania extends Casilla implements Ocupante {
     }
 
     @Override
-    public void ocupar(Unidad unidad){
+    public void ocupar(Unidad unidad) {
         throw new RuntimeException("casilla invalida");
+    }
+
+    @Override
+    public Ocupante obtenerBlanco() {
+        return this;
     }
 }
