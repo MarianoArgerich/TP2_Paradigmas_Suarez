@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
-import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -45,8 +45,11 @@ public class Tablero {
 
         for (int i=1; i<=distancia; i++){
             Posicion siguiente = destinoFinal.siguienteEn(direccion);
-            Casilla casillaSiguiente = casillaEn(siguiente);
-            if(casillaSiguiente == null){
+            Casilla casillaSiguiente;
+
+            try {
+                casillaSiguiente = casillaEn(siguiente);
+            } catch (RuntimeException e) {
                 break;
             }
 
@@ -64,22 +67,10 @@ public class Tablero {
         }
     }
 
-    private boolean esCoordenadaValida(Posicion posicion){
-        return posicion.getX() >= 0 && posicion.getX() < casillas.length &&
-                posicion.getY() >= 0 && posicion.getY() < casillas.length;
-    }
-
-    private Casilla casillaEn(Posicion posicion){
-        if (!esCoordenadaValida(posicion)){
-            return null;
-        }
-        return casillas[posicion.getX()][posicion.getY()];
-    }
-
-    public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
+    public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
         Casilla casilla = casillaEn(posicion);
         if (casilla != null) {
-            casilla.recibirGolpe(dano, direccion, this);
+            casilla.unidadRecibirDanio(danio, direccion, this);
         }
     }
 
@@ -92,6 +83,18 @@ public class Tablero {
         if (casillaDestino != null) {
             casillaDestino.recibirEmpuje(casillaOrigen);
         }
+    }
+
+    private Casilla casillaEn(Posicion posicion){
+        if (!esCoordenadaValida(posicion)){
+            throw new RuntimeException("Coordenada fuera del tablero");
+        }
+        return casillas[posicion.getX()][posicion.getY()];
+    }
+
+    private boolean esCoordenadaValida(Posicion posicion){
+        return posicion.getX() >= 0 && posicion.getX() < casillas.length &&
+                posicion.getY() >= 0 && posicion.getY() < casillas.length;
     }
 
     public void aplicarGolpeEnLinea(Posicion origen, int dano, Direccion direccion) {
