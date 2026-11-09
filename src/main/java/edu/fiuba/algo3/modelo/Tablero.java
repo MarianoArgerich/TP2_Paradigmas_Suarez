@@ -93,4 +93,15 @@ public class Tablero {
             casillaDestino.recibirEmpuje(casillaOrigen);
         }
     }
+
+    public void aplicarGolpeEnLinea(Posicion origen, int dano, Direccion direccion) {
+        Posicion actual = direccion.calcularSiguientePosicion(origen);
+        while (esCoordenadaValida(actual)) {
+            if (casillaEn(actual).detieneDisparo()) {
+                aplicarGolpe(actual, dano, direccion);
+                return;
+            }
+            actual = direccion.calcularSiguientePosicion(actual);
+        }
+    }
 }
