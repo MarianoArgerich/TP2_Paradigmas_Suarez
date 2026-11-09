@@ -23,16 +23,17 @@ public class Tablero {
     }
 
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
-        int x = coordenadas.getX();
-        int y = coordenadas.getY();
-
-        casillas[x][y].ocupar(unidad);
-        unidades.add(unidad);
-        unidad.setPosicion(coordenadas);
+        if (!esCoordenadaValida(coordenadas)){
+            throw new RuntimeException("Coordenada fuera del tablero");
+        }
+        casillaEn(coordenadas).ocupar(unidad);
+        if (!unidades.contains(unidad)) {
+            unidades.add(unidad);
+        }
+        unidad.moverA(coordenadas);
     }
 
-    public void moverUnidad(Direccion direccion, int distancia, Posicion coordenadaActual, Unidad unidad) {
-
+    public void moverUnidad(Unidad unidad, Posicion origen, Direccion direccion, int distancia) {
         if (!unidades.contains(unidad)) {
             throw new RuntimeException("Unidad no existe");
         }
@@ -41,39 +42,56 @@ public class Tablero {
             throw new RuntimeException("Fuera de rango");
         }
 
-        Posicion coordenadaAux = coordenadaActual;
+        Posicion destinoFinal = origen;
 
         for (int i=1; i<=distancia; i++){
-            Posicion nuevaCoord = coordenadaAux.siguienteEn(direccion);
-            coordenadaValida(nuevaCoord);
-            try{
-                removerUnidad(coordenadaAux, unidad);
-                colocarUnidad(nuevaCoord, unidad);
-            }
-            catch (RuntimeException e){
-                colocarUnidad(coordenadaActual, unidad);
+            Posicion siguiente = destinoFinal.siguienteEn(direccion);
+            Casilla casillaSiguiente = casillaEn(siguiente);
+            if(casillaSiguiente == null){
                 break;
             }
 
-            coordenadaAux = nuevaCoord;
+            try {
+                casillaSiguiente.validarPaso();
+                destinoFinal = siguiente;
+            } catch (RuntimeException e){
+                break;
+            }
         }
 
+        if (!destinoFinal.equals(origen)) {
+            casillaEn(origen).transferirUnidadA(casillaEn(destinoFinal));
+            unidad.moverA(destinoFinal);
+        }
     }
 
-    private void removerUnidad(Posicion coordenadas, Unidad unidad) {
-        int x = coordenadas.getX();
-        int y = coordenadas.getY();
-
-        casillas[x][y].desocupar();
-        unidades.remove(unidad);
+    private boolean esCoordenadaValida(Posicion posicion){
+        return posicion.getX() >= 0 && posicion.getX() < casillas.length &&
+                posicion.getY() >= 0 && posicion.getY() < casillas.length;
     }
 
-    private void coordenadaValida(Posicion coordenadas){
-        int x = coordenadas.getX();
-        int y = coordenadas.getY();
+    private Casilla casillaEn(Posicion posicion){
+        if (!esCoordenadaValida(posicion)){
+            return null;
+        }
+        return casillas[posicion.getX()][posicion.getY()];
+    }
 
-        if (x > 8 || x < 0 || y > 8 || y < 0){
-            throw new RuntimeException("Coordenada no valida");
+    public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
+        Casilla casilla = casillaEn(posicion);
+        if (casilla != null) {
+            casilla.recibirGolpe(dano, direccion, this);
+        }
+    }
+
+    public void empujarDesde(Posicion origen, Direccion direccion) {
+        Posicion destino = direccion.calcularSiguientePosicion(origen);
+
+        Casilla casillaOrigen = casillaEn(origen);
+        Casilla casillaDestino = casillaEn(destino);
+
+        if (casillaDestino != null) {
+            casillaDestino.recibirEmpuje(casillaOrigen);
         }
     }
 

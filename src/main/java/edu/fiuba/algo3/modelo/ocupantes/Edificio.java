@@ -1,28 +1,29 @@
 package edu.fiuba.algo3.modelo.ocupantes;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Edificio extends Casilla implements Ocupante {
+public class Edificio extends Casilla{
 
     private int vida = 1;
 
-    @Override
-    public void recibirDanio(int cantidad) {
-        this.vida -= cantidad;
+    public Edificio(Posicion posicion) {
+        super(posicion);
     }
 
     @Override
-    public void empujar() {
+    public void validarPaso(){
+        throw new RuntimeException("No se puede atravesar un Edificio");
     }
 
     @Override
-    public void ocupar(Unidad unidad) {
+    public void ocupar(Unidad unidad){
         throw new RuntimeException("casilla invalida");
     }
 
     @Override
-    public Ocupante obtenerBlanco() {
-        return this;
+    public void recibirEmpuje(Casilla casillaOrigen){
+        casillaOrigen.recibirDanoPorColision();
     }
 }
