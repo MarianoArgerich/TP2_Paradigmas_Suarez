@@ -11,8 +11,7 @@ public class Mech extends Unidad {
     protected Arma arma;
     protected boolean yaAtaco;
 
-
-    public Mech(int vidaMax, int movimiento, Arma arma){
+    public Mech(int vidaMax, int movimiento, Arma arma) {
         super(vidaMax, movimiento);
         this.arma = arma;
         this.yaAtaco = false;
@@ -28,7 +27,4 @@ public class Mech extends Unidad {
 
         this.yaAtaco = true;
     }
-
-
-
 }
