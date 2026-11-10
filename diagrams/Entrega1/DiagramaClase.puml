@@ -19,12 +19,19 @@ class Tablero {
 
 }
 
-abstract class Casilla <<abstract>> {
+abstract class Casilla {
 
         - posicion: Posicion
 
         + Casilla(posicion: Posicion)
-        + ocupar(unidad: Unidad): void
+        + {abstract} ocupar(unidad: Unidad): void
+        + {abstract} transferirUnidadA(casilla: Casilla):void
+        + {abstract} unidadRecibirGolpe(danio: int , direccion: Direccion , tablero: Tablero ):void
+        + {abstract} recibirEmpuje(casillaOrigen:Casilla ):void
+        + {abstract} detieneDisparo():boolean
+        + {abstract} recibirDanoPorColision():void
+        + {abstract} desocupar():void
+        + {abstract} unidadGolpeada(int danio):void
 
 
 }
@@ -33,21 +40,31 @@ abstract class Casilla <<abstract>> {
 abstract class Transitable extends Casilla{
         - unidad: Unidad
 
-        - estaOcupada():boolean
-        + unidadRecibirDanio(dano: int, direccion: Direccion, tablero: Tablero):void
-        + unidadRecibirEmpuje(casilla: Casilla):void
-        + unidadRecibirDanoPorColision():void
-        + transferirUnidadA(casillaDestino: Casilla): void
+        + Transitable(posicion:Posicion)
         + ocupar(unidad: Unidad):void
+        + transferirUnidadA(casilla: Casilla): void
+        + unidadRecibirGolpe(danio: int, direccion:Direccion, tablero:Tablero):void
+        + recibirEmpuje(casilla: Casilla):void
+        + detieneDisparo()boolean
+        + recibirDanoPorColision():void
         + descocupar():void
-        + validarPaso():void
+        - estaOcupada():boolean
+        + unidadGolpeada(danio:int):void
 
 }
 
 abstract class Obstaculo extends Casilla{
         - vida: int
 
-        + recibirDanio(danio: int, tablero:Tablero):void
+        + Obstaculo(posicion: Posicion, vida:int)
+        + ocupar(unidad:Unidad):void
+        + transferirUnidadA(casilla:Casilla):void
+        + unidadRecibirGolpe(danio: int, direccion: Direccion, tablero: Tablero):void
+        + recibirEmpuje(casilla:Casilla):void
+        + detieneDisparo():boolean
+        + recibirDanoPorColision():void
+        + desocupar():void
+        + unidadGolpeada(danio:int):void
 }
 
 
@@ -57,10 +74,10 @@ abstract class Unidad {
         - rangoDeMovimiento: int
         - vidaActual: int
 
-        + Unidad(vidaMaxima: int, movimiento: int)
+        + Unidad(vidaMaxima: int, rangoDeMovimiento: int)
         + verificarRangoDeMovimiento(distancia: int):void
         + moverA(nuevaPosicion: Posicion):void
-        + estaEn(posicion: Posicion):boolean
+        + estaEn(otraPosicion: Posicion):boolean
         + mover(direccion: Direccion, distancia: int, tablero: Tablero):void
         + obtenerVidaActual():int
         + recibirGolpe(danio: int, posicion: Posicion, direccion: Direccion, tablero: Tablero, casilla: Casilla):void
@@ -68,15 +85,15 @@ abstract class Unidad {
 
 }
 
-abstract class Posicion {
+class Posicion {
         - x: int
         - y: int
 
         + Posicion(x: int, y: int)
-        + getX():int
-        + getY():int
         + desplazar(deltaX: int, deltaY: int): Posicion
         + siguienteEn(direccion: Direccion): Posicion
+        + getX():int
+        + getY():int
         + equals(o: Object): boolean
         + calcularDireccionHacia(objetivo: Posicion): Direccion
 }
@@ -91,9 +108,6 @@ interface Arma {
        + ejecutarAtaque(origen: Posicion, objetivo: Posicion, tablero: Tablero):void
 }
 
-class Puno implements Arma {
-        - danio: int
-}
 
 class Acido extends Transitable {
        + Acido(posicion: Posicion)
@@ -110,7 +124,7 @@ class Suelo extends Transitable {
 class Edificio extends Obstaculo {
 
        + Edificio(posicion: Posicion)
-       + recibirDanio(danio: int, tablero:Tablero):void
+       + detieneDisparo():boolean
 
 }
 
@@ -136,39 +150,60 @@ class Arriba implements Direccion {
 abstract class Mech extends Unidad{
         - arma: Arma
         - movimientosDeshechos: int
-        # yaAtaco: boolean
+        - posicionAnterior: Posicion
+        - yaAtaco: boolean
+        # yaSeMovio : boolean
 
         + Mech(vidaMax: int, movimiento: int, arma: Arma)
+        + mover(direccion: Direccion, distancia: int, tablero: Tablero):void
         + atacar(posicionObjetivo: Posicion, tablero: Tablero): void
+        + deshacerMovimiento(tablero:Tablero):void
 }
 
 abstract class Vek extends Unidad{
 
-        + Vek(vidaMax: int, movimiento: int)
+        + Vek(vidaMax: int, rangoDeMovimiento: int)
 }
 
 class Combate extends Mech{
         + Combate()
-        + Combate(posicion:Posicion)
+}
+
+class Canion extends Mech{
+        + Canion()
+}
+
+class Artilleria extends Mech{
+        + Artilleria()
 }
 
 class Luciernaga extends Vek{
         + Luciernaga()
 }
 
+class Punio implements Arma{
+        -danio:int
+}
+
+class DisparoCanion implements Arma{
+        -danio:int
+}
+
+class Arco implements Arma{
+        -danio:int
+
+        - estaDentroDelRangoProhibido3x3(origen: Posicion, objetivo: Posicion): boolean
+        - estaEnLineaRecta(origen: Posicion, objetivo:Posicion):boolean
+}
+
 Tablero"1" o-- "1..*"Casilla
 Tablero"1" o-- "1..*"Unidad
 Tablero ..> Direccion
-Tablero ..> Posicion
-
 Transitable"1" o-- "0..1"Unidad
 
-Casilla ..> Direccion
+Casilla"1" o-- "1"Posicion
 Unidad"1" o-- "1"Posicion
-Unidad ..> Direccion
 
-
-Posicion ..> Direccion
 Mech o-- Arma
 
 

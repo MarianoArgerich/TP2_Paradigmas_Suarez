@@ -12,8 +12,7 @@ public abstract class Casilla {
         this.posicion = posicion;
     }
 
-    abstract public void ocupar(Unidad unidad);
-
+    public abstract void ocupar(Unidad unidad);
 
     public abstract void transferirUnidadA(Casilla casilla);
 
