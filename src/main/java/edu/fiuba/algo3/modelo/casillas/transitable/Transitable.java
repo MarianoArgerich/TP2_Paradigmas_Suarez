@@ -25,7 +25,7 @@ public abstract class Transitable extends Casilla{
         desocupar();
     }
 
-    public void unidadRecibirDanio(int danio, Direccion direccion, Tablero tablero) {
+    public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero) {
         if (!estaOcupada()) {
             return;
         }
