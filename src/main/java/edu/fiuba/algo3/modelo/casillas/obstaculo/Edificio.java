@@ -7,9 +7,4 @@ public class Edificio extends Obstaculo {
     public Edificio(Posicion posicion) {
         super(posicion, 1);
     }
-
-    @Override
-    public boolean detieneDisparo() {
-        return false;
-    }
 }

@@ -84,9 +84,14 @@ public class Tablero {
         }
     }
 
+    private boolean estaDentro(Posicion posicion) {
+        return posicion.getX() >= 0 && posicion.getX() < casillas.length
+                && posicion.getY() >= 0 && posicion.getY() < casillas[0].length;
+    }
+
     public void ataqueEnLinea(Posicion origen, int danio, Direccion direccion) {
         Posicion actual = direccion.calcularSiguientePosicion(origen);
-        while (actual.getX() >= 0 || actual.getX() < casillas.length - 1 || actual.getY() >= 0 || actual.getY() < casillas[0].length - 1) {
+        while (estaDentro(actual)) {
             if (casillaEn(actual).detieneDisparo()) {
                 aplicarGolpe(actual, danio, direccion);
                 return;
