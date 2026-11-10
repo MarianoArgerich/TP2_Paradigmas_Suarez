@@ -106,4 +106,10 @@ public class Tablero {
         }
         casillaEn(posicionActual).transferirUnidadA(casillaEn(posicionAnterior));
     }
+
+    public void aplicarDisparo(Posicion objetivo,int danio){
+        Casilla casilla = casillaEn(objetivo);
+        casilla.unidadGolpeada(danio);
+
+    }
 }

@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Obstaculo extends Casilla {
+public abstract class Obstaculo extends Casilla {
 
     private int vida;
 
@@ -51,5 +51,8 @@ public class Obstaculo extends Casilla {
     public void desocupar() {
         throw new RuntimeException("No se puede desocupar un obstaculo");
 
+    }
+
+    public void unidadGolpeada(int danio) {
     }
 }
