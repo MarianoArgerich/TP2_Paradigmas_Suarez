@@ -56,7 +56,7 @@ public class Tablero {
         int x = posicion.getX();
         int y = posicion.getY();
         if (x < 0 || x > casillas.length - 1 || y < 0 || y > casillas[0].length - 1){
-            throw new RuntimeException("Coordenada fuera del tablero ");
+            throw new RuntimeException("Coordenada fuera del tablero");
         }
     }
 
