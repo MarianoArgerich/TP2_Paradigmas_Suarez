@@ -2,6 +2,7 @@ package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
@@ -190,16 +191,17 @@ public class ArtilleriaTest {
 
     }
 
+    @Test
+    public void testArtilleriaPuedeAtacarPorEncimaDeObstaculos() {
+        mapa[1][3] = new Montania(new Posicion(1, 3));
+        tablero = new Tablero(mapa);
+        tablero.colocarUnidad(new Posicion(0, 3), artillero);
+        Vek vek = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(3, 3), vek);
 
+        artillero.atacar(new Posicion(3, 3), tablero);
 
-
-
-
-
-
-
-
-
-
+        assertEquals(2, vek.obtenerVidaActual());
+    }
 
 }
