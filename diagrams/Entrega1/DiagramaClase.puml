@@ -8,7 +8,7 @@ class Tablero {
         + Tablero(mapa:Casilla[][])
         + casillaIgualQue(x: int, y: int, comparar: Casilla): boolean
         + colocarUnidad(coordenadas: Posicion, unidad: Unidad): void
-        + moverUnidad(direccion: Direccion, distancia: int, coordenadaActual: Posicion, unidad: Unidad): void
+        + moverUnidad(unidad: Unidad, origen: Posicion, direccion: Direccion, distancia: int): void
         + aplicarGolpe(posicion:Posicion, danio: int, direccion: Direccion):void
         + empujarDesde(origen:Posicion, direccion:Direccion):void
         - casillaEn(posicion: Posicion): Casilla
@@ -22,6 +22,7 @@ abstract class Casilla <<abstract>> {
         - posicion: Posicion
 
         + Casilla(posicion: Posicion)
+        + ocupar(unidad: Unidad): void
 
 
 }

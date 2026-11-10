@@ -1,11 +1,11 @@
 package edu.fiuba.algo3.entrega1.tableroTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.Acido;
-import edu.fiuba.algo3.modelo.casillas.Agua;
-import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.Suelo;
-import edu.fiuba.algo3.modelo.ocupantes.Montania;
+import edu.fiuba.algo3.modelo.casillas.transitable.Acido;
+import edu.fiuba.algo3.modelo.casillas.transitable.Agua;
+import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
