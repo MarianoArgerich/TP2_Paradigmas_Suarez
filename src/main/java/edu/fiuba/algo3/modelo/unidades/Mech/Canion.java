@@ -8,8 +8,4 @@ public class Canion extends Mech {
     public Canion() {
         super(3, 3, new DisparoCanion());
     }
-
-    public Canion(Posicion posicion) {
-        super(posicion, 3, 3, new DisparoCanion());
-    }
 }

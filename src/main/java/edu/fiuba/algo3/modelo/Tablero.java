@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
-import edu.fiuba.algo3.modelo.casillas.Casilla;
+
+import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -67,17 +68,19 @@ public class Tablero {
 
     public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
         Casilla casilla = casillaEn(posicion);
-        casilla.recibirGolpe(dano, direccion, this);
+        casilla.unidadRecibirGolpe(dano, direccion, this);
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
         Posicion destino = direccion.calcularSiguientePosicion(origen);
 
-        Casilla casillaOrigen = casillaEn(origen);
-        Casilla casillaDestino = casillaEn(destino);
-
-        if (casillaDestino != null) {
+        try {
+            Casilla casillaOrigen = casillaEn(origen);
+            Casilla casillaDestino = casillaEn(destino);
             casillaDestino.recibirEmpuje(casillaOrigen);
+
+        } catch (RuntimeException e){
+
         }
     }
 
@@ -97,5 +100,11 @@ public class Tablero {
             throw new RuntimeException("Unidad no existe");
         }
         casillaEn(posicionActual).transferirUnidadA(casillaEn(posicionAnterior));
+    }
+
+    public void aplicarDisparo(Posicion objetivo,int danio){
+        Casilla casilla = casillaEn(objetivo);
+        casilla.unidadGolpeada(danio);
+
     }
 }

@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.Casilla;
+
+import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.YaSeMovioException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 public class Unidad {
@@ -44,14 +44,14 @@ public class Unidad {
     }
 
     public void recibirGolpe(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
-        recibirDano(dano, casilla);
+        recibirDanio(dano, casilla);
 
         if (this.vidaActual > 0) {
             tablero.empujarDesde(posicion, direccion);
         }
     }
 
-    public void recibirDano(int dano,  Casilla casilla ) {
+    public void recibirDanio(int dano, Casilla casilla ) {
         this.vidaActual -= dano;
         if (this.vidaActual <= 0) {
             casilla.desocupar();

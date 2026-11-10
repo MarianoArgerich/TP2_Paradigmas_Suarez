@@ -15,15 +15,17 @@ public abstract class Casilla {
     abstract public void ocupar(Unidad unidad);
 
 
-    abstract public void transferirUnidadA(Casilla casilla);
+    public abstract void transferirUnidadA(Casilla casilla);
 
-    abstract public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero);
+    public abstract void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero);
 
-    abstract public void recibirEmpuje(Casilla casillaOrigen);
+    public abstract void recibirEmpuje(Casilla casillaOrigen);
 
-    abstract public boolean detieneDisparo();
+    public abstract boolean detieneDisparo();
 
-    abstract public void recibirDanoPorColision();
+    public abstract void recibirDanoPorColision();
 
-    abstract public void desocupar();
+    public abstract void desocupar();
+
+    public abstract void unidadGolpeada(int danio);
 }
