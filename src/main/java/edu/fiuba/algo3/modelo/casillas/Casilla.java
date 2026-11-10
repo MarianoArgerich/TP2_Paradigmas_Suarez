@@ -58,12 +58,6 @@ public abstract class Casilla {
         this.unidad = null;
     }
 
-    public void validarPaso() {
-        if(estaOcupada()){
-            throw new RuntimeException("Paso bloqueado: Casilla ocupada");
-        }
-    }
-
     public boolean detieneDisparo() {
         return estaOcupada();
     }

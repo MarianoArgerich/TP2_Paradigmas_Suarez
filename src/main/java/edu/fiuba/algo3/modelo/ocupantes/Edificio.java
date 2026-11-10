@@ -13,11 +13,6 @@ public class Edificio extends Casilla{
     }
 
     @Override
-    public void validarPaso(){
-        throw new RuntimeException("No se puede atravesar un Edificio");
-    }
-
-    @Override
     public void ocupar(Unidad unidad){
         throw new RuntimeException("casilla invalida");
     }
