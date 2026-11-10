@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
+
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
@@ -9,7 +11,7 @@ import edu.fiuba.algo3.modelo.direccion.Derecha;
 import edu.fiuba.algo3.modelo.excepciones.NoSePuedeDeshacerMovimiento;
 import edu.fiuba.algo3.modelo.excepciones.YaAtacoException;
 import edu.fiuba.algo3.modelo.excepciones.YaSeMovioException;
-import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
+
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
