@@ -9,11 +9,13 @@ class Tablero {
         + casillaIgualQue(x: int, y: int, comparar: Casilla): boolean
         + colocarUnidad(coordenadas: Posicion, unidad: Unidad): void
         + moverUnidad(unidad: Unidad, origen: Posicion, direccion: Direccion, distancia: int): void
+        - esCoordenadaValida(posicion: Posicion):void
+        - casillaEn(posicion: Posicion): Casilla
         + aplicarGolpe(posicion:Posicion, danio: int, direccion: Direccion):void
         + empujarDesde(origen:Posicion, direccion:Direccion):void
-        - casillaEn(posicion: Posicion): Casilla
-        - esCoordenadaValida(posicion: Posicion): boolean
-        + destruirCasilla(posicion: Posicion):void
+        + ataqueEnLinea(origen: Posicion, danio:int, direccion: Direccion):void
+        + revertirMovimiento(unidad:Unidad, posicionActual: Posicion, posicionAnterior: Posicion):void
+        + aplicarDisparo(objetivo: Posicion, danio: int):void
 
 }
 
@@ -50,14 +52,13 @@ abstract class Obstaculo extends Casilla{
 
 
 abstract class Unidad {
-        # yaSeMovio: boolean
         # posicion: Posicion
-        - vidaMaxima: int
-        - movimiento: int
+        - vidaMax: int
+        - rangoDeMovimiento: int
         - vidaActual: int
 
         + Unidad(vidaMaxima: int, movimiento: int)
-        + Unidad(posicion: Posicion, vidaMaxima: int, movimiento: int)
+        + verificarRangoDeMovimiento(distancia: int):void
         + moverA(nuevaPosicion: Posicion):void
         + estaEn(posicion: Posicion):boolean
         + mover(direccion: Direccion, distancia: int, tablero: Tablero):void
@@ -133,7 +134,8 @@ class Arriba implements Direccion {
 }
 
 abstract class Mech extends Unidad{
-        # arma: Arma
+        - arma: Arma
+        - movimientosDeshechos: int
         # yaAtaco: boolean
 
         + Mech(vidaMax: int, movimiento: int, arma: Arma)

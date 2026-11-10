@@ -25,6 +25,7 @@ public abstract class Transitable extends Casilla{
         desocupar();
     }
 
+    @Override
     public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero) {
         if (!estaOcupada()) {
             return;
@@ -36,7 +37,6 @@ public abstract class Transitable extends Casilla{
     public void recibirEmpuje(Casilla casilla) {
         if (estaOcupada()) {
 
-            this.unidad.recibirDanio(1, this);
             casilla.recibirDanoPorColision();
         } else {
             casilla.transferirUnidadA(this);
@@ -59,5 +59,12 @@ public abstract class Transitable extends Casilla{
 
     private boolean estaOcupada() {
         return unidad != null;
+    }
+
+    public void unidadGolpeada(int danio){
+        if (estaOcupada()) {
+            this.unidad.recibirDanio(danio, this);
+        }
+
     }
 }
