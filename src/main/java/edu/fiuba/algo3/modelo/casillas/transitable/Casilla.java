@@ -17,7 +17,7 @@ public abstract class Casilla {
 
     abstract public void transferirUnidadA(Casilla casilla);
 
-    abstract public void unidadRecibirDanio(int danio, Direccion direccion, Tablero tablero);
+    abstract public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero);
 
     abstract public void recibirEmpuje(Casilla casillaOrigen);
 

@@ -68,17 +68,19 @@ public class Tablero {
 
     public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
         Casilla casilla = casillaEn(posicion);
-        casilla.unidadRecibirDanio(dano, direccion, this);
+        casilla.unidadRecibirGolpe(dano, direccion, this);
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
         Posicion destino = direccion.calcularSiguientePosicion(origen);
 
-        Casilla casillaOrigen = casillaEn(origen);
-        Casilla casillaDestino = casillaEn(destino);
-
-        if (casillaDestino != null) {
+        try {
+            Casilla casillaOrigen = casillaEn(origen);
+            Casilla casillaDestino = casillaEn(destino);
             casillaDestino.recibirEmpuje(casillaOrigen);
+
+        } catch (RuntimeException e){
+
         }
     }
 

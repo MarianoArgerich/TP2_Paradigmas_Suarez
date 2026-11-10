@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public class Puno implements Arma {
+public class Punio implements Arma {
 
     private final int dano = 2;
     @Override
