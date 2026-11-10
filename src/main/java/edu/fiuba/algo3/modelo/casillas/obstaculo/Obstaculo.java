@@ -20,10 +20,7 @@ public class Obstaculo extends Casilla {
         throw new RuntimeException("casilla invalida");
     }
 
-    @Override
-    public void validarPaso() {
-        throw new RuntimeException("No se puede atravesar un Obstaculo");
-    }
+
 
     @Override
     public void transferirUnidadA(Casilla casilla) {
