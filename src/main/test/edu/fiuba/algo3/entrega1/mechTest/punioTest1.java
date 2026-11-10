@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class punoTest1 {
+public class punioTest1 {
 
     private Tablero tablero;
     private Casilla[][] mapa;

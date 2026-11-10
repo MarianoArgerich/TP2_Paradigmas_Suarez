@@ -28,7 +28,7 @@ public class Obstaculo extends Casilla {
     }
 
     @Override
-    public void unidadRecibirDanio(int danio, Direccion direccion, Tablero tablero) {
+    public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero) {
         throw new RuntimeException("Un obstaculo no tiene unidades");
     }
 
