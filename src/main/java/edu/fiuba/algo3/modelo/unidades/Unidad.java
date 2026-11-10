@@ -8,24 +8,23 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 public class Unidad {
 
-    protected boolean yaSeMovio;
+
     protected Posicion posicion;
     private final int vidaMax;
-    private int movimiento;
+    private int rangoDeMovimiento;
     private int vidaActual;
 
-    public Unidad(int vidaMax, int movimiento) {
+    public Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
-        this.movimiento = movimiento;
+        this.rangoDeMovimiento = rangoDeMovimiento;
         posicion = null;
     }
 
-    public Unidad(Posicion posicion, int vidaMax, int movimiento) {
-        this.vidaMax = vidaMax;
-        this.vidaActual = this.vidaMax;
-        this.movimiento = movimiento;
-        this.posicion = posicion;
+    public void verificarRangoDeMovimiento(int distancia){
+        if (distancia > rangoDeMovimiento) {
+            throw new RuntimeException("Fuera de rango");
+        }
     }
 
     public void moverA(Posicion nuevaPosicion) {
@@ -37,19 +36,7 @@ public class Unidad {
     }
 
     public void mover(Direccion direccion, int distancia, Tablero tablero) {
-        if (this.posicion == null){
-            throw new RuntimeException("La unidad no está en el tablero");
-        }
-
-
-        if (this.yaSeMovio) {
-            throw new YaSeMovioException("El Mech no debería poder moverse dos veces en un turno");
-        }
-
         tablero.moverUnidad(this, this.posicion, direccion, distancia);
-
-
-        this.yaSeMovio = true;
     }
 
     public int obtenerVidaActual() {
