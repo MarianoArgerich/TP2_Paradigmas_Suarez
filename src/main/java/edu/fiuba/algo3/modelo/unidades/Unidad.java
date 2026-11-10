@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Tablero;
+
 import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -9,21 +10,23 @@ public class Unidad {
 
 
     protected Posicion posicion;
-    private final int vidaMaxima;
-    private int movimiento;
+    private final int vidaMax;
+    private int rangoDeMovimiento;
     private int vidaActual;
 
-    public Unidad(int vidaMaxima, int movimiento) {
-        this.vidaMaxima = vidaMaxima;
-        this.vidaActual = this.vidaMaxima;
-        this.movimiento = movimiento;
+    public Unidad(int vidaMax, int rangoDeMovimiento) {
+        this.vidaMax = vidaMax;
+        this.vidaActual = this.vidaMax;
+        this.rangoDeMovimiento = rangoDeMovimiento;
         posicion = null;
     }
+
     public void verificarRangoDeMovimiento(int distancia){
-        if (distancia < 0 || distancia > movimiento) {
+        if (distancia > rangoDeMovimiento) {
             throw new RuntimeException("Fuera de rango");
         }
     }
+
     public void moverA(Posicion nuevaPosicion) {
         this.posicion = nuevaPosicion;
     }
@@ -40,7 +43,7 @@ public class Unidad {
         return vidaActual;
     }
 
-    public void recibirDanio(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
+    public void recibirGolpe(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
         recibirDanio(dano, casilla);
 
         if (this.vidaActual > 0) {

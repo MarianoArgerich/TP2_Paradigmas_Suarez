@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
+
 import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -44,7 +45,6 @@ public class Tablero {
 
             try {
                 Casilla casillaSiguiente = casillaEn(siguiente);
-                casillaSiguiente.validarPaso();
                 casillaEn(actual).transferirUnidadA(casillaSiguiente);
                 actual = siguiente;
             } catch (RuntimeException e){
@@ -66,9 +66,9 @@ public class Tablero {
         return casillas[posicion.getX()][posicion.getY()];
     }
 
-    public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
+    public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
         Casilla casilla = casillaEn(posicion);
-        casilla.unidadRecibirDanio(danio, direccion, this);
+        casilla.unidadRecibirDanio(dano, direccion, this);
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
@@ -84,22 +84,13 @@ public class Tablero {
 
     public void ataqueEnLinea(Posicion origen, int danio, Direccion direccion) {
         Posicion actual = direccion.calcularSiguientePosicion(origen);
-        while (esPosicionValida(actual)) {
+        while (actual.getX() >= 0 || actual.getX() < casillas.length - 1 || actual.getY() >= 0 || actual.getY() < casillas[0].length - 1) {
             if (casillaEn(actual).detieneDisparo()) {
                 aplicarGolpe(actual, danio, direccion);
                 return;
             }
             actual = direccion.calcularSiguientePosicion(actual);
         }
-    }
-
-    public void aplicarGolpeEnLinea(Posicion origen, int danio, Direccion direccion) {
-        ataqueEnLinea(origen, danio, direccion);
-    }
-
-    private boolean esPosicionValida(Posicion posicion){
-        return posicion.getX() >= 0 && posicion.getX() < casillas.length &&
-                posicion.getY() >= 0 && posicion.getY() < casillas[0].length;
     }
 
     public void revertirMovimiento(Unidad unidad, Posicion posicionActual, Posicion posicionAnterior){

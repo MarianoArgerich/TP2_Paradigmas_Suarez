@@ -14,7 +14,6 @@ public abstract class Casilla {
 
     abstract public void ocupar(Unidad unidad);
 
-    abstract public void validarPaso();
 
     abstract public void transferirUnidadA(Casilla casilla);
 
