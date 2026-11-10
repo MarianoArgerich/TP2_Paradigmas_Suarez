@@ -20,12 +20,6 @@ public abstract class Transitable extends Casilla{
         this.unidad.moverA(this.posicion);
     }
 
-    public void validarPaso() {
-        if(estaOcupada()){
-            throw new RuntimeException("Paso bloqueado: Casilla ocupada");
-        }
-    }
-
     public void transferirUnidadA(Casilla casilla) {
         casilla.ocupar(this.unidad);
         desocupar();
@@ -36,7 +30,7 @@ public abstract class Transitable extends Casilla{
             return;
         }
 
-        this.unidad.recibirDanio(danio, this.posicion, direccion, tablero, this);
+        this.unidad.recibirGolpe(danio, this.posicion, direccion, tablero, this);
     }
 
     public void recibirEmpuje(Casilla casilla) {
