@@ -13,4 +13,9 @@ public class Acido implements Terreno {
     public void reaccionarAlIngresoDe(Unidad unidad) {
 
     }
+
+    @Override
+    public boolean puedeIngresar() {
+        return true;
+    }
 }

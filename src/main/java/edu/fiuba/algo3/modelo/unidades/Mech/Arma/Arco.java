@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Arma;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;

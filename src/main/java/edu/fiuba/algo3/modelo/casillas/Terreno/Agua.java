@@ -15,4 +15,9 @@ public class Agua implements Terreno {
     public void reaccionarAlIngresoDe(Unidad unidad) {
 
     }
+
+    @Override
+    public boolean puedeIngresar() {
+        return true;
+    }
 }

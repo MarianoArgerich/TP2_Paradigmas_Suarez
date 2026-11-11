@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.Ocupante;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -14,5 +14,5 @@ public interface Ocupante {
     void recibirDisparo(int danio, Casilla casillaActual);
     void recibirDanioPorColision(Casilla casillaActual);
 
-    boolean estaVacio();
+    void empujarA(Casilla origen, Casilla destino);
 }

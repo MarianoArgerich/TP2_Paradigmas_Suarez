@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.Ocupante;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -32,7 +32,5 @@ public class SinOcupante implements Ocupante{
     public void recibirDanioPorColision(Casilla casillaActual) {}
 
     @Override
-    public boolean estaVacio() {
-        return true;
-    }
+    public void empujarA(Casilla origen, Casilla destino) {}
 }

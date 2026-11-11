@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -28,7 +28,7 @@ public abstract class Unidad implements Ocupante {
 
     @Override
     public boolean esUnidad(Unidad unidad) {
-        return this.equals(unidad);
+        return this == unidad;
     }
 
     @Override
@@ -69,10 +69,6 @@ public abstract class Unidad implements Ocupante {
         }
     }
 
-    public boolean estaEn(Posicion otraPosicion, Tablero tablero) {
-        return tablero.unidadEstaEn(this, otraPosicion);
-    }
-
     public void mover(Direccion direccion, int distancia, Tablero tablero) {
         tablero.moverUnidad(this, direccion, distancia);
     }
@@ -85,7 +81,10 @@ public abstract class Unidad implements Ocupante {
     }
 
     @Override
-    public boolean estaVacio() {
-        return false;
+    public void empujarA(Casilla origen, Casilla destino) {
+        boolean seTransfirio = origen.transferirOcupanteA(destino);
+        if (!seTransfirio) {
+            destino.procesarColisionCon(origen);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
@@ -62,7 +62,7 @@ public class PunioTest {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(new Posicion(2, 4), tablero));
+        assertTrue(tablero.unidadEstaEn(vek, new Posicion(2, 4)));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PunioTest {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(ubicacionVek, tablero));
+        assertTrue(tablero.unidadEstaEn(vek, ubicacionVek));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class PunioTest {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(ubicacionVek, tablero));
+        assertTrue(tablero.unidadEstaEn(vek, ubicacionVek));
     }
 }
 

@@ -1,8 +1,7 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
@@ -43,6 +42,6 @@ public class CanionTest {
 
         canion.atacar(ubicacionVek, tablero);
 
-        assertTrue( vek.suVidaEsIgualA(2));
+        assertTrue(vek.suVidaEsIgualA(2));
     }
 }

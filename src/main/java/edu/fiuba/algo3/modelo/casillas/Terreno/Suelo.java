@@ -14,4 +14,9 @@ public class Suelo implements Terreno {
     public void reaccionarAlIngresoDe(Unidad unidad) {
 
     }
+
+    @Override
+    public boolean puedeIngresar() {
+        return true;
+    }
 }

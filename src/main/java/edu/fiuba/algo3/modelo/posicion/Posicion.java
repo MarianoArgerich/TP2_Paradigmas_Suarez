@@ -2,6 +2,8 @@ package edu.fiuba.algo3.modelo.posicion;
 
 import edu.fiuba.algo3.modelo.direccion.*;
 
+import java.util.Objects;
+
 
 public class Posicion {
     private final int x;
@@ -21,7 +23,7 @@ public class Posicion {
     }
 
     public boolean estaEnLineaRectaCon(Posicion otra) {
-        return (this.x == otra.x && this.y != otra.y) || (this.x != otra.x && this.y == otra.y);
+        return (this.x == otra.x) ^ (this.y == otra.y);
     }
 
     public boolean estaEnArea(Posicion otra) {
@@ -31,11 +33,11 @@ public class Posicion {
         return deltaX <= 1 && deltaY <= 1;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Posicion posicion = (Posicion) o;
-        return x == posicion.x && y == posicion.y;
+    public boolean esAdyacenteA(Posicion objetivo) {
+        int deltaX = Math.abs(this.x - objetivo.x);
+        int deltaY = Math.abs(this.y - objetivo.y);
+
+        return (deltaX + deltaY) == 1;
     }
 
     public Direccion calcularDireccionHacia(Posicion objetivo) {
@@ -52,5 +54,18 @@ public class Posicion {
             return new Derecha();
         }
         return new Izquierda();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Posicion posicion = (Posicion) o;
+        return x == posicion.x && y == posicion.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

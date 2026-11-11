@@ -1,10 +1,11 @@
 package edu.fiuba.algo3.modelo.casillas;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -27,32 +28,24 @@ public class Casilla {
         this.ocupante = ocupante;
     }
 
-    public boolean esDelTerreno(Terreno terrenoAComparar) {
-        return terrenoAComparar != null && this.terreno.getClass().equals(terrenoAComparar.getClass());
-    }
-
-    public boolean esDelOcupante(Ocupante ocupanteAComparar) {
-        return ocupanteAComparar != null && this.ocupante.getClass().equals(ocupanteAComparar.getClass());
-    }
-
     public boolean estaEn(Posicion otraPosicion) {
         return this.posicion.equals(otraPosicion);
     }
 
-    public Posicion siguienteEn(Direccion direccion) {
-        return this.posicion.siguienteEn(direccion);
+    public boolean admitirOcupante(Ocupante ocupante){
+        return this.terreno.puedeIngresar() && this.ocupante.puedeIngresar();
     }
 
-    public boolean admitirOcupante(Ocupante ocupante){
-        if (!this.ocupante.puedeIngresar()){
-            return false;
+    public void colocarOcupante(Ocupante ocupante) {
+        if (!admitirOcupante(ocupante)) {
+            throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
         }
         this.ocupante = ocupante;
-        return true;
     }
 
     public boolean transferirOcupanteA(Casilla casillaDestino){
         if (casillaDestino.admitirOcupante(this.ocupante)){
+            casillaDestino.colocarOcupante(this.ocupante);
             vaciar();
             return true;
         }
@@ -61,6 +54,18 @@ public class Casilla {
 
     public void vaciar(){
         this.ocupante = new SinOcupante();
+    }
+
+    public boolean esDelTerreno(Terreno terrenoAComparar) {
+        return terrenoAComparar != null && this.terreno.getClass().equals(terrenoAComparar.getClass());
+    }
+
+    public boolean esDelOcupante(Ocupante ocupanteAComparar) {
+        return ocupanteAComparar != null && this.ocupante.getClass().equals(ocupanteAComparar.getClass());
+    }
+
+    public Posicion siguienteEn(Direccion direccion) {
+        return this.posicion.siguienteEn(direccion);
     }
 
     public boolean tieneUnidad(Unidad unidad){
@@ -91,12 +96,16 @@ public class Casilla {
         arma.ejecutarAtaque(this.posicion, objetivo, tablero);
     }
 
+    public void empujarOcupanteA(Casilla casillaDestino){
+        this.ocupante.empujarA(this, casillaDestino);
+    }
+
     public void empujarHacia(Direccion direccion, Tablero tablero) {
         tablero.empujarDesde(this.posicion, direccion);
     }
 
-    public boolean estaVacia(){
-        return this.ocupante.estaVacio();
+    public void procesarColisionCon(Casilla origen) {
+        origen.recibirDanioPorColision();
+        this.recibirDanioPorColision();
     }
-
 }

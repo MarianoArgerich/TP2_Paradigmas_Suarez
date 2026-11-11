@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.casillas.obstaculo;
 
-public class Edificio extends Obstaculo {
+public class Edificio extends Destruible {
 
     public Edificio() {
         super(1);
@@ -10,4 +10,5 @@ public class Edificio extends Obstaculo {
     public boolean detieneDisparo() {
         return false;
     }
+
 }

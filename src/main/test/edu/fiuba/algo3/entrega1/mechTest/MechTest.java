@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
@@ -60,7 +60,7 @@ public class MechTest {
 
         mech1.mover(new Abajo(), 3, tablero);
 
-        assertTrue(mech1.estaEn(coordenadas, tablero));
+        assertTrue(tablero.unidadEstaEn(mech1, coordenadas));
 
     }
 
@@ -72,7 +72,7 @@ public class MechTest {
 
         mech1.mover(new Abajo(), 2, tablero);
 
-        assertTrue(mech1.estaEn(posicionInicial, tablero));
+        assertTrue(tablero.unidadEstaEn(mech1, posicionInicial));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class MechTest {
         tablero.colocarUnidad(posicionInicial, mech1);
 
         mech1.mover(new Abajo(), 2, tablero);
-        assertTrue(mech1.estaEn(posicionInicial, tablero));
+        assertTrue(tablero.unidadEstaEn(mech1, posicionInicial));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class MechTest {
         mech1.deshacerMovimiento(tablero);
 
 
-        assertTrue(mech1.estaEn(posicionInicial, tablero));
+        assertTrue(tablero.unidadEstaEn(mech1, posicionInicial));
     }
 
     @Test
@@ -167,8 +167,8 @@ public class MechTest {
         mech1.deshacerMovimiento(tablero);
         mech2.deshacerMovimiento(tablero);
 
-        assertTrue(mech2.estaEn(posicionInicial2, tablero));
-        assertTrue(mech1.estaEn(posicionInicial1, tablero));
+        assertTrue(tablero.unidadEstaEn(mech2, posicionInicial2));
+        assertTrue(tablero.unidadEstaEn(mech1, posicionInicial1));
 
     }
 

@@ -7,4 +7,5 @@ public interface Terreno {
     void reaccionarAlIngresoDe(Unidad unidad);
 
 
+    boolean puedeIngresar();
 }

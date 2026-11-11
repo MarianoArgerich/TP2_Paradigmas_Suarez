@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.entrega1.tableroTest;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Acido;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Agua;
 import edu.fiuba.algo3.modelo.casillas.Casilla;

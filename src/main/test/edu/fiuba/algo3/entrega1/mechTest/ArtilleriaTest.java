@@ -1,8 +1,7 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
 import edu.fiuba.algo3.modelo.direccion.Derecha;
@@ -98,10 +97,10 @@ public class ArtilleriaTest {
         artillero.atacar(posObjetivo, tablero);
 
 
-        assertTrue(vekNorte.estaEn(new Posicion(2, 4), tablero), "La unidad al Norte debe ser empujada a (2, 4)");
-        assertTrue(vekSur.estaEn(new Posicion(6, 4), tablero),   "La unidad al Sur debe ser empujada a (6, 4)");
-        assertTrue(vekOeste.estaEn(new Posicion(4, 2), tablero), "La unidad al Oeste debe ser empujada a (4, 2)");
-        assertTrue(vekEste.estaEn(new Posicion(4, 6), tablero),  "La unidad al Este debe ser empujada a (4, 6)");
+        assertTrue(tablero.unidadEstaEn(vekNorte, new Posicion(2, 4)), "La unidad al Norte debe ser empujada a (2, 4)");
+        assertTrue(tablero.unidadEstaEn(vekSur,new Posicion(6, 4)),   "La unidad al Sur debe ser empujada a (6, 4)");
+        assertTrue(tablero.unidadEstaEn(vekOeste,new Posicion(4, 2)), "La unidad al Oeste debe ser empujada a (4, 2)");
+        assertTrue(tablero.unidadEstaEn(vekEste,new Posicion(4, 6)),  "La unidad al Este debe ser empujada a (4, 6)");
     }
 
     @Test
@@ -122,7 +121,7 @@ public class ArtilleriaTest {
 
         // Assert: Daña al objetivo y empuja al Vek de (3,2) hacia (4,2)
         Posicion posicionFinalEsperada = derecha.calcularSiguientePosicion(posicionInicialDerecha); // (4, 2)
-        assertTrue(vekDerecha.estaEn(posicionFinalEsperada, tablero));
+        assertTrue(tablero.unidadEstaEn(vekDerecha,posicionFinalEsperada));
     }
 
     @Test
@@ -143,7 +142,7 @@ public class ArtilleriaTest {
 
         // Assert: Daña al objetivo y empuja al Vek de (1,2) hacia (0,2)
         Posicion posicionFinalEsperada = izquierda.calcularSiguientePosicion(posicionInicialIzquierda); // (0, 2)
-        assertTrue(vekIzquierda.estaEn(posicionFinalEsperada, tablero));
+        assertTrue(tablero.unidadEstaEn(vekIzquierda,posicionFinalEsperada));
     }
 
     @Test
@@ -164,7 +163,7 @@ public class ArtilleriaTest {
 
         // Assert: Daña al objetivo y empuja al Vek de (2,1) hacia (2,0)
         Posicion posicionFinalEsperada = arriba.calcularSiguientePosicion(posicionInicialArriba); // (2, 0)
-        assertTrue(vekArriba.estaEn(posicionFinalEsperada, tablero));
+        assertTrue(tablero.unidadEstaEn(vekArriba, posicionFinalEsperada));
     }
 
     @Test
@@ -185,7 +184,7 @@ public class ArtilleriaTest {
 
         // Assert: Daña al objetivo y empuja al Vek de (2,3) hacia (2,4)
         Posicion posicionFinalEsperada = abajo.calcularSiguientePosicion(posicionInicialAbajo); // (2, 4)
-        assertTrue(vekAbajo.estaEn(posicionFinalEsperada, tablero));
+        assertTrue(tablero.unidadEstaEn(vekAbajo, posicionFinalEsperada));
 
     }
 
