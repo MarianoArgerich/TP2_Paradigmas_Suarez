@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo.casillas.Terreno;
 
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Agua implements Terreno {
+public class Agua extends Terreno {
 
 
     @Override

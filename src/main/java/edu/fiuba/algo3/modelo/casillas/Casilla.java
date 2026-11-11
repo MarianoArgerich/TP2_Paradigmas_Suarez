@@ -32,6 +32,10 @@ public class Casilla {
         return this.posicion.equals(otraPosicion);
     }
 
+    public boolean tieneUnidad(Unidad unidad){
+        return this.ocupante.esUnidad(unidad);
+    }
+
     public boolean admitirOcupante(Ocupante ocupante){
         return this.terreno.puedeIngresar() && this.ocupante.puedeIngresar();
     }
@@ -56,8 +60,8 @@ public class Casilla {
         this.ocupante = new SinOcupante();
     }
 
-    public boolean esDelTerreno(Terreno terrenoAComparar) {
-        return terrenoAComparar != null && this.terreno.getClass().equals(terrenoAComparar.getClass());
+    public boolean tieneTerreno(Terreno terrenoAComparar) {
+        return this.terreno.equals(terrenoAComparar);
     }
 
     public boolean esDelOcupante(Ocupante ocupanteAComparar) {
@@ -66,10 +70,6 @@ public class Casilla {
 
     public Posicion siguienteEn(Direccion direccion) {
         return this.posicion.siguienteEn(direccion);
-    }
-
-    public boolean tieneUnidad(Unidad unidad){
-        return this.ocupante.esUnidad(unidad);
     }
 
     public void recibirGolpe(int danio, Direccion direccion, Tablero tablero){

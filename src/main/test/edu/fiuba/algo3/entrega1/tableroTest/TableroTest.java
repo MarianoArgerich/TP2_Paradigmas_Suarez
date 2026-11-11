@@ -48,9 +48,9 @@ public class TableroTest {
         assertTrue(tablero.esCoordenadaValida(new Posicion(1 , 0)));
         assertTrue(tablero.esCoordenadaValida(new Posicion(1, 1)));
 
-        assertTrue(suelo.esDelTerreno(new Suelo()));
-        assertTrue(agua.esDelTerreno(new Agua()));
-        assertTrue(acido.esDelTerreno(new Acido()));
+        assertTrue(suelo.tieneTerreno(new Suelo()));
+        assertTrue(agua.tieneTerreno(new Agua()));
+        assertTrue(acido.tieneTerreno(new Acido()));
         assertTrue(montania.esDelOcupante(new Montania()));
     }
 }
