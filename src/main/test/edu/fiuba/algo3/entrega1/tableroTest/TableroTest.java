@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TableroTest {
     @Test
@@ -28,31 +27,30 @@ public class TableroTest {
         }
 
         Tablero tablero = new Tablero(casillas);
+        assertTrue(tablero.esCoordenadaValida(new Posicion(0, 0)));
+        assertTrue(tablero.esCoordenadaValida(new Posicion(7, 7)));
 
-        assertEquals(64, casillas.size());
+        assertFalse(tablero.esCoordenadaValida(new Posicion(8, 8)));
     }
 
     @Test
     public void tableroSeCargaConElTerrenoCorrecto() {
-
-        List<Casilla> casillas = new ArrayList<>();
-
-
         Casilla suelo = new Casilla(new Posicion(0, 0), new Suelo());
         Casilla agua = new Casilla(new Posicion(0, 1), new Agua());
         Casilla acido = new Casilla(new Posicion(1, 0), new Acido());
         Casilla montania = new Casilla(new Posicion(1, 1), new Suelo(), new Montania());
 
-        casillas.add(suelo);
-        casillas.add(agua);
-        casillas.add(acido);
-        casillas.add(montania);
-
+        List<Casilla> casillas = List.of(suelo, agua, acido, montania);
         Tablero tablero = new Tablero(casillas);
 
-        assertTrue(tablero.casillaIgualQue(new Posicion(0 , 0), suelo));
-        assertTrue(tablero.casillaIgualQue(new Posicion(0 , 1), agua));
-        assertTrue(tablero.casillaIgualQue(new Posicion(1 , 0), acido));
-        assertTrue(tablero.casillaIgualQue(new Posicion(1, 1), montania));
+        assertTrue(tablero.esCoordenadaValida(new Posicion(0 , 0)));
+        assertTrue(tablero.esCoordenadaValida(new Posicion(0 , 1)));
+        assertTrue(tablero.esCoordenadaValida(new Posicion(1 , 0)));
+        assertTrue(tablero.esCoordenadaValida(new Posicion(1, 1)));
+
+        assertTrue(suelo.esDelTerreno(new Suelo()));
+        assertTrue(agua.esDelTerreno(new Agua()));
+        assertTrue(acido.esDelTerreno(new Acido()));
+        assertTrue(montania.esDelOcupante(new Montania()));
     }
 }

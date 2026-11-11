@@ -22,10 +22,6 @@ public class Tablero {
         this.casillas = casillas;
     }
 
-    public boolean casillaIgualQue(Posicion posicion, Casilla comparar){
-        return casillaEn(posicion) == comparar;
-    }
-
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
         validarCoordenada(coordenadas);
         boolean colocada = casillaEn(coordenadas).admitirOcupante(unidad);

@@ -4,7 +4,6 @@ import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Obstaculo implements Ocupante {
@@ -33,12 +32,6 @@ public abstract class Obstaculo implements Ocupante {
     @Override
     public void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual) {
         recibirDanio(danio, casillaActual);
-    }
-
-    @Override
-    public void recibirEmpuje(Casilla casillaOrigen, Casilla casillaActual) {
-        casillaOrigen.recibirDanioPorColision();
-        this.recibirDanioPorColision(casillaActual);
     }
 
     @Override
