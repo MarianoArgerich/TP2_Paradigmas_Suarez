@@ -29,9 +29,6 @@ public class SinOcupante implements Ocupante{
     public void recibirDisparo(int danio, Casilla casillaActual) {}
 
     @Override
-    public void recibirEmpuje(Casilla casillaOrigen, Casilla casillaActual) {}
-
-    @Override
     public void recibirDanioPorColision(Casilla casillaActual) {}
 
     @Override

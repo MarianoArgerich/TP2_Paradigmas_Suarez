@@ -12,7 +12,6 @@ public interface Ocupante {
 
     void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual);
     void recibirDisparo(int danio, Casilla casillaActual);
-    void recibirEmpuje(Casilla casillaOrigen, Casilla casillaDestino);
     void recibirDanioPorColision(Casilla casillaActual);
 
     boolean estaVacio();

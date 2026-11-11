@@ -50,11 +50,6 @@ public abstract class Unidad implements Ocupante {
     }
 
     @Override
-    public void recibirEmpuje(Casilla casillaOrigen, Casilla casillaDestino){
-        casillaOrigen.recibirDanioPorColision();
-    }
-
-    @Override
     public void recibirDanioPorColision(Casilla casillaActual){
         recibirDanio(1, casillaActual);
     }
@@ -91,9 +86,5 @@ public abstract class Unidad implements Ocupante {
     @Override
     public boolean estaVacio() {
         return false;
-    }
-
-    public boolean estaOcupada() {
-        return true;
     }
 }
