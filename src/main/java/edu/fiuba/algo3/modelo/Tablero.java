@@ -3,6 +3,9 @@ package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
+import edu.fiuba.algo3.modelo.excepciones.CoordenadaFueraDelTableroException;
+import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -27,7 +30,7 @@ public class Tablero {
         validarCoordenada(coordenadas);
         boolean colocada = casillaEn(coordenadas).admitirOcupante(unidad);
         if (!colocada){
-            throw new RuntimeException("No se puede colocar la unidad en una casilla ocupada o no transitable");
+            throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
         }
         if (!unidades.contains(unidad)) {
             unidades.add(unidad);
@@ -131,25 +134,25 @@ public class Tablero {
         return casillas.stream()
                 .filter(casilla -> casilla.tieneUnidad(unidad))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("La unidad no está en el tablero"));
+                .orElseThrow(() -> new UnidadInvalidaException("La unidad no está en el tablero"));
     }
 
     private Casilla casillaEn(Posicion posicion){
         return casillas.stream()
                 .filter(casilla -> casilla.estaEn(posicion))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Coordenada fuera del tablero"));
+                .orElseThrow(() -> new CoordenadaFueraDelTableroException("Coordenada fuera del tablero"));
     }
 
     private void validarExistenciaUnidad(Unidad unidad) {
         if (!unidades.contains(unidad)) {
-            throw new RuntimeException("Unidad no existe");
+            throw new UnidadInvalidaException("Unidad no existe");
         }
     }
 
     private void validarCoordenada(Posicion posicion) {
         if (!esCoordenadaValida(posicion)) {
-            throw new RuntimeException("Coordenada fuera del tablero");
+            throw new CoordenadaFueraDelTableroException("Coordenada fuera del tablero");
         }
     }
 }

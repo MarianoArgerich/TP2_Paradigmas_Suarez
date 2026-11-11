@@ -19,7 +19,7 @@ public class Arco extends Arma{
             throw new AtaqueInvalidoException("No se puede atacar a una casilla que este dentro del rango prohibido 3x3");
         }
         if (!origen.estaEnLineaRectaCon(objetivo)) {
-            throw new RuntimeException("No se puede atacar a una casilla que no este en linea recta");
+            throw new AtaqueInvalidoException("No se puede atacar a una casilla que no este en linea recta");
         }
 
         tablero.aplicarDisparo(objetivo, danio);

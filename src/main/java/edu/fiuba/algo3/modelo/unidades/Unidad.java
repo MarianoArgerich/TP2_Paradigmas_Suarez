@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Tablero;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 public abstract class Unidad implements Ocupante {
@@ -64,7 +65,7 @@ public abstract class Unidad implements Ocupante {
 
     public void verificarRangoDeMovimiento(int distancia){
         if (distancia > rangoDeMovimiento) {
-            throw new RuntimeException("Fuera de rango");
+            throw new DistanciaInvalidaException("Fuera de rango");
         }
     }
 
