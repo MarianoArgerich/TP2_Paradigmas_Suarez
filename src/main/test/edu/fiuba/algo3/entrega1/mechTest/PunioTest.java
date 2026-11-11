@@ -16,17 +16,16 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class punioTest1 {
+public class PunioTest {
 
     private Tablero tablero;
     private List<Casilla> mapa = new ArrayList<>();
     private Mech combate;
 
     @BeforeEach
-    public void setUp() {;
+    public void setUp() {
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
                 mapa.add( new Suelo(new Posicion(i, j)));

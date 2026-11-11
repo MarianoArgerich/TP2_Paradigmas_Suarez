@@ -65,9 +65,9 @@ public class ArtilleriaTest {
 
         tablero.colocarUnidad(posArtilleria, artillero);
 
-        assertThrows(AtaqueInvalidoException.class, () -> {
-            artillero.atacar(posObjetivoAdyacente, tablero);
-        }, "El Mech de Artillería no debe poder atacar casillas adyacentes");
+        assertThrows(AtaqueInvalidoException.class, () ->
+            artillero.atacar(posObjetivoAdyacente, tablero)
+        , "El Mech de Artillería no debe poder atacar casillas adyacentes");
 
     }
 

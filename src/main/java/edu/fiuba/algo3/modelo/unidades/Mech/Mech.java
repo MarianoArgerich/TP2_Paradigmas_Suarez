@@ -2,9 +2,6 @@ package edu.fiuba.algo3.modelo.unidades.Mech;
 
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.NoSePuedeDeshacerMovimiento;
-import edu.fiuba.algo3.modelo.excepciones.YaAtacoException;
-import edu.fiuba.algo3.modelo.excepciones.YaSeMovioException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Estado;
@@ -14,7 +11,7 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public class Mech extends Unidad {
 
-    private Arma arma;
+    private final Arma arma;
     private Estado estado;
 
     public Mech(int vidaMax, int movimiento, Arma arma) {

@@ -10,7 +10,7 @@ public abstract class Unidad {
 
 
     private final int vidaMax;
-    private int rangoDeMovimiento;
+    private final int rangoDeMovimiento;
     private int vidaActual;
 
     public Unidad(int vidaMax, int rangoDeMovimiento) {
@@ -53,7 +53,7 @@ public abstract class Unidad {
     }
 
     public void registrarMovimientoDesde(Posicion posicion) {
-        
+
     }
 
     public void recibirEmpujeEn(Casilla casillaDestino, Casilla casillaOrigen) {

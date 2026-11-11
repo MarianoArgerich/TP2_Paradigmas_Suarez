@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class mechTest1 {
+public class MechTest {
 
     private List<Casilla> mapa =  new ArrayList<>();
     private Tablero tablero;
@@ -94,9 +94,9 @@ public class mechTest1 {
         tablero.colocarUnidad(coordenadas, mech1);
         mech1.mover(new Arriba(), 1, tablero);
 
-        assertThrows(YaSeMovioException.class, () -> {
-            mech1.mover(new Derecha(), 1, tablero);
-        }, "El Mech no debería poder moverse dos veces en un turno");
+        assertThrows(YaSeMovioException.class, () ->
+            mech1.mover(new Derecha(), 1, tablero)
+        , "El Mech no debería poder moverse dos veces en un turno");
 
 
     }
@@ -108,9 +108,9 @@ public class mechTest1 {
         tablero.colocarUnidad(coordenadas, mech1);
         mech1.atacar(new Posicion(4, 5), tablero);
 
-        assertThrows(YaAtacoException.class, () -> {
-            mech1.atacar(new Posicion(4, 6), tablero);
-        }, "El Mech no debería poder atacar dos veces en un turno");
+        assertThrows(YaAtacoException.class, () ->
+            mech1.atacar(new Posicion(4, 6), tablero)
+        , "El Mech no debería poder atacar dos veces en un turno");
     }
 
     @Test
@@ -132,9 +132,9 @@ public class mechTest1 {
         mech1.mover(new Abajo(), 2, tablero);
         mech1.deshacerMovimiento(tablero);
 
-        assertThrows(NoSePuedeDeshacerMovimiento.class, () -> {
-            mech1.deshacerMovimiento(tablero);
-        }, "No se puede deshacer mas de un movimiento");
+        assertThrows(NoSePuedeDeshacerMovimiento.class, () ->
+            mech1.deshacerMovimiento(tablero)
+        , "No se puede deshacer mas de un movimiento");
 
     }
 
@@ -145,9 +145,9 @@ public class mechTest1 {
         mech1.mover(new Abajo(), 2, tablero);
         mech1.atacar(new Posicion(4, 5), tablero);
 
-        assertThrows(NoSePuedeDeshacerMovimiento.class, () -> {
-            mech1.deshacerMovimiento(tablero);
-        }, "No se puede deshacer un movimiento despues de atacar");
+        assertThrows(NoSePuedeDeshacerMovimiento.class, () ->
+            mech1.deshacerMovimiento(tablero)
+        , "No se puede deshacer un movimiento despues de atacar");
     }
 
 

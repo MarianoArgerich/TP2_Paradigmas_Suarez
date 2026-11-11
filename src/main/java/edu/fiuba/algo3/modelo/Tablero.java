@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Tablero {
 
-    private List<Casilla> casillas;
+    private final List<Casilla> casillas;
     private List<Unidad> unidades = new ArrayList<>();
 
     public Tablero(List<Casilla> casillas){

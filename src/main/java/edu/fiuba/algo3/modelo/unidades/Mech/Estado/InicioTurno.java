@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Estado;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.NoSePuedeDeshacerMovimiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
