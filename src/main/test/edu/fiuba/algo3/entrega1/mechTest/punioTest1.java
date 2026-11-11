@@ -2,7 +2,7 @@ package edu.fiuba.algo3.entrega1.mechTest;
 
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -12,21 +12,24 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class punioTest1 {
 
     private Tablero tablero;
-    private Casilla[][] mapa;
+    private List<Casilla> mapa = new ArrayList<>();
     private Mech combate;
 
     @BeforeEach
-    public void setUp() {
-        mapa = new Casilla[8][8];
+    public void setUp() {;
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
-                mapa[i][j] = new Suelo(new Posicion(i, j));
+                mapa.add( new Suelo(new Posicion(i, j)));
             }
         }
         tablero = new Tablero(mapa);
@@ -45,7 +48,7 @@ public class punioTest1 {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertEquals(1, vek.obtenerVidaActual());
+        assertTrue(vek.suVidaEsIgualA(1));
     }
 
     @Test
@@ -60,25 +63,25 @@ public class punioTest1 {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(new Posicion(2, 4)));
+        assertTrue(vek.estaEn(new Posicion(2, 4), tablero));
     }
 
     @Test
     public void testPunoGolpeaYColisionaContraEdificio(){
         Posicion ubicacionMech = new Posicion(2,2);
 
-        Vek vek = new Luciernaga();
+        Vek vek = new Vek(4, 2);
         Posicion ubicacionVek = new Posicion(2,3);
 
-        mapa[2][4] = new Edificio(new Posicion(2, 4));
+        mapa.removeIf(casilla -> casilla.estaEn(new Posicion(2, 4)));
+        mapa.add(new Edificio(new Posicion(2, 4)));
         tablero = new Tablero(mapa);
         tablero.colocarUnidad(ubicacionMech, combate);
         tablero.colocarUnidad(ubicacionVek, vek);
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(ubicacionVek));
-
+        assertTrue(vek.estaEn(ubicacionVek, tablero));
     }
 
     @Test
@@ -92,7 +95,7 @@ public class punioTest1 {
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(vek.estaEn(ubicacionVek));
+        assertTrue(vek.estaEn(ubicacionVek, tablero));
     }
 }
 

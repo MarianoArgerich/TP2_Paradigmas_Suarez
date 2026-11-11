@@ -1,70 +1,72 @@
 package edu.fiuba.algo3.modelo.casillas.transitable;
 
 import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.SinUnidad;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public abstract class Transitable extends Casilla{
+public abstract class Transitable extends Casilla {
+
     private Unidad unidad;
 
     public Transitable(Posicion posicion) {
         super(posicion);
-    }
-
-    public void ocupar(Unidad unidad){
-        if(estaOcupada()){
-            throw new RuntimeException("casilla ocupada");
-        }
-        this.unidad = unidad;
-        this.unidad.moverA(this.posicion);
-    }
-
-    public void transferirUnidadA(Casilla casilla) {
-        casilla.ocupar(this.unidad);
-        desocupar();
+        this.unidad = new SinUnidad();
     }
 
     @Override
-    public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero) {
-        if (!estaOcupada()) {
-            return;
+    public boolean admitirUnidad(Unidad nuevaUnidad){
+        if (this.unidad.estaOcupada()){
+            return false;
         }
+        this.unidad =  nuevaUnidad;
+        return true;
+    }
 
+    @Override
+    public boolean transferirUnidadA(Casilla casillaDestino) {
+        if (casillaDestino.admitirUnidad(this.unidad)) {
+            desocupar();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero) {
         this.unidad.recibirGolpe(danio, this.posicion, direccion, tablero, this);
     }
 
-    public void recibirEmpuje(Casilla casilla) {
-        if (estaOcupada()) {
-
-            casilla.recibirDanoPorColision();
-        } else {
-            casilla.transferirUnidadA(this);
-        }
+    @Override
+    public void recibirEmpuje(Casilla casillaOrigen) {
+        this.unidad.recibirEmpujeEn(this, casillaOrigen);
     }
 
-    public boolean detieneDisparo() {
-        return estaOcupada();
+
+    @Override
+    public void recibirDisparo(int danio){
+        this.unidad.recibirDanio(danio, this);
     }
 
+    @Override
     public void recibirDanoPorColision() {
-        if (estaOcupada()) {
-            this.unidad.recibirDanio(1, this);
-        }
+        this.unidad.recibirDanio(1, this);
     }
 
+    @Override
+    public boolean detieneDisparo() {
+        return this.unidad.detieneDisparo();
+    }
+
+    @Override
     public void desocupar() {
-        this.unidad = null;
+        this.unidad = new SinUnidad();
     }
 
-    private boolean estaOcupada() {
-        return unidad != null;
-    }
-
-    public void unidadGolpeada(int danio){
-        if (estaOcupada()) {
-            this.unidad.recibirDanio(danio, this);
-        }
-
+    @Override
+    public boolean tieneUnidad(Unidad unidad) {
+        return this.unidad.equals(unidad);
     }
 }

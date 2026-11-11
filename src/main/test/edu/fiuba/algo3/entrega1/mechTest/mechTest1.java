@@ -3,7 +3,7 @@ package edu.fiuba.algo3.entrega1.mechTest;
 import edu.fiuba.algo3.modelo.Tablero;
 
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
@@ -19,21 +19,23 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class mechTest1 {
 
-    private Casilla[][] mapa;
+    private List<Casilla> mapa =  new ArrayList<>();
     private Tablero tablero;
     private Mech mech1;
     private Mech mech2;
 
     @BeforeEach
     public void setUp() {
-        mapa = new Casilla[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa[i][j] = new Suelo(new Posicion(i, j));
+                mapa.add( new Suelo(new Posicion(i, j)));
             }
         }
         tablero = new Tablero(mapa);
@@ -57,7 +59,7 @@ public class mechTest1 {
 
         mech1.mover(new Abajo(), 3, tablero);
 
-        assertTrue(mech1.estaEn(coordenadas));
+        assertTrue(mech1.estaEn(coordenadas, tablero));
 
     }
 
@@ -69,20 +71,20 @@ public class mechTest1 {
 
         mech1.mover(new Abajo(), 2, tablero);
 
-        assertTrue(mech1.estaEn(posicionInicial));
+        assertTrue(mech1.estaEn(posicionInicial, tablero));
     }
 
     @Test
     public void testMechNoPuedeAtravesarObstaculos() {
-
-        mapa[1][2] = new Edificio(new Posicion(1, 2));
+        mapa.removeIf(casilla -> casilla.estaEn(new Posicion(1, 2)));
+        mapa.add(new Edificio(new Posicion(1, 2)));
         tablero = new Tablero(mapa);
 
         Posicion posicionInicial = new Posicion(1, 1);
         tablero.colocarUnidad(posicionInicial, mech1);
 
         mech1.mover(new Abajo(), 2, tablero);
-        assertTrue(mech1.estaEn(posicionInicial));
+        assertTrue(mech1.estaEn(posicionInicial, tablero));
     }
 
     @Test
@@ -120,7 +122,7 @@ public class mechTest1 {
         mech1.deshacerMovimiento(tablero);
 
 
-        assertTrue(mech1.estaEn(posicionInicial));
+        assertTrue(mech1.estaEn(posicionInicial, tablero));
     }
 
     @Test
@@ -164,8 +166,8 @@ public class mechTest1 {
         mech1.deshacerMovimiento(tablero);
         mech2.deshacerMovimiento(tablero);
 
-        assertTrue(mech2.estaEn(posicionInicial2));
-        assertTrue(mech1.estaEn(posicionInicial1));
+        assertTrue(mech2.estaEn(posicionInicial2, tablero));
+        assertTrue(mech1.estaEn(posicionInicial1, tablero));
 
     }
 

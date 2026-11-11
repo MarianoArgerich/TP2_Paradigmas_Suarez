@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
@@ -11,20 +11,23 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CanionTest {
 
     private Tablero tablero;
-    private Casilla[][] mapa;
+    private List<Casilla> mapa = new ArrayList<>();
     private Mech canion;
 
     @BeforeEach
     public void setUp() {
-        mapa = new Casilla[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa[i][j] = new Suelo(new Posicion(i, j));
+                mapa.add(new Suelo(new Posicion(i, j)));
             }
         }
         tablero = new Tablero(mapa);
@@ -41,6 +44,6 @@ public class CanionTest {
 
         canion.atacar(ubicacionVek, tablero);
 
-        assertEquals(2, vek.obtenerVidaActual());
+        assertTrue( vek.suVidaEsIgualA(2));
     }
 }

@@ -2,14 +2,13 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Tablero;
 
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public class Unidad {
+public abstract class Unidad {
 
 
-    protected Posicion posicion;
     private final int vidaMax;
     private int rangoDeMovimiento;
     private int vidaActual;
@@ -18,7 +17,6 @@ public class Unidad {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
-        posicion = null;
     }
 
     public void verificarRangoDeMovimiento(int distancia){
@@ -27,20 +25,16 @@ public class Unidad {
         }
     }
 
-    public void moverA(Posicion nuevaPosicion) {
-        this.posicion = nuevaPosicion;
-    }
-
-    public boolean estaEn(Posicion otraPosicion) {
-        return this.posicion != null && this.posicion.equals(otraPosicion);
+    public boolean estaEn(Posicion otraPosicion, Tablero tablero) {
+        return tablero.unidadEstaEn(this, otraPosicion);
     }
 
     public void mover(Direccion direccion, int distancia, Tablero tablero) {
-        tablero.moverUnidad(this, this.posicion, direccion, distancia);
+        tablero.moverUnidad(this, direccion, distancia);
     }
 
-    public int obtenerVidaActual() {
-        return vidaActual;
+    public boolean suVidaEsIgualA(int comparacion) {
+        return vidaActual == comparacion;
     }
 
     public void recibirGolpe(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
@@ -58,4 +52,19 @@ public class Unidad {
         }
     }
 
+    public void registrarMovimientoDesde(Posicion posicion) {
+        
+    }
+
+    public void recibirEmpujeEn(Casilla casillaDestino, Casilla casillaOrigen) {
+        casillaOrigen.recibirDanoPorColision();
+    }
+
+    public boolean detieneDisparo() {
+        return true;
+    }
+
+    public boolean estaOcupada() {
+        return true;
+    }
 }

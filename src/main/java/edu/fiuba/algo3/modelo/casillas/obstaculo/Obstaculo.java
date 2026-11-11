@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.modelo.casillas.obstaculo;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
@@ -16,25 +16,34 @@ public abstract class Obstaculo extends Casilla {
     }
 
     @Override
-    public void ocupar(Unidad unidad) {
-        throw new RuntimeException("casilla invalida");
-    }
-
-
-
-    @Override
-    public void transferirUnidadA(Casilla casilla) {
-        throw new RuntimeException("No se puede atravesar un Obstaculo");
+    public boolean admitirUnidad(Unidad unidad) {
+        return false;
     }
 
     @Override
-    public void unidadRecibirGolpe(int danio, Direccion direccion, Tablero tablero) {
-        throw new RuntimeException("Un obstaculo no tiene unidades");
+    public boolean transferirUnidadA(Casilla casilla) {
+        return false;
+    }
+
+    @Override
+    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero) {
+        recibirDanio(danio);
     }
 
     @Override
     public void recibirEmpuje(Casilla casillaOrigen) {
         casillaOrigen.recibirDanoPorColision();
+        this.recibirDanoPorColision();
+    }
+
+    @Override
+    public void recibirDisparo(int danio) {
+        recibirDanio(danio);
+    }
+
+    @Override
+    public void recibirDanoPorColision() {
+        recibirDanio(1);
     }
 
     @Override
@@ -43,17 +52,16 @@ public abstract class Obstaculo extends Casilla {
     }
 
     @Override
-    public void recibirDanoPorColision() {
-        throw new RuntimeException("Un obstaculo no tiene unidades");
-
+    public boolean tieneUnidad(Unidad unidad){
+        return false;
     }
 
     @Override
     public void desocupar() {
-        throw new RuntimeException("No se puede desocupar un obstaculo");
 
     }
 
-    public void unidadGolpeada(int danio) {
+    private void recibirDanio(int danio) {
+        this.vida -= danio;
     }
 }

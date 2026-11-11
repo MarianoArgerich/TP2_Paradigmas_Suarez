@@ -3,11 +3,15 @@ package edu.fiuba.algo3.entrega1.tableroTest;
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.transitable.Acido;
 import edu.fiuba.algo3.modelo.casillas.transitable.Agua;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,40 +19,40 @@ public class tableroTest1 {
     @Test
     public void tableroSeCargaConDimensiones8x8() {
 
-        Casilla[][] mapa = new Casilla[8][8];
+        List<Casilla> casillas = new ArrayList<>();
 
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
-                mapa[i][j] = new Suelo(new Posicion(i, j));
+                casillas.add(new Suelo(new Posicion(i, j)));
             }
         }
 
-        Tablero tablero = new Tablero(mapa);
+        Tablero tablero = new Tablero(casillas);
 
-        assertEquals(64, mapa.length * mapa[0].length);
+        assertEquals(64, casillas.size());
     }
 
     @Test
     public void tableroSeCargaConElTerrenoCorrecto() {
 
-        Casilla[][] mapa = new Casilla[2][2];
-        mapa[0][0] = new Suelo(new Posicion(0, 0));
-        mapa[0][1] = new Agua(new Posicion(0, 1));
-        mapa[1][0] = new Acido(new Posicion(1, 0));
-        mapa[1][1] = new Montania(new Posicion(1, 1));
+        List<Casilla> casillas = new ArrayList<>();
 
-        Tablero tablero = new Tablero(mapa);
 
-        boolean coincide = true;
+        Casilla suelo = new Suelo(new Posicion(0, 0));
+        Casilla agua = new Agua(new Posicion(0, 1));
+        Casilla acido = new Acido(new Posicion(1, 0));
+        Casilla montania = new Montania(new Posicion(1, 1));
 
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (!tablero.casillaIgualQue(i,j,mapa[i][j])){
-                        coincide = false;
-                }
-            }
-        }
+        casillas.add(suelo);
+        casillas.add(agua);
+        casillas.add(acido);
+        casillas.add(montania);
 
-        assertTrue(coincide);
+        Tablero tablero = new Tablero(casillas);
+
+        assertTrue(tablero.casillaIgualQue(new Posicion(0 , 0), suelo));
+        assertTrue(tablero.casillaIgualQue(new Posicion(0 , 1), agua));
+        assertTrue(tablero.casillaIgualQue(new Posicion(1 , 0), acido));
+        assertTrue(tablero.casillaIgualQue(new Posicion(1, 1), montania));
     }
 }

@@ -20,12 +20,15 @@ public class Posicion {
         return direccion.calcularSiguientePosicion(this);
     }
 
-    public int getX() {
-        return x;
+    public boolean estaEnLineaRectaCon(Posicion otra) {
+        return (this.x == otra.x && this.y != otra.y) || (this.x != otra.x && this.y == otra.y);
     }
 
-    public int getY() {
-        return y;
+    public boolean estaEnArea(Posicion otra) {
+        int deltaX = Math.abs(this.x - otra.x);
+        int deltaY = Math.abs(this.y - otra.y);
+
+        return deltaX <= 1 && deltaY <= 1;
     }
 
     @Override
@@ -36,8 +39,8 @@ public class Posicion {
     }
 
     public Direccion calcularDireccionHacia(Posicion objetivo) {
-        int deltaX = objetivo.getX() - this.x;
-        int deltaY = objetivo.getY() - this.y;
+        int deltaX = objetivo.x - this.x;
+        int deltaY = objetivo.y - this.y;
 
         if (deltaY < 0){
             return new Arriba();

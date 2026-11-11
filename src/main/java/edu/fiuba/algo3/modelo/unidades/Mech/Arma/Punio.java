@@ -4,12 +4,14 @@ import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public class Punio implements Arma {
+public class Punio extends Arma {
 
-    private final int dano = 2;
-    @Override
+    public Punio() {
+        this.danio = 2;
+    }
+
     public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
         Direccion direccionGolpe = origen.calcularDireccionHacia(objetivo);
-        tablero.aplicarGolpe(objetivo, dano, direccionGolpe);
+        tablero.aplicarGolpe(objetivo, danio, direccionGolpe);
     }
 }

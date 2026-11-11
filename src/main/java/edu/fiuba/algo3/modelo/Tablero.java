@@ -1,9 +1,10 @@
 package edu.fiuba.algo3.modelo;
 
 
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 import java.util.ArrayList;
@@ -11,100 +12,128 @@ import java.util.List;
 
 public class Tablero {
 
-    private Casilla[][] casillas;
+    private List<Casilla> casillas;
     private List<Unidad> unidades = new ArrayList<>();
 
-    public Tablero(Casilla[][] mapa){
-        casillas = mapa;
+    public Tablero(List<Casilla> casillas){
+        this.casillas = casillas;
     }
 
-    public Boolean casillaIgualQue(int x, int y, Casilla comparar){
-        return casillas[x][y] == comparar;
+    public boolean casillaIgualQue(Posicion posicion, Casilla comparar){
+        return casillaEn(posicion) == comparar;
     }
 
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
-        esCoordenadaValida(coordenadas);
-        casillaEn(coordenadas).ocupar(unidad);
+        validarCoordenada(coordenadas);
+        boolean colocada = casillaEn(coordenadas).admitirUnidad(unidad);
+        if (!colocada){
+            throw new RuntimeException("No se puede colocar la unidad en una casilla ocupada o no transitable");
+        }
         if (!unidades.contains(unidad)) {
             unidades.add(unidad);
         }
-        unidad.moverA(coordenadas);
     }
 
-    public void moverUnidad(Unidad unidad, Posicion origen, Direccion direccion, int distancia) {
-        if (!unidades.contains(unidad)) {
-            throw new RuntimeException("Unidad no existe");
-        }
-
+    public void moverUnidad(Unidad unidad, Direccion direccion, int distancia) {
+        validarExistenciaUnidad(unidad);
         unidad.verificarRangoDeMovimiento(distancia);
+        Casilla casillaInicial = casillaDe(unidad);
 
-        Posicion actual = origen;
 
-        for (int i=1; i<=distancia; i++){
-            Posicion siguiente = actual.siguienteEn(direccion);
+        for (int i=1; i<=distancia; i++) {
+            Casilla origen = casillaDe(unidad);
+            Posicion siguientePosicion = origen.siguienteEn(direccion);
 
-            try {
-                Casilla casillaSiguiente = casillaEn(siguiente);
-                casillaEn(actual).transferirUnidadA(casillaSiguiente);
-                actual = siguiente;
-            } catch (RuntimeException e){
+            if (!esCoordenadaValida(siguientePosicion)) {
+                break;
+            }
+
+            Casilla destino = casillaEn(siguientePosicion);
+            boolean seTransifirio = origen.transferirUnidadA(destino);
+            if (!seTransifirio) {
                 break;
             }
         }
-    }
 
-    private void esCoordenadaValida(Posicion posicion){
-        int x = posicion.getX();
-        int y = posicion.getY();
-        if (x < 0 || x > casillas.length - 1 || y < 0 || y > casillas[0].length - 1){
-            throw new RuntimeException("Coordenada fuera del tablero");
+        Casilla casillaFinal = casillaDe(unidad);
+        if (casillaFinal != casillaInicial) {
+            casillaInicial.notificarMovimientoA(unidad);
         }
     }
 
-    private Casilla casillaEn(Posicion posicion){
-        esCoordenadaValida(posicion);
-        return casillas[posicion.getX()][posicion.getY()];
+    public void revertirMovimiento(Unidad unidad, Posicion posicionAnterior){
+        validarExistenciaUnidad(unidad);
+        Casilla origenActual = casillaDe(unidad);
+        Casilla destinoAnterior = casillaEn(posicionAnterior);
+        origenActual.transferirUnidadA(destinoAnterior);
     }
 
-    public void aplicarGolpe(Posicion posicion, int dano, Direccion direccion) {
-        Casilla casilla = casillaEn(posicion);
-        casilla.unidadRecibirGolpe(dano, direccion, this);
+    public void atacarDesdeUnidad(Unidad unidad, Arma arma, Posicion objetivo) {
+        validarExistenciaUnidad(unidad);
+        casillaDe(unidad).ejecutarAtaque(arma, objetivo, this);
+    }
+
+    public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
+        casillaEn(posicion).recibirGolpe(danio, direccion, this);
+    }
+
+    public void aplicarDisparo(Posicion objetivo,int danio){
+        casillaEn(objetivo).recibirDisparo(danio);
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
         Posicion destino = direccion.calcularSiguientePosicion(origen);
 
-        try {
+        if (esCoordenadaValida(origen) && esCoordenadaValida(destino)) {
             Casilla casillaOrigen = casillaEn(origen);
             Casilla casillaDestino = casillaEn(destino);
             casillaDestino.recibirEmpuje(casillaOrigen);
-
-        } catch (RuntimeException e){
-
         }
     }
 
     public void ataqueEnLinea(Posicion origen, int danio, Direccion direccion) {
         Posicion actual = direccion.calcularSiguientePosicion(origen);
-        while (actual.getX() >= 0 || actual.getX() < casillas.length - 1 || actual.getY() >= 0 || actual.getY() < casillas[0].length - 1) {
-            if (casillaEn(actual).detieneDisparo()) {
-                aplicarGolpe(actual, danio, direccion);
+        while (esCoordenadaValida(actual)) {
+            Casilla casillaActual = casillaEn(actual);
+            if (casillaActual.detieneDisparo()) {
+                casillaActual.recibirGolpe(danio, direccion, this);
                 return;
             }
             actual = direccion.calcularSiguientePosicion(actual);
         }
     }
 
-    public void revertirMovimiento(Unidad unidad, Posicion posicionActual, Posicion posicionAnterior){
+    public boolean esCoordenadaValida(Posicion posicion){
+        return casillas.stream().anyMatch(casilla -> casilla.estaEn(posicion));
+    }
+
+    public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
+        return esCoordenadaValida(posicion) && casillaEn(posicion).tieneUnidad(unidad);
+    }
+
+    private Casilla casillaDe(Unidad unidad) {
+        return casillas.stream()
+                .filter(casilla -> casilla.tieneUnidad(unidad))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("La unidad no está en el tablero"));
+    }
+
+    private Casilla casillaEn(Posicion posicion){
+        return casillas.stream()
+                .filter(casilla -> casilla.estaEn(posicion))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Coordenada fuera del tablero"));
+    }
+
+    private void validarExistenciaUnidad(Unidad unidad) {
         if (!unidades.contains(unidad)) {
             throw new RuntimeException("Unidad no existe");
         }
-        casillaEn(posicionActual).transferirUnidadA(casillaEn(posicionAnterior));
     }
 
-    public void aplicarDisparo(Posicion objetivo,int danio){
-        Casilla casilla = casillaEn(objetivo);
-        casilla.unidadGolpeada(danio);
-
+    private void validarCoordenada(Posicion posicion) {
+        if (!esCoordenadaValida(posicion)) {
+            throw new RuntimeException("Coordenada fuera del tablero");
+        }
     }
 }
