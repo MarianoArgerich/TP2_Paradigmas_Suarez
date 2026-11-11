@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.casillas;
+import edu.fiuba.algo3.modelo.Efecto.Efecto;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
@@ -26,6 +28,10 @@ public class Casilla {
         this.posicion = posicion;
         this.terreno = terreno;
         this.ocupante = ocupante;
+    }
+
+    public void aceptar(Efecto efecto, Mapa mapa){
+        this.ocupante.aceptar(efecto, terreno, this, mapa);
     }
 
     public boolean estaEn(Posicion otraPosicion) {
@@ -72,18 +78,6 @@ public class Casilla {
         return this.posicion.siguienteEn(direccion);
     }
 
-    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero){
-        this.ocupante.recibirGolpe(danio, direccion, tablero, this);
-    }
-
-    public void recibirDisparo(int danio){
-        this.ocupante.recibirDisparo(danio, this);
-    }
-
-    public void recibirDanioPorColision(){
-        this.ocupante.recibirDanioPorColision(this);
-    }
-
     public boolean detieneDisparo(){
         return this.ocupante.detieneDisparo();
     }
@@ -94,27 +88,5 @@ public class Casilla {
 
     public void ejecutarAtaque(Arma arma, Posicion objetivo, Tablero tablero) {
         arma.ejecutarAtaque(this.posicion, objetivo, tablero);
-    }
-
-    public void empujarOcupanteA(Casilla casillaDestino){
-        this.ocupante.empujarA(this,  casillaDestino);
-    }
-
-    public void recibirEmpujeDesde(Casilla origen, Ocupante nuevoOcupante) {
-        if (this.terreno.puedeIngresar() && this.ocupante.puedeIngresar()) {
-            this.colocarOcupante(nuevoOcupante);
-            origen.vaciar();
-        } else {
-            this.procesarColisionCon(origen);
-        }
-    }
-
-    public void empujarHacia(Direccion direccion, Tablero tablero) {
-        tablero.empujarDesde(this.posicion, direccion);
-    }
-
-    public void procesarColisionCon(Casilla origen) {
-        origen.recibirDanioPorColision();
-        this.recibirDanioPorColision();
     }
 }

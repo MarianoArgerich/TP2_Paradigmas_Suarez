@@ -14,18 +14,7 @@ public class CasillaNula extends Casilla {
     }
 
     @Override
-    public void empujarOcupanteA(Casilla casillaDestino) {}
-
-    @Override
     public boolean detieneDisparo() {
         return true;
     }
-
-    @Override
-    public void recibirDanioPorColision() {}
-    @Override
-    public void procesarColisionCon(Casilla origen) {}
-
-    @Override
-    public void recibirEmpujeDesde(Casilla origen, Ocupante nuewvoOcupante){}
 }

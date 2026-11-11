@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
+import edu.fiuba.algo3.modelo.Efecto.Efecto;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.CasillaNula;
 import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
@@ -13,6 +14,13 @@ public class Mapa {
 
     public Mapa(List<Casilla> casillas) {
         this.casillas = casillas;
+    }
+
+    public void aplicarEfecto(Posicion posicion, Efecto efecto){
+        casillas.stream()
+                .filter(casilla -> casilla.estaEn(posicion))
+                .findFirst()
+                .ifPresent(casilla -> casilla.aceptar(efecto, this));
     }
 
     public boolean esCoordenadaValida(Posicion posicion) {

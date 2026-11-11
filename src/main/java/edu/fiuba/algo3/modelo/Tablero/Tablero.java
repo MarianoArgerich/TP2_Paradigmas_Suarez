@@ -1,6 +1,9 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
+import edu.fiuba.algo3.modelo.Efecto.Disparo;
+import edu.fiuba.algo3.modelo.Efecto.Empuje;
+import edu.fiuba.algo3.modelo.Efecto.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -46,15 +49,15 @@ public class Tablero {
     }
 
     public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
-        mapa.casillaEn(posicion).recibirGolpe(danio, direccion, this);
+        mapa.aplicarEfecto(posicion, new Golpe(danio, direccion));
     }
 
     public void aplicarDisparo(Posicion objetivo,int danio){
-        mapa.casillaEn(objetivo).recibirDisparo(danio);
+        mapa.aplicarEfecto(objetivo, new Disparo(danio));
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
-        mapa.casillaEn(origen).empujarOcupanteA(mapa.casillaEn(origen.siguienteEn(direccion)));
+        mapa.aplicarEfecto(origen, new Empuje(direccion));
     }
 
     public void atacarDesdeUnidad(Unidad unidad, Arma arma, Posicion objetivo) {
