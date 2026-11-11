@@ -6,13 +6,13 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Ocupante {
-    abstract public boolean puedeIngresar();
-    abstract public boolean esUnidad(Unidad unidad);
-    abstract public boolean detieneDisparo();
+    public abstract boolean puedeIngresar();
+    public abstract boolean esUnidad(Unidad unidad);
+    public abstract boolean detieneDisparo();
 
-    abstract public void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual);
-    abstract public void recibirDisparo(int danio, Casilla casillaActual);
-    abstract public void recibirDanioPorColision(Casilla casillaActual);
+    public abstract void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual);
+    public abstract void recibirDisparo(int danio, Casilla casillaActual);
+    public abstract void recibirDanioPorColision(Casilla casillaActual);
 
     abstract public void empujarA(Casilla origen, Casilla destino);
 
