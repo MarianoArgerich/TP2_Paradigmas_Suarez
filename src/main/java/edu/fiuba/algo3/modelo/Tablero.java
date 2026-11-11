@@ -25,7 +25,7 @@ public class Tablero {
 
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
         validarCoordenada(coordenadas);
-        boolean colocada = casillaEn(coordenadas).admitirUnidad(unidad);
+        boolean colocada = casillaEn(coordenadas).admitirOcupante(unidad);
         if (!colocada){
             throw new RuntimeException("No se puede colocar la unidad en una casilla ocupada o no transitable");
         }
@@ -49,7 +49,7 @@ public class Tablero {
             }
 
             Casilla destino = casillaEn(siguientePosicion);
-            boolean seTransifirio = origen.transferirUnidadA(destino);
+            boolean seTransifirio = origen.transferirOcupanteA(destino);
             if (!seTransifirio) {
                 break;
             }
@@ -65,7 +65,7 @@ public class Tablero {
         validarExistenciaUnidad(unidad);
         Casilla origenActual = casillaDe(unidad);
         Casilla destinoAnterior = casillaEn(posicionAnterior);
-        origenActual.transferirUnidadA(destinoAnterior);
+        origenActual.transferirOcupanteA(destinoAnterior);
     }
 
     public void atacarDesdeUnidad(Unidad unidad, Arma arma, Posicion objetivo) {
@@ -82,12 +82,28 @@ public class Tablero {
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
-        Posicion destino = direccion.calcularSiguientePosicion(origen);
+        if (!esCoordenadaValida(origen)) {
+            return;
+        }
 
-        if (esCoordenadaValida(origen) && esCoordenadaValida(destino)) {
-            Casilla casillaOrigen = casillaEn(origen);
-            Casilla casillaDestino = casillaEn(destino);
-            casillaDestino.recibirEmpuje(casillaOrigen);
+        Casilla casillaOrigen = casillaEn(origen);
+
+        if (casillaOrigen.estaVacia()){
+            return;
+        }
+
+        Posicion destino = casillaOrigen.siguienteEn(direccion);
+
+        if (!esCoordenadaValida(destino)) {
+            return;
+        }
+
+        Casilla casillaDestino = casillaEn(destino);
+        boolean seTransfirio = casillaOrigen.transferirOcupanteA(casillaDestino);
+
+        if (!seTransfirio) {
+            casillaOrigen.recibirDanioPorColision();
+            casillaDestino.recibirDanioPorColision();
         }
     }
 

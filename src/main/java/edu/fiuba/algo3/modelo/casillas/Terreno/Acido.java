@@ -1,0 +1,16 @@
+package edu.fiuba.algo3.modelo.casillas.Terreno;
+
+import edu.fiuba.algo3.modelo.unidades.Unidad;
+
+public class Acido implements Terreno {
+
+    @Override
+    public boolean esTransitable() {
+        return false;
+    }
+
+    @Override
+    public void reaccionarAlIngresoDe(Unidad unidad) {
+
+    }
+}

@@ -1,16 +1,38 @@
 package edu.fiuba.algo3.modelo.casillas;
+import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
+import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
 import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public abstract class Casilla {
+public class Casilla {
 
-    protected final Posicion posicion;
+    private final Posicion posicion;
+    private Terreno terreno;
+    private Ocupante ocupante;
 
     public Casilla(Posicion posicion) {
+        this(posicion, new Suelo(), new SinOcupante());
+    }
+    public Casilla(Posicion posicion, Terreno terreno) {
+        this(posicion, terreno, new SinOcupante());
+    }
+    public Casilla(Posicion posicion, Terreno terreno, Ocupante ocupante) {
         this.posicion = posicion;
+        this.terreno = terreno;
+        this.ocupante = ocupante;
+    }
+
+    public boolean esDelTerreno(Terreno terrenoAComparar) {
+        return this.terreno.equals(terrenoAComparar);
+    }
+
+    public boolean esDelOcupante(Ocupante ocupanteAComparar) {
+        return this.ocupante.equals(ocupanteAComparar);
     }
 
     public boolean estaEn(Posicion otraPosicion) {
@@ -21,21 +43,48 @@ public abstract class Casilla {
         return this.posicion.siguienteEn(direccion);
     }
 
-    public abstract boolean admitirUnidad(Unidad unidad);
-    public abstract boolean transferirUnidadA(Casilla casillaDestino);
+    public boolean admitirOcupante(Ocupante ocupante){
+        if (!this.ocupante.puedeIngresar()){
+            return false;
+        }
+        this.ocupante = ocupante;
+        return true;
+    }
 
+    public boolean transferirOcupanteA(Casilla casillaDestino){
+        if (casillaDestino.admitirOcupante(this.ocupante)){
+            vaciar();
+            return true;
+        }
+        return false;
+    }
 
-    public abstract void recibirGolpe(int danio, Direccion direccion, Tablero tablero);
-    public abstract void recibirEmpuje(Casilla casillaOrigen);
-    public abstract void recibirDisparo(int danio);
+    public void vaciar(){
+        this.ocupante = new SinOcupante();
+    }
 
-    public abstract void recibirDanoPorColision();
+    public boolean tieneUnidad(Unidad unidad){
+        return this.ocupante.esUnidad(unidad);
+    }
 
-    public abstract boolean detieneDisparo();
+    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero){
+        this.ocupante.recibirGolpe(danio, direccion, tablero, this);
+    }
+    public void recibirEmpuje(Casilla casillaOrigen){
+        this.ocupante.recibirEmpuje(casillaOrigen, this);
+    }
 
-    public abstract boolean tieneUnidad(Unidad unidad);
+    public void recibirDisparo(int danio){
+        this.ocupante.recibirDisparo(danio, this);
+    }
 
-    public abstract void desocupar();
+    public void recibirDanioPorColision(){
+        this.ocupante.recibirDanioPorColision(this);
+    }
+
+    public boolean detieneDisparo(){
+        return this.ocupante.detieneDisparo();
+    }
 
     public void notificarMovimientoA(Unidad unidad) {
         unidad.registrarMovimientoDesde(this.posicion);
@@ -43,6 +92,14 @@ public abstract class Casilla {
 
     public void ejecutarAtaque(Arma arma, Posicion objetivo, Tablero tablero) {
         arma.ejecutarAtaque(this.posicion, objetivo, tablero);
+    }
+
+    public void empujarHacia(Direccion direccion, Tablero tablero) {
+        tablero.empujarDesde(this.posicion, direccion);
+    }
+
+    public boolean estaVacia(){
+        return this.ocupante.estaVacio();
     }
 
 }

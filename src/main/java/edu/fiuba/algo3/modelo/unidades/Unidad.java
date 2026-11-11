@@ -1,12 +1,13 @@
 package edu.fiuba.algo3.modelo.unidades;
 
+import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public abstract class Unidad {
+public abstract class Unidad implements Ocupante {
 
 
     private final int vidaMax;
@@ -17,6 +18,53 @@ public abstract class Unidad {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
+    }
+
+    @Override
+    public boolean puedeIngresar() {
+        return false;
+    }
+
+    @Override
+    public boolean esUnidad(Unidad unidad) {
+        return this.equals(unidad);
+    }
+
+    @Override
+    public boolean detieneDisparo() {
+        return true;
+    }
+
+    @Override
+    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual) {
+        recibirDanio(danio, casillaActual);
+
+        if (this.vidaActual > 0) {
+            casillaActual.empujarHacia(direccion, tablero);
+        }
+    }
+
+    @Override
+    public void recibirDisparo(int danio, Casilla casillaActual) {
+        recibirDanio(danio, casillaActual);
+    }
+
+    @Override
+    public void recibirEmpuje(Casilla casillaOrigen, Casilla casillaDestino){
+        casillaOrigen.recibirDanioPorColision();
+    }
+
+    @Override
+    public void recibirDanioPorColision(Casilla casillaActual){
+        recibirDanio(1, casillaActual);
+    }
+
+
+    public void recibirDanio(int danio, Casilla casillaActual ) {
+        this.vidaActual -= danio;
+        if (this.vidaActual <= 0) {
+            casillaActual.vaciar();
+        }
     }
 
     public void verificarRangoDeMovimiento(int distancia){
@@ -37,31 +85,12 @@ public abstract class Unidad {
         return vidaActual == comparacion;
     }
 
-    public void recibirGolpe(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
-        recibirDanio(dano, casilla);
-
-        if (this.vidaActual > 0) {
-            tablero.empujarDesde(posicion, direccion);
-        }
-    }
-
-    public void recibirDanio(int dano, Casilla casilla ) {
-        this.vidaActual -= dano;
-        if (this.vidaActual <= 0) {
-            casilla.desocupar();
-        }
-    }
-
     public void registrarMovimientoDesde(Posicion posicion) {
-
     }
 
-    public void recibirEmpujeEn(Casilla casillaDestino, Casilla casillaOrigen) {
-        casillaOrigen.recibirDanoPorColision();
-    }
-
-    public boolean detieneDisparo() {
-        return true;
+    @Override
+    public boolean estaVacio() {
+        return false;
     }
 
     public boolean estaOcupada() {

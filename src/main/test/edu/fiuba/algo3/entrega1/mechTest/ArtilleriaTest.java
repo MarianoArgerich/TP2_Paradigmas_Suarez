@@ -2,7 +2,7 @@ package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
 import edu.fiuba.algo3.modelo.direccion.Derecha;
@@ -31,7 +31,7 @@ public class ArtilleriaTest {
     public void setUp() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa.add( new Suelo(new Posicion(i, j)));
+                mapa.add( new Casilla(new Posicion(i, j)));
             }
         }
 

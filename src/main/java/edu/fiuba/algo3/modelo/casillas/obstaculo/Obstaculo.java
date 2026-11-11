@@ -1,49 +1,28 @@
 package edu.fiuba.algo3.modelo.casillas.obstaculo;
 
+import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public abstract class Obstaculo extends Casilla {
+public abstract class Obstaculo implements Ocupante {
 
     private int vida;
 
-    public Obstaculo(Posicion posicion, int vida) {
-        super(posicion);
+    public Obstaculo(int vida) {
         this.vida = vida;
     }
 
     @Override
-    public boolean admitirUnidad(Unidad unidad) {
+    public boolean puedeIngresar() {
         return false;
     }
 
     @Override
-    public boolean transferirUnidadA(Casilla casilla) {
+    public boolean esUnidad(Unidad unidad) {
         return false;
-    }
-
-    @Override
-    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero) {
-        recibirDanio(danio);
-    }
-
-    @Override
-    public void recibirEmpuje(Casilla casillaOrigen) {
-        casillaOrigen.recibirDanoPorColision();
-        this.recibirDanoPorColision();
-    }
-
-    @Override
-    public void recibirDisparo(int danio) {
-        recibirDanio(danio);
-    }
-
-    @Override
-    public void recibirDanoPorColision() {
-        recibirDanio(1);
     }
 
     @Override
@@ -52,16 +31,36 @@ public abstract class Obstaculo extends Casilla {
     }
 
     @Override
-    public boolean tieneUnidad(Unidad unidad){
-        return false;
+    public void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual) {
+        recibirDanio(danio, casillaActual);
     }
 
     @Override
-    public void desocupar() {
-
+    public void recibirEmpuje(Casilla casillaOrigen, Casilla casillaActual) {
+        casillaOrigen.recibirDanioPorColision();
+        this.recibirDanioPorColision(casillaActual);
     }
 
-    private void recibirDanio(int danio) {
+    @Override
+    public void recibirDisparo(int danio, Casilla casillaActual) {
+        recibirDanio(danio, casillaActual);
+    }
+
+    @Override
+    public void recibirDanioPorColision(Casilla casillaActual) {
+        recibirDanio(1, casillaActual);
+    }
+
+    private void recibirDanio(int danio, Casilla casillaActual) {
         this.vida -= danio;
+        if (this.vida <= 0) {
+            casillaActual.vaciar();
+        }
     }
+
+    @Override
+    public boolean estaVacio() {
+        return false;
+    }
+
 }
