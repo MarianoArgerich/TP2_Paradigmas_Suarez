@@ -26,4 +26,6 @@ public class CasillaNula extends Casilla {
     @Override
     public void procesarColisionCon(Casilla origen) {}
 
+    @Override
+    public void recibirEmpujeDesde(Casilla origen, Ocupante nuewvoOcupante){}
 }

@@ -97,7 +97,16 @@ public class Casilla {
     }
 
     public void empujarOcupanteA(Casilla casillaDestino){
-        this.ocupante.empujarA(this, casillaDestino);
+        this.ocupante.empujarA(this,  casillaDestino);
+    }
+
+    public void recibirEmpujeDesde(Casilla origen, Ocupante nuevoOcupante) {
+        if (this.terreno.puedeIngresar() && this.ocupante.puedeIngresar()) {
+            this.colocarOcupante(nuevoOcupante);
+            origen.vaciar();
+        } else {
+            this.procesarColisionCon(origen);
+        }
     }
 
     public void empujarHacia(Direccion direccion, Tablero tablero) {

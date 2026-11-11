@@ -82,9 +82,6 @@ public abstract class Unidad extends Ocupante {
 
     @Override
     public void empujarA(Casilla origen, Casilla destino) {
-        boolean seTransfirio = origen.transferirOcupanteA(destino);
-        if (!seTransfirio) {
-            destino.procesarColisionCon(origen);
-        }
+        destino.recibirEmpujeDesde(origen, this);
     }
 }
