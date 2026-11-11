@@ -28,11 +28,11 @@ public class Casilla {
     }
 
     public boolean esDelTerreno(Terreno terrenoAComparar) {
-        return this.terreno.equals(terrenoAComparar);
+        return terrenoAComparar != null && this.terreno.getClass().equals(terrenoAComparar.getClass());
     }
 
     public boolean esDelOcupante(Ocupante ocupanteAComparar) {
-        return this.ocupante.equals(ocupanteAComparar);
+        return ocupanteAComparar != null && this.ocupante.getClass().equals(ocupanteAComparar.getClass());
     }
 
     public boolean estaEn(Posicion otraPosicion) {

@@ -10,13 +10,11 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Tablero {
 
     private final List<Casilla> casillas;
-    private List<Unidad> unidades = new ArrayList<>();
 
     public Tablero(List<Casilla> casillas){
         this.casillas = casillas;
@@ -28,13 +26,9 @@ public class Tablero {
         if (!colocada){
             throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
         }
-        if (!unidades.contains(unidad)) {
-            unidades.add(unidad);
-        }
     }
 
     public void moverUnidad(Unidad unidad, Direccion direccion, int distancia) {
-        validarExistenciaUnidad(unidad);
         unidad.verificarRangoDeMovimiento(distancia);
         Casilla casillaInicial = casillaDe(unidad);
 
@@ -61,14 +55,12 @@ public class Tablero {
     }
 
     public void revertirMovimiento(Unidad unidad, Posicion posicionAnterior){
-        validarExistenciaUnidad(unidad);
         Casilla origenActual = casillaDe(unidad);
         Casilla destinoAnterior = casillaEn(posicionAnterior);
         origenActual.transferirOcupanteA(destinoAnterior);
     }
 
     public void atacarDesdeUnidad(Unidad unidad, Arma arma, Posicion objetivo) {
-        validarExistenciaUnidad(unidad);
         casillaDe(unidad).ejecutarAtaque(arma, objetivo, this);
     }
 
@@ -107,14 +99,18 @@ public class Tablero {
     }
 
     public void ataqueEnLinea(Posicion origen, int danio, Direccion direccion) {
-        Posicion actual = direccion.calcularSiguientePosicion(origen);
+        if(!esCoordenadaValida(origen)){
+            return;
+        }
+
+        Posicion actual = casillaEn(origen).siguienteEn(direccion);
         while (esCoordenadaValida(actual)) {
             Casilla casillaActual = casillaEn(actual);
             if (casillaActual.detieneDisparo()) {
                 casillaActual.recibirGolpe(danio, direccion, this);
                 return;
             }
-            actual = direccion.calcularSiguientePosicion(actual);
+            actual = casillaActual.siguienteEn(direccion);
         }
     }
 
@@ -138,12 +134,6 @@ public class Tablero {
                 .filter(casilla -> casilla.estaEn(posicion))
                 .findFirst()
                 .orElseThrow(() -> new CoordenadaFueraDelTableroException("Coordenada fuera del tablero"));
-    }
-
-    private void validarExistenciaUnidad(Unidad unidad) {
-        if (!unidades.contains(unidad)) {
-            throw new UnidadInvalidaException("Unidad no existe");
-        }
     }
 
     private void validarCoordenada(Posicion posicion) {

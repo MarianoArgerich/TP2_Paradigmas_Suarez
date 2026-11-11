@@ -13,14 +13,4 @@ public class Acido implements Terreno {
     public void reaccionarAlIngresoDe(Unidad unidad) {
 
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && this.getClass().equals(obj.getClass());
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }
