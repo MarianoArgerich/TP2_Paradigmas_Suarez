@@ -70,9 +70,6 @@ public class Casilla {
     public void recibirGolpe(int danio, Direccion direccion, Tablero tablero){
         this.ocupante.recibirGolpe(danio, direccion, tablero, this);
     }
-    public void recibirEmpuje(Casilla casillaOrigen){
-        this.ocupante.recibirEmpuje(casillaOrigen, this);
-    }
 
     public void recibirDisparo(int danio){
         this.ocupante.recibirDisparo(danio, this);
