@@ -5,7 +5,7 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class SinOcupante implements Ocupante{
+public class SinOcupante extends Ocupante{
 
     @Override
     public boolean puedeIngresar() {

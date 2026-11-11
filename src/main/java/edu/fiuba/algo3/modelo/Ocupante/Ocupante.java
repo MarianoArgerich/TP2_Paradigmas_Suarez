@@ -5,14 +5,20 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public interface Ocupante {
-    boolean puedeIngresar();
-    boolean esUnidad(Unidad unidad);
-    boolean detieneDisparo();
+public abstract class Ocupante {
+    abstract public boolean puedeIngresar();
+    abstract public boolean esUnidad(Unidad unidad);
+    abstract public boolean detieneDisparo();
 
-    void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual);
-    void recibirDisparo(int danio, Casilla casillaActual);
-    void recibirDanioPorColision(Casilla casillaActual);
+    abstract public void recibirGolpe(int danio, Direccion direccion, Tablero tablero, Casilla casillaActual);
+    abstract public void recibirDisparo(int danio, Casilla casillaActual);
+    abstract public void recibirDanioPorColision(Casilla casillaActual);
 
-    void empujarA(Casilla origen, Casilla destino);
+    abstract public void empujarA(Casilla origen, Casilla destino);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj != null && getClass() == obj.getClass();
+    }
 }

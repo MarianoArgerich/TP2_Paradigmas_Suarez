@@ -64,8 +64,8 @@ public class Casilla {
         return this.terreno.equals(terrenoAComparar);
     }
 
-    public boolean esDelOcupante(Ocupante ocupanteAComparar) {
-        return ocupanteAComparar != null && this.ocupante.getClass().equals(ocupanteAComparar.getClass());
+    public boolean tieneOcupante(Ocupante ocupanteAComparar) {
+        return this.ocupante.equals(ocupanteAComparar);
     }
 
     public Posicion siguienteEn(Direccion direccion) {

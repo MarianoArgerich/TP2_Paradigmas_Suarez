@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public abstract class Obstaculo implements Ocupante {
+public abstract class Obstaculo extends Ocupante {
 
     @Override
     public boolean puedeIngresar() {

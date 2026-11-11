@@ -8,7 +8,7 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public abstract class Unidad implements Ocupante {
+public abstract class Unidad extends Ocupante {
 
 
     private final int vidaMax;

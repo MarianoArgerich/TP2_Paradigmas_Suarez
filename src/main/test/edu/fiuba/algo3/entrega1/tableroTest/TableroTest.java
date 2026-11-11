@@ -51,6 +51,6 @@ public class TableroTest {
         assertTrue(suelo.tieneTerreno(new Suelo()));
         assertTrue(agua.tieneTerreno(new Agua()));
         assertTrue(acido.tieneTerreno(new Acido()));
-        assertTrue(montania.esDelOcupante(new Montania()));
+        assertTrue(montania.tieneOcupante(new Montania()));
     }
 }
