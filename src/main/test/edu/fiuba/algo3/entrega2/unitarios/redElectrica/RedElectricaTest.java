@@ -1,5 +1,13 @@
 package edu.fiuba.algo3.entrega2.unitarios.redElectrica;
 
-public class RedElectricaTest {
+import org.junit.jupiter.api.Test;
 
+public class RedElectricaTest {
+/*
+    @Test
+    public void test01AlHacerDañoAUnEdificioLaRedElectricaSeReduceEn1(){}
+
+
+    
+ */
 }

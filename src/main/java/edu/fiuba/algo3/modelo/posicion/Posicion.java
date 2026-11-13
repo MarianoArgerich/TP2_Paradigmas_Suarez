@@ -22,12 +22,10 @@ public class Posicion {
         return direccion.calcularSiguientePosicion(this);
     }
 
-    //TODO: Chequear
     public boolean estaEnLineaRectaCon(Posicion otra) {
-        return (this.x == otra.x) ^ (this.y == otra.y);
+        return (this.x == otra.x) || (this.y == otra.y);
     }
 
-    //TODO: Chequear
     public boolean estaEnArea(Posicion otra) {
         int deltaX = Math.abs(this.x - otra.x);
         int deltaY = Math.abs(this.y - otra.y);
@@ -35,7 +33,6 @@ public class Posicion {
         return deltaX <= 1 && deltaY <= 1;
     }
 
-    //TODO: Chequear
     public boolean esAdyacenteA(Posicion objetivo) {
         int deltaX = Math.abs(this.x - objetivo.x);
         int deltaY = Math.abs(this.y - objetivo.y);
@@ -48,10 +45,10 @@ public class Posicion {
         int deltaY = objetivo.y - this.y;
 
         if (deltaY < 0){
-            return new Arriba();
+            return new Abajo();
         }
         if (deltaY > 0){
-            return new Abajo();
+            return new Arriba();
         }
         if (deltaX > 0){
             return new Derecha();

@@ -12,9 +12,6 @@ public class DanioPorColision implements Visitante{
     @Override
     public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Mapa mapa) {
         unidad.recibirDanio(1, casillaActual);
-        if (!unidad.estaViva()){
-            casillaActual.vaciar();
-        }
     }
 
     @Override

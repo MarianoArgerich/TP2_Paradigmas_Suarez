@@ -6,8 +6,8 @@ import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 import java.util.List;
@@ -21,31 +21,11 @@ public class Tablero {
     }
 
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
-        mapa.casillaEn(coordenadas).colocarOcupante(unidad);
+        mapa.colocarUnidad(coordenadas, unidad);
     }
 
-    public void moverUnidad(Unidad unidad, Direccion direccion, int distancia) {
-        unidad.verificarRangoDeMovimiento(distancia);
-        Casilla casillaInicial = mapa.casillaDe(unidad);
-
-
-        for (int i=1; i<=distancia; i++) {
-            Casilla origen = mapa.casillaDe(unidad);
-            Casilla destino = mapa.casillaEn(origen.siguienteEn(direccion));
-
-            if (!origen.transferirOcupanteA(destino)) {
-                break;
-            }
-        }
-
-        Casilla casillaFinal = mapa.casillaDe(unidad);
-        if (casillaFinal != casillaInicial) {
-            casillaInicial.notificarMovimientoA(unidad);
-        }
-    }
-
-    public void revertirMovimiento(Unidad unidad, Posicion posicionAnterior){
-        mapa.casillaDe(unidad).transferirOcupanteA(mapa.casillaEn(posicionAnterior));
+    public void mover(Posicion origen, Direccion direccion, int distancia){
+        mapa.mover(origen, direccion, distancia);
     }
 
     public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
@@ -60,22 +40,19 @@ public class Tablero {
         mapa.aplicarEfecto(origen, new Empuje(direccion));
     }
 
-    public void atacarDesdeUnidad(Unidad unidad, Arma arma, Posicion objetivo) {
-        mapa.casillaDe(unidad).ejecutarAtaque(arma, objetivo, this);
+    public void atacar(Posicion origen, Posicion objetivo) {
+        mapa.atacar(origen, objetivo, this);
     }
 
-    //TODO: Chequear
     public boolean detieneDisparoEn(Posicion posicion) {
-        return mapa.esCoordenadaValida(posicion) && mapa.casillaEn(posicion).detieneDisparo();
+        return mapa.detieneDisparoEn(posicion);
     }
 
-    //TODO: Chequear
-    public boolean esCoordenadaValida(Posicion posicion){
-        return mapa.esCoordenadaValida(posicion);
-    }
-
-    //TODO: Chequear
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         return mapa.unidadEstaEn(unidad, posicion);
+    }
+
+    public void deshacerMovimiento(Posicion posicionActual) {
+        mapa.deshacerMovimiento(posicionActual);
     }
 }

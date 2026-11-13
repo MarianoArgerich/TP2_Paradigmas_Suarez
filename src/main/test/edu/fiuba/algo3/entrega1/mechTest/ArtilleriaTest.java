@@ -50,7 +50,7 @@ public class ArtilleriaTest {
         tablero.colocarUnidad(posicionDeArtillero, artillero);
         tablero.colocarUnidad(posicionDelVek, vek1);
 
-        artillero.atacar(posicionObjetivo, tablero);
+        tablero.atacar(posicionDeArtillero, posicionObjetivo);
 
         assertTrue(vek1.suVidaEsIgualA(3),
                 "El Vek por encima del cual voló el disparo no debe recibir daño");
@@ -65,7 +65,7 @@ public class ArtilleriaTest {
         tablero.colocarUnidad(posArtilleria, artillero);
 
         assertThrows(AtaqueInvalidoException.class, () ->
-            artillero.atacar(posObjetivoAdyacente, tablero)
+            tablero.atacar(posArtilleria, posObjetivoAdyacente)
         , "El Mech de Artillería no debe poder atacar casillas adyacentes");
 
     }
@@ -94,7 +94,7 @@ public class ArtilleriaTest {
         tablero.colocarUnidad(posEste, vekEste);
 
 
-        artillero.atacar(posObjetivo, tablero);
+        tablero.atacar(posArtilleria,posObjetivo);
 
 
         assertTrue(tablero.unidadEstaEn(vekNorte, new Posicion(2, 4)), "La unidad al Norte debe ser empujada a (2, 4)");
@@ -117,7 +117,7 @@ public class ArtilleriaTest {
         tablero.colocarUnidad(new Posicion(2, 5), artillero);
 
         // Act
-        artillero.atacar(posicionObjetivo, tablero);
+        tablero.atacar(new Posicion(2, 5) ,posicionObjetivo);
 
         // Assert: Daña al objetivo y empuja al Vek de (3,2) hacia (4,2)
         Posicion posicionFinalEsperada = derecha.calcularSiguientePosicion(posicionInicialDerecha); // (4, 2)
@@ -138,32 +138,11 @@ public class ArtilleriaTest {
         tablero.colocarUnidad(new Posicion(2, 5), artillero);
 
         // Act
-        artillero.atacar(posicionObjetivo, tablero);
+        tablero.atacar(new Posicion(2, 5), posicionObjetivo);
 
         // Assert: Daña al objetivo y empuja al Vek de (1,2) hacia (0,2)
         Posicion posicionFinalEsperada = izquierda.calcularSiguientePosicion(posicionInicialIzquierda); // (0, 2)
         assertTrue(tablero.unidadEstaEn(vekIzquierda,posicionFinalEsperada));
-    }
-
-    @Test
-    public void testArtilleriaAtacaACasillaObjetivoYEmpujaAUnidadAdyacenteHaciaArriba() {
-        Arriba arriba = new Arriba();
-        Vek vekObjetivo = new Luciernaga();
-        Vek vekArriba = new Luciernaga();
-
-        Posicion posicionObjetivo = new Posicion(2, 2);
-        Posicion posicionInicialArriba = new Posicion(2, 1); // Adyacente arriba de (2,2)
-
-        tablero.colocarUnidad(posicionObjetivo, vekObjetivo);
-        tablero.colocarUnidad(posicionInicialArriba, vekArriba);
-        tablero.colocarUnidad(new Posicion(2, 5), artillero);
-
-        // Act
-        artillero.atacar(posicionObjetivo, tablero);
-
-        // Assert: Daña al objetivo y empuja al Vek de (2,1) hacia (2,0)
-        Posicion posicionFinalEsperada = arriba.calcularSiguientePosicion(posicionInicialArriba); // (2, 0)
-        assertTrue(tablero.unidadEstaEn(vekArriba, posicionFinalEsperada));
     }
 
     @Test
@@ -173,18 +152,39 @@ public class ArtilleriaTest {
         Vek vekAbajo = new Luciernaga();
 
         Posicion posicionObjetivo = new Posicion(2, 2);
-        Posicion posicionInicialAbajo = new Posicion(2, 3); // Adyacente abajo de (2,2)
+        Posicion posicionInicialAbajo = new Posicion(2, 1); // Adyacente arriba de (2,2)
 
         tablero.colocarUnidad(posicionObjetivo, vekObjetivo);
         tablero.colocarUnidad(posicionInicialAbajo, vekAbajo);
         tablero.colocarUnidad(new Posicion(2, 5), artillero);
 
         // Act
-        artillero.atacar(posicionObjetivo, tablero);
+        tablero.atacar(new Posicion(2, 5), posicionObjetivo);
+
+        // Assert: Daña al objetivo y empuja al Vek de (2,1) hacia (2,0)
+        Posicion posicionFinalEsperada = abajo.calcularSiguientePosicion(posicionInicialAbajo); // (2, 0)
+        assertTrue(tablero.unidadEstaEn(vekAbajo, posicionFinalEsperada));
+    }
+
+    @Test
+    public void testArtilleriaAtacaACasillaObjetivoYEmpujaAUnidadAdyacenteHaciaArriba() {
+        Arriba arriba = new Arriba();
+        Vek vekObjetivo = new Luciernaga();
+        Vek vekArriba = new Luciernaga();
+
+        Posicion posicionObjetivo = new Posicion(2, 2);
+        Posicion posicionInicialArriba = new Posicion(2, 3); // Adyacente abajo de (2,2)
+
+        tablero.colocarUnidad(posicionObjetivo, vekObjetivo);
+        tablero.colocarUnidad(posicionInicialArriba, vekArriba);
+        tablero.colocarUnidad(new Posicion(2, 5), artillero);
+
+        // Act
+        tablero.atacar(new Posicion(2, 5), posicionObjetivo);
 
         // Assert: Daña al objetivo y empuja al Vek de (2,3) hacia (2,4)
-        Posicion posicionFinalEsperada = abajo.calcularSiguientePosicion(posicionInicialAbajo); // (2, 4)
-        assertTrue(tablero.unidadEstaEn(vekAbajo, posicionFinalEsperada));
+        Posicion posicionFinalEsperada = arriba.calcularSiguientePosicion(posicionInicialArriba); // (2, 4)
+        assertTrue(tablero.unidadEstaEn(vekArriba, posicionFinalEsperada));
 
     }
 

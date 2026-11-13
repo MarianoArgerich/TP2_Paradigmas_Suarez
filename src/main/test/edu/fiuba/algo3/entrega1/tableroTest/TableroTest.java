@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ public class TableroTest {
 
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
-                assertTrue(tablero.esCoordenadaValida(new Posicion(i, j)));
+                int I = i;
+                int J = j;
+                assertDoesNotThrow(() -> tablero.colocarUnidad(new Posicion(I, J), new Combate()));
             }
         }
     }
@@ -42,8 +45,6 @@ public class TableroTest {
         List<Casilla> casillas = List.of(suelo);
         Tablero tablero = new Tablero(casillas);
 
-        assertTrue(tablero.esCoordenadaValida(new Posicion(0 , 0)));
-
-        assertTrue(suelo.tieneTerreno(new Suelo()));
+        assertDoesNotThrow(() -> tablero.colocarUnidad(new Posicion(0 , 0), new Combate()));
     }
 }

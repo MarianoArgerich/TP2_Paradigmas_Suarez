@@ -20,12 +20,9 @@ public class DisparoCanion extends Arma {
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         Posicion actual = origen.siguienteEn(direccion);
 
-        while (tablero.esCoordenadaValida(actual)){
-            if (tablero.detieneDisparoEn(actual)){
-                tablero.aplicarGolpe(actual, danio, direccion);
-                return;
-            }
+        while (!tablero.detieneDisparoEn(actual)){
             actual = actual.siguienteEn(direccion);
         }
+        tablero.aplicarGolpe(actual, danio, direccion);
     }
 }

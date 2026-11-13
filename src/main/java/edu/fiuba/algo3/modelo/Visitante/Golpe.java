@@ -22,9 +22,7 @@ public class Golpe implements Visitante {
     public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Mapa mapa) {
         unidad.recibirDanio(danio, casillaActual);
 
-        if (unidad.estaViva()){
-            casillaActual.aceptar(new Empuje(direccion), mapa);
-        }
+        casillaActual.aceptar(new Empuje(direccion), mapa);
     }
 
     @Override

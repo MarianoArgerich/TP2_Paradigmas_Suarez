@@ -3,7 +3,8 @@ package edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.CasillaNula;
-import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
+import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -21,12 +22,6 @@ public class Mapa {
                 .filter(casilla -> casilla.estaEn(posicion))
                 .findFirst()
                 .ifPresent(casilla -> casilla.aceptar(visitante, this));
-        //TODO: revisar si en vez de usar casilla.estaEn(posicion) se puede hacer con un equals
-    }
-
-    public boolean esCoordenadaValida(Posicion posicion) {
-        return casillas.stream().anyMatch(casilla -> casilla.estaEn(posicion));
-        //TODO: lo mismo que arriba
     }
 
     public Casilla casillaEn(Posicion posicion) {
@@ -34,19 +29,54 @@ public class Mapa {
                 .filter(casilla -> casilla.estaEn(posicion))
                 .findFirst()
                 .orElse(new CasillaNula());
-        //TODO: Idem
     }
 
-    public Casilla casillaDe(Unidad unidad) {
-        return casillas.stream()
-                .filter(casilla -> casilla.tieneUnidad(unidad))
-                //TODO: revisar tambien si se puede sacar el casilla.tieneUnidad(unidad)
-                .findFirst()
-                .orElseThrow(() -> new UnidadInvalidaException("La unidad no está en el tablero"));
+    public void colocarUnidad(Posicion posicion, Unidad unidad) {
+        casillaEn(posicion).colocarOcupante(unidad);
     }
 
-    //TODO: Chequear
+    public void mover(Posicion origen, Direccion direccion, int distancia){
+        casillaEn(origen).moverOcupante(direccion, distancia, this);
+    }
+
+    public void deshacerMovimiento(Posicion posicion){
+        casillaEn(posicion).deshacerMovimientoOcupante(this);
+    }
+
+    public boolean detieneDisparoEn(Posicion posicion){
+        return casillaEn(posicion).detieneDisparo();
+    }
+
+    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero){
+        casillaEn(origen).ejecutarAtaque(objetivo, tablero);
+    }
+
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
-        return esCoordenadaValida(posicion) && casillaEn(posicion).tieneUnidad(unidad);
+        return casillaEn(posicion).tieneUnidad(unidad);
+    }
+
+    private Casilla siguienteCasilla(Casilla origen, Direccion direccion) {
+        return casillas.stream()
+                .filter(casilla -> origen.esSiguienteEn(direccion, casilla))
+                .findFirst()
+                .orElse(new CasillaNula());
+    }
+
+    public void desplazarUnidad(Casilla origen, Unidad unidad, Direccion direccion, int distancia){
+        Casilla casillaActual = origen;
+
+        for (int i = 0; i < distancia; i++){
+            Casilla casillaSiguiente = siguienteCasilla(casillaActual, direccion);
+            try {
+                casillaActual.transferirOcupanteA(casillaSiguiente);
+            } catch (CasillaInvalidaException e) {
+                if (!casillaActual.equals(origen)) {
+                    casillaActual.transferirOcupanteA(origen);
+                }
+                return;
+            }
+            casillaActual = siguienteCasilla(casillaActual, direccion);
+        }
+        origen.notificarMovimientoA(unidad);
     }
 }

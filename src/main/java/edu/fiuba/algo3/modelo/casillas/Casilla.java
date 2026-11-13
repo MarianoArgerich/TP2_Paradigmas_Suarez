@@ -28,51 +28,49 @@ public class Casilla {
     }
 
     public void aceptar(Visitante visitante, Mapa mapa){
+
         this.ocupante.aceptar(visitante, terreno, this, mapa);
+
     }
 
-    //TODO: Revisar
     public boolean estaEn(Posicion otraPosicion) {
         return this.posicion.equals(otraPosicion);
     }
 
-    //TODO: Revisar
     public boolean tieneUnidad(Unidad unidad){
-        return this.ocupante.esUnidad(unidad);
-    }
-
-    //TODO: Chequear
-    protected boolean admitirOcupante(Ocupante ocupante){
-        return this.terreno.puedeIngresar() && this.ocupante.puedeIngresar();
+        return this.ocupante.equals(unidad);
     }
 
     public void colocarOcupante(Ocupante ocupante) {
-        if (!admitirOcupante(ocupante)) {
+
+        if (this.terreno.puedeIngresar() && this.ocupante.puedeIngresar()) {
+            this.ocupante = ocupante;
+        }
+        else {
             throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
         }
-        this.ocupante = ocupante;
     }
 
-    //TODO: Chequear
-    public boolean transferirOcupanteA(Casilla casillaDestino){
-        if (casillaDestino.admitirOcupante(this.ocupante)){
+    public void transferirOcupanteA(Casilla casillaDestino){
+
+        try {
             casillaDestino.colocarOcupante(this.ocupante);
             vaciar();
-            return true;
         }
-        return false;
+        catch (CasillaInvalidaException e) {
+            throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
+        }
+
     }
 
     public void vaciar(){
         this.ocupante = new SinOcupante();
     }
 
-    //TODO: Chequear
     public boolean tieneTerreno(Terreno terrenoAComparar) {
         return this.terreno.equals(terrenoAComparar);
     }
 
-    //TODO: Chequear
     public boolean tieneOcupante(Ocupante ocupanteAComparar) {
         return this.ocupante.equals(ocupanteAComparar);
     }
@@ -81,7 +79,6 @@ public class Casilla {
         return this.posicion.siguienteEn(direccion);
     }
 
-    //TODO: Chequear
     public boolean detieneDisparo(){
         return this.ocupante.detieneDisparo();
     }
@@ -90,7 +87,19 @@ public class Casilla {
         unidad.registrarMovimientoDesde(this.posicion);
     }
 
-    public void ejecutarAtaque(Arma arma, Posicion objetivo, Tablero tablero) {
-        arma.ejecutarAtaque(this.posicion, objetivo, tablero);
+    public void ejecutarAtaque(Posicion objetivo, Tablero tablero) {
+        this.ocupante.atacar(this.posicion ,objetivo, tablero);
+    }
+
+    public void deshacerMovimientoOcupante(Mapa mapa) {
+        this.ocupante.deshacerMovimientoDesde(this, mapa);
+    }
+
+    public void moverOcupante(Direccion direccion, int distancia, Mapa mapa) {
+        this.ocupante.moverDesde(this, direccion, distancia, mapa);
+    }
+
+    public boolean esSiguienteEn(Direccion direccion, Casilla otraCasilla) {
+        return otraCasilla.estaEn(this.posicion.siguienteEn(direccion));
     }
 }

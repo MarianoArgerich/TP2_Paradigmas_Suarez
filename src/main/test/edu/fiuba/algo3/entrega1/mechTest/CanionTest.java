@@ -56,7 +56,7 @@ public class CanionTest {
         Posicion ubicacionVek = new Posicion(2, 5);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        canion.atacar(ubicacionVek, tablero);
+        tablero.atacar(new Posicion(2, 2), ubicacionVek);
 
         assertTrue(vek.suVidaEsIgualA(2));
     }
@@ -69,7 +69,7 @@ public class CanionTest {
         tablero.colocarUnidad(new Posicion(2, 4), delante);
         tablero.colocarUnidad(new Posicion(2, 7), atras);
 
-        canion.atacar(new Posicion(2, 7), tablero);
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
 
         assertTrue(delante.suVidaEsIgualA(2));
         assertTrue(atras.suVidaEsIgualA(3));
@@ -82,7 +82,7 @@ public class CanionTest {
         Vek atras = new Luciernaga();
         tablero.colocarUnidad(new Posicion(2, 7), atras);
 
-        canion.atacar(new Posicion(2, 7), tablero);
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
 
         assertTrue(atras.suVidaEsIgualA(3));
     }
@@ -94,7 +94,7 @@ public class CanionTest {
         Vek atras = new Luciernaga();
         tablero.colocarUnidad(new Posicion(2, 7), atras);
 
-        canion.atacar(new Posicion(2, 7), tablero);
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
 
         assertTrue(atras.suVidaEsIgualA(3));
     }
@@ -103,7 +103,7 @@ public class CanionTest {
     public void testCanionQueNoEncuentraNadaEnLaLineaNoFalla() {
         tablero.colocarUnidad(new Posicion(2, 2), canion);
 
-        assertDoesNotThrow(() -> canion.atacar(new Posicion(2, 7), tablero));
+        assertDoesNotThrow(() -> tablero.atacar(new Posicion(2, 2), new Posicion(2, 7)));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class CanionTest {
         Vek vek = new Luciernaga();
         tablero.colocarUnidad(new Posicion(2, 5), vek);
 
-        canion.atacar(new Posicion(2, 5), tablero);
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 5));
 
         assertTrue(tablero.unidadEstaEn(vek, new Posicion(2, 6)));
     }
@@ -121,6 +121,6 @@ public class CanionTest {
     public void testCanionNoPuedeDispararFueraDeLineaRecta() {
         tablero.colocarUnidad(new Posicion(2, 2), canion);
 
-        assertThrows(AtaqueInvalidoException.class, () -> canion.atacar(new Posicion(4, 3), tablero));
+        assertThrows(AtaqueInvalidoException.class, () -> tablero.atacar(new Posicion(2, 2), new Posicion(4, 3)));
     }
 }

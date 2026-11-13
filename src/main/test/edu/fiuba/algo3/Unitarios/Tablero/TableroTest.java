@@ -4,15 +4,17 @@ import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.CasillaNula;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
+import edu.fiuba.algo3.modelo.excepciones.CoordenadaFueraDelTableroException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
+import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TableroTest {
 
@@ -31,13 +33,13 @@ public class TableroTest {
 
 
         tablero = new Tablero(casillas);
-        assertTrue(tablero.esCoordenadaValida(new Posicion(0, 0)));
+        assertDoesNotThrow(() -> tablero.colocarUnidad(new Posicion(0, 0), new Luciernaga()));
     }
 
     @Test
     public void tableroValidaPosicionInexistente() {
         tablero = new Tablero(casillas);
-        assertFalse(tablero.esCoordenadaValida(new Posicion(-1, -1)));
+        assertThrows(CoordenadaFueraDelTableroException.class, () -> tablero.colocarUnidad(new Posicion(0, 1), new Combate()));
     }
 
 }

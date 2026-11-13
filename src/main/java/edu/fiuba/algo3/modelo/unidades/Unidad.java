@@ -11,8 +11,9 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public abstract class Unidad extends Ocupante {
+import java.util.Objects;
 
+public abstract class Unidad extends Ocupante {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;
@@ -24,19 +25,24 @@ public abstract class Unidad extends Ocupante {
         this.rangoDeMovimiento = rangoDeMovimiento;
     }
 
-    //TODO: Chequear
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Unidad unidad = (Unidad) o;
+        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);
+    }
+
     @Override
     public boolean puedeIngresar() {
         return false;
     }
 
-    //TODO: Chequear
-    @Override
-    public boolean esUnidad(Unidad unidad) {
-        return this == unidad;
-    }
-
-    //TODO: Chequear
     @Override
     public boolean detieneDisparo() {
         return true;
@@ -54,26 +60,22 @@ public abstract class Unidad extends Ocupante {
         }
     }
 
-    //TODO: Chequear
-    public boolean estaViva(){
-        return this.vidaActual > 0;
-    }
-
     public void verificarRangoDeMovimiento(int distancia){
         if (distancia > rangoDeMovimiento) {
             throw new DistanciaInvalidaException("Fuera de rango");
         }
     }
 
-    public void mover(Direccion direccion, int distancia, Tablero tablero) {
-        tablero.moverUnidad(this, direccion, distancia);
-    }
-
-    //TODO: Chequear
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }
 
     public void registrarMovimientoDesde(Posicion posicion) {
+    }
+
+    @Override
+    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
+        this.verificarRangoDeMovimiento(distancia);
+        mapa.desplazarUnidad(origen, this, direccion, distancia);
     }
 }

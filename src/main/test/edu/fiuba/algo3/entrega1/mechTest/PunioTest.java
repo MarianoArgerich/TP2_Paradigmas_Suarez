@@ -46,7 +46,7 @@ public class PunioTest {
         Posicion ubicacionVek = new Posicion(2,3);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        combate.atacar(ubicacionVek, tablero);
+        tablero.atacar(ubicacionMech, ubicacionVek);
 
         assertTrue(vek.suVidaEsIgualA(1));
     }
@@ -61,7 +61,7 @@ public class PunioTest {
         Posicion ubicacionVek = new Posicion(2,3);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        combate.atacar(ubicacionVek, tablero);
+        tablero.atacar(ubicacionMech, ubicacionVek);
 
         assertTrue(tablero.unidadEstaEn(vek, new Posicion(2, 4)));
     }
@@ -82,7 +82,7 @@ public class PunioTest {
         tablero.colocarUnidad(ubicacionMech, combate);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        combate.atacar(ubicacionVek, tablero);
+        tablero.atacar(ubicacionMech, ubicacionVek);
 
         assertFalse(tablero.unidadEstaEn(vek, ubicacionVek));
     }
@@ -96,7 +96,7 @@ public class PunioTest {
         Posicion ubicacionVek = new Posicion(2,7);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        combate.atacar(ubicacionVek, tablero);
+        tablero.atacar(ubicacionMech, ubicacionVek);
 
         assertTrue(tablero.unidadEstaEn(vek, ubicacionVek));
     }

@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.unidades.Mech;
 
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
@@ -29,16 +31,16 @@ public abstract class Mech extends Unidad {
         this.estado = new Movido(posicion);
     }
 
+    public void atacar(Posicion origen, Posicion posicionObjetivo, Tablero tablero) {
+        this.estado.atacar(this, this.arma, origen, posicionObjetivo, tablero);
+    }
+
+    public void deshacerMovimientoDesde(Casilla casillaActual, Mapa mapa){
+        this.estado.deshacerMovimiento(this, casillaActual, mapa);
+    }
+
     @Override
-    public void mover(Direccion direccion, int distancia, Tablero tablero) {
-        this.estado.mover(this, direccion, distancia, tablero);
-    }
-
-    public void atacar(Posicion posicionObjetivo, Tablero tablero) {
-        this.estado.atacar(this, this.arma, posicionObjetivo, tablero);
-    }
-
-    public void deshacerMovimiento(Tablero tablero ){
-        this.estado.deshacerMovimiento(this, tablero);
+    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
+        this.estado.mover(this, origen, direccion, distancia, mapa);
     }
 }
