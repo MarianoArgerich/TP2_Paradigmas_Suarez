@@ -1,10 +1,10 @@
 package edu.fiuba.algo3.modelo.unidades;
 
-import edu.fiuba.algo3.modelo.Efecto.Efecto;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 
+import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -18,30 +18,33 @@ public abstract class Unidad extends Ocupante {
     private final int rangoDeMovimiento;
     private int vidaActual;
 
-    public Unidad(int vidaMax, int rangoDeMovimiento) {
+    protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
     }
 
+    //TODO: Chequear
     @Override
     public boolean puedeIngresar() {
         return false;
     }
 
+    //TODO: Chequear
     @Override
     public boolean esUnidad(Unidad unidad) {
         return this == unidad;
     }
 
+    //TODO: Chequear
     @Override
     public boolean detieneDisparo() {
         return true;
     }
 
     @Override
-    public void aceptar(Efecto efecto, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        efecto.visitar(this,  terreno, casillaActual, mapa);
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
+        visitante.visitar(this,  terreno, casillaActual, mapa);
     }
 
     public void recibirDanio(int danio, Casilla casillaActual){
@@ -51,6 +54,7 @@ public abstract class Unidad extends Ocupante {
         }
     }
 
+    //TODO: Chequear
     public boolean estaViva(){
         return this.vidaActual > 0;
     }
@@ -65,6 +69,7 @@ public abstract class Unidad extends Ocupante {
         tablero.moverUnidad(this, direccion, distancia);
     }
 
+    //TODO: Chequear
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }

@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Abajo;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
 import edu.fiuba.algo3.modelo.direccion.Derecha;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.excepciones.NoSePuedeDeshacerMovimiento;
 import edu.fiuba.algo3.modelo.excepciones.YaAtacoException;
 import edu.fiuba.algo3.modelo.excepciones.YaSeMovioException;
@@ -50,7 +51,7 @@ public class MechTest {
         Posicion coordenadas = new Posicion(0, 0);
         tablero.colocarUnidad(coordenadas, mech1);
 
-        assertThrows(RuntimeException.class, () -> mech1.mover(new Arriba(), 4, tablero));
+        assertThrows(DistanciaInvalidaException.class, () -> mech1.mover(new Arriba(), 4, tablero));
     }
 
     @Test
@@ -78,7 +79,10 @@ public class MechTest {
     @Test
     public void testMechNoPuedeAtravesarObstaculos() {
         mapa.removeIf(casilla -> casilla.estaEn(new Posicion(1, 2)));
-        mapa.add(new Casilla(new Posicion(1, 2), new Suelo(), new Edificio()));
+        Casilla casilla = new Casilla(new Posicion(1, 2));
+        casilla.colocarOcupante(new Edificio());
+
+        mapa.add(casilla);
         tablero = new Tablero(mapa);
 
         Posicion posicionInicial = new Posicion(1, 1);

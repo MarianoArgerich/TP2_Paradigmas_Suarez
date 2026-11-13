@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.casillas;
-import edu.fiuba.algo3.modelo.Efecto.Efecto;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
 import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -19,30 +19,30 @@ public class Casilla {
     private Ocupante ocupante;
 
     public Casilla(Posicion posicion) {
-        this(posicion, new Suelo(), new SinOcupante());
+        this(posicion, new Suelo());
     }
     public Casilla(Posicion posicion, Terreno terreno) {
-        this(posicion, terreno, new SinOcupante());
-    }
-    public Casilla(Posicion posicion, Terreno terreno, Ocupante ocupante) {
         this.posicion = posicion;
         this.terreno = terreno;
-        this.ocupante = ocupante;
+        this.ocupante = new SinOcupante();
     }
 
-    public void aceptar(Efecto efecto, Mapa mapa){
-        this.ocupante.aceptar(efecto, terreno, this, mapa);
+    public void aceptar(Visitante visitante, Mapa mapa){
+        this.ocupante.aceptar(visitante, terreno, this, mapa);
     }
 
+    //TODO: Revisar
     public boolean estaEn(Posicion otraPosicion) {
         return this.posicion.equals(otraPosicion);
     }
 
+    //TODO: Revisar
     public boolean tieneUnidad(Unidad unidad){
         return this.ocupante.esUnidad(unidad);
     }
 
-    public boolean admitirOcupante(Ocupante ocupante){
+    //TODO: Chequear
+    protected boolean admitirOcupante(Ocupante ocupante){
         return this.terreno.puedeIngresar() && this.ocupante.puedeIngresar();
     }
 
@@ -53,6 +53,7 @@ public class Casilla {
         this.ocupante = ocupante;
     }
 
+    //TODO: Chequear
     public boolean transferirOcupanteA(Casilla casillaDestino){
         if (casillaDestino.admitirOcupante(this.ocupante)){
             casillaDestino.colocarOcupante(this.ocupante);
@@ -66,10 +67,12 @@ public class Casilla {
         this.ocupante = new SinOcupante();
     }
 
+    //TODO: Chequear
     public boolean tieneTerreno(Terreno terrenoAComparar) {
         return this.terreno.equals(terrenoAComparar);
     }
 
+    //TODO: Chequear
     public boolean tieneOcupante(Ocupante ocupanteAComparar) {
         return this.ocupante.equals(ocupanteAComparar);
     }
@@ -78,6 +81,7 @@ public class Casilla {
         return this.posicion.siguienteEn(direccion);
     }
 
+    //TODO: Chequear
     public boolean detieneDisparo(){
         return this.ocupante.detieneDisparo();
     }

@@ -8,13 +8,9 @@ public class CasillaNula extends Casilla {
         super(new Posicion(-1, -1));
     }
 
+    //TODO: Chequear
     @Override
-    public boolean admitirOcupante(Ocupante ocupante){
+    protected boolean admitirOcupante(Ocupante ocupante){
         return false;
-    }
-
-    @Override
-    public boolean detieneDisparo() {
-        return true;
     }
 }

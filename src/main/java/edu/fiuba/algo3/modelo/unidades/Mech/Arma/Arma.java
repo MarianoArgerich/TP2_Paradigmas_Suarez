@@ -6,5 +6,6 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 public abstract class Arma {
 
     protected int danio;
+
     abstract public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero);
 }

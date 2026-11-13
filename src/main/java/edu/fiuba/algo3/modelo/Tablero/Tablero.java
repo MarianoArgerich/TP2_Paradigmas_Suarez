@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
-import edu.fiuba.algo3.modelo.Efecto.Disparo;
-import edu.fiuba.algo3.modelo.Efecto.Empuje;
-import edu.fiuba.algo3.modelo.Efecto.Golpe;
+import edu.fiuba.algo3.modelo.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Visitante.Empuje;
+import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -64,14 +64,17 @@ public class Tablero {
         mapa.casillaDe(unidad).ejecutarAtaque(arma, objetivo, this);
     }
 
+    //TODO: Chequear
     public boolean detieneDisparoEn(Posicion posicion) {
         return mapa.esCoordenadaValida(posicion) && mapa.casillaEn(posicion).detieneDisparo();
     }
 
+    //TODO: Chequear
     public boolean esCoordenadaValida(Posicion posicion){
         return mapa.esCoordenadaValida(posicion);
     }
 
+    //TODO: Chequear
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         return mapa.unidadEstaEn(unidad, posicion);
     }

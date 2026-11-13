@@ -9,12 +9,12 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Estado.InicioTurno;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Movido;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Mech extends Unidad {
+public abstract class Mech extends Unidad {
 
     private final Arma arma;
     private Estado estado;
 
-    public Mech(int vidaMax, int movimiento, Arma arma) {
+    protected Mech(int vidaMax, int movimiento, Arma arma) {
         super(vidaMax, movimiento);
         this.arma = arma;
         this.estado = new InicioTurno();

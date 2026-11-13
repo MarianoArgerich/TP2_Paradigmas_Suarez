@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PunioTest {
@@ -66,21 +67,24 @@ public class PunioTest {
     }
 
     @Test
-    public void testPunoGolpeaYColisionaContraEdificio(){
+    public void testPunioGolpeaYColisionaContraEdificio(){
         Posicion ubicacionMech = new Posicion(2,2);
 
-        Vek vek = new Vek(4, 2);
+        Vek vek = new Luciernaga();
         Posicion ubicacionVek = new Posicion(2,3);
 
         mapa.removeIf(casilla -> casilla.estaEn(new Posicion(2, 4)));
-        mapa.add(new Casilla(new Posicion(2, 4), new Suelo(), new Edificio()));
+        Casilla casilla  = new Casilla(new Posicion(2, 4));
+        casilla.colocarOcupante(new Edificio());
+
+        mapa.add(casilla);
         tablero = new Tablero(mapa);
         tablero.colocarUnidad(ubicacionMech, combate);
         tablero.colocarUnidad(ubicacionVek, vek);
 
         combate.atacar(ubicacionVek, tablero);
 
-        assertTrue(tablero.unidadEstaEn(vek, ubicacionVek));
+        assertFalse(tablero.unidadEstaEn(vek, ubicacionVek));
     }
 
     @Test

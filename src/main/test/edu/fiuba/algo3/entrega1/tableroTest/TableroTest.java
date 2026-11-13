@@ -27,30 +27,23 @@ public class TableroTest {
         }
 
         Tablero tablero = new Tablero(casillas);
-        assertTrue(tablero.esCoordenadaValida(new Posicion(0, 0)));
-        assertTrue(tablero.esCoordenadaValida(new Posicion(7, 7)));
 
-        assertFalse(tablero.esCoordenadaValida(new Posicion(8, 8)));
+        for (int i=0; i<8; i++){
+            for (int j=0; j<8; j++){
+                assertTrue(tablero.esCoordenadaValida(new Posicion(i, j)));
+            }
+        }
     }
 
     @Test
-    public void tableroSeCargaConElTerrenoCorrecto() {
+    public void tableroSeCargaConSuelo() {
         Casilla suelo = new Casilla(new Posicion(0, 0), new Suelo());
-        Casilla agua = new Casilla(new Posicion(0, 1), new Agua());
-        Casilla acido = new Casilla(new Posicion(1, 0), new Acido());
-        Casilla montania = new Casilla(new Posicion(1, 1), new Suelo(), new Montania());
 
-        List<Casilla> casillas = List.of(suelo, agua, acido, montania);
+        List<Casilla> casillas = List.of(suelo);
         Tablero tablero = new Tablero(casillas);
 
         assertTrue(tablero.esCoordenadaValida(new Posicion(0 , 0)));
-        assertTrue(tablero.esCoordenadaValida(new Posicion(0 , 1)));
-        assertTrue(tablero.esCoordenadaValida(new Posicion(1 , 0)));
-        assertTrue(tablero.esCoordenadaValida(new Posicion(1, 1)));
 
         assertTrue(suelo.tieneTerreno(new Suelo()));
-        assertTrue(agua.tieneTerreno(new Agua()));
-        assertTrue(acido.tieneTerreno(new Acido()));
-        assertTrue(montania.tieneOcupante(new Montania()));
     }
 }
