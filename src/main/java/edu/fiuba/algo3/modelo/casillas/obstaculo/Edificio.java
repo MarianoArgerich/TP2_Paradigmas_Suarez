@@ -1,15 +1,17 @@
 package edu.fiuba.algo3.modelo.casillas.obstaculo;
 
-import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.direccion.Direccion;
 
-public class Edificio extends Obstaculo {
+public class Edificio extends Destruible {
 
-    public Edificio(Posicion posicion) {
-        super(posicion, 1);
+    public Edificio() {
+        super(1);
     }
 
     @Override
-    public boolean detieneDisparo() {
-        return false;
+    public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
+
     }
 }

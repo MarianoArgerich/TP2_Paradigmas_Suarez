@@ -7,7 +7,7 @@ public class Abajo implements Direccion {
 
     @Override
     public Posicion calcularSiguientePosicion(Posicion posicion) {
-        return posicion.desplazar(0, 1);
+        return posicion.desplazar(0, -1);
     }
 
 

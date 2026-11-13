@@ -1,61 +1,81 @@
 package edu.fiuba.algo3.modelo.unidades;
 
-import edu.fiuba.algo3.modelo.Tablero;
+import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
+import edu.fiuba.algo3.modelo.Visitante.Visitante;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
-public class Unidad {
+import java.util.Objects;
 
+public abstract class Unidad extends Ocupante {
 
-    protected Posicion posicion;
     private final int vidaMax;
-    private int rangoDeMovimiento;
+    private final int rangoDeMovimiento;
     private int vidaActual;
 
-    public Unidad(int vidaMax, int rangoDeMovimiento) {
+    protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
-        posicion = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Unidad unidad = (Unidad) o;
+        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);
+    }
+
+    @Override
+    public boolean puedeIngresar() {
+        return false;
+    }
+
+    @Override
+    public boolean detieneDisparo() {
+        return true;
+    }
+
+    @Override
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
+        visitante.visitar(this,  terreno, casillaActual, mapa);
+    }
+
+    public void recibirDanio(int danio, Casilla casillaActual){
+        this.vidaActual -= danio;
+        if (this.vidaActual <= 0) {
+            casillaActual.vaciar();
+        }
     }
 
     public void verificarRangoDeMovimiento(int distancia){
         if (distancia > rangoDeMovimiento) {
-            throw new RuntimeException("Fuera de rango");
+            throw new DistanciaInvalidaException("Fuera de rango");
         }
     }
 
-    public void moverA(Posicion nuevaPosicion) {
-        this.posicion = nuevaPosicion;
+    public boolean suVidaEsIgualA(int comparacion) {
+        return vidaActual == comparacion;
     }
 
-    public boolean estaEn(Posicion otraPosicion) {
-        return this.posicion != null && this.posicion.equals(otraPosicion);
+    public void registrarMovimientoDesde(Posicion posicion) {
     }
 
-    public void mover(Direccion direccion, int distancia, Tablero tablero) {
-        tablero.moverUnidad(this, this.posicion, direccion, distancia);
+    @Override
+    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
+        this.verificarRangoDeMovimiento(distancia);
+        mapa.desplazarUnidad(origen, this, direccion, distancia);
     }
-
-    public int obtenerVidaActual() {
-        return vidaActual;
-    }
-
-    public void recibirGolpe(int dano, Posicion posicion, Direccion direccion, Tablero tablero, Casilla casilla) {
-        recibirDanio(dano, casilla);
-
-        if (this.vidaActual > 0) {
-            tablero.empujarDesde(posicion, direccion);
-        }
-    }
-
-    public void recibirDanio(int dano, Casilla casilla ) {
-        this.vidaActual -= dano;
-        if (this.vidaActual <= 0) {
-            casilla.desocupar();
-        }
-    }
-
 }

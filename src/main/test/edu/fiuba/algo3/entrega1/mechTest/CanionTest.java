@@ -1,8 +1,12 @@
 package edu.fiuba.algo3.entrega1.mechTest;
 
-import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.casillas.transitable.Casilla;
-import edu.fiuba.algo3.modelo.casillas.transitable.Suelo;
+import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
+import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
@@ -11,24 +15,37 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CanionTest {
 
     private Tablero tablero;
-    private Casilla[][] mapa;
+    private List<Casilla> mapa;
     private Mech canion;
 
     @BeforeEach
     public void setUp() {
-        mapa = new Casilla[8][8];
+        mapa = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa[i][j] = new Suelo(new Posicion(i, j));
+                mapa.add(new Casilla(new Posicion(i, j)));
             }
         }
         tablero = new Tablero(mapa);
         canion = new Canion();
+    }
+
+    private void colocarObstaculo(Posicion posicion, Ocupante obstaculo) {
+        mapa.removeIf(casilla -> casilla.estaEn(posicion));
+        Casilla casilla = new Casilla(posicion);
+        casilla.colocarOcupante(obstaculo);
+        mapa.add(casilla);
+        tablero = new Tablero(mapa);
     }
 
     @Test
@@ -39,8 +56,71 @@ public class CanionTest {
         Posicion ubicacionVek = new Posicion(2, 5);
         tablero.colocarUnidad(ubicacionVek, vek);
 
-        canion.atacar(ubicacionVek, tablero);
+        tablero.atacar(new Posicion(2, 2), ubicacionVek);
 
-        assertEquals(2, vek.obtenerVidaActual());
+        assertTrue(vek.suVidaEsIgualA(2));
+    }
+
+    @Test
+    public void testCanionNoImpactaALasUnidadesDeAtras() {
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+        Vek delante = new Luciernaga();
+        Vek atras = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 4), delante);
+        tablero.colocarUnidad(new Posicion(2, 7), atras);
+
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
+
+        assertTrue(delante.suVidaEsIgualA(2));
+        assertTrue(atras.suVidaEsIgualA(3));
+    }
+
+    @Test
+    public void testUnaMontaniaFrenaElDisparoDelCanion() {
+        colocarObstaculo(new Posicion(2, 4), new Montania());
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+        Vek atras = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 7), atras);
+
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
+
+        assertTrue(atras.suVidaEsIgualA(3));
+    }
+
+    @Test
+    public void testUnEdificioFrenaElDisparoDelCanion() {
+        colocarObstaculo(new Posicion(2, 4), new Edificio());
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+        Vek atras = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 7), atras);
+
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 7));
+
+        assertTrue(atras.suVidaEsIgualA(3));
+    }
+
+    @Test
+    public void testCanionQueNoEncuentraNadaEnLaLineaNoFalla() {
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+
+        assertDoesNotThrow(() -> tablero.atacar(new Posicion(2, 2), new Posicion(2, 7)));
+    }
+
+    @Test
+    public void testCanionEmpujaUnaCasillaALaUnidadImpactada() {
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+        Vek vek = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 5), vek);
+
+        tablero.atacar(new Posicion(2, 2), new Posicion(2, 5));
+
+        assertTrue(tablero.unidadEstaEn(vek, new Posicion(2, 6)));
+    }
+
+    @Test
+    public void testCanionNoPuedeDispararFueraDeLineaRecta() {
+        tablero.colocarUnidad(new Posicion(2, 2), canion);
+
+        assertThrows(AtaqueInvalidoException.class, () -> tablero.atacar(new Posicion(2, 2), new Posicion(4, 3)));
     }
 }
