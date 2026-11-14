@@ -1,0 +1,330 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Visitante {
+        + visitar(unidad: Unidad, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(destruible:Destruible , terreno:Terreno ,casillaActual: Casilla , mapa:Mapa):  void
+}
+
+class ImpactoDeEmpuje implements Visitante {
+       - origen: Casilla
+
+       + ImpactoDeEmpuje(origen:Casilla)
+       + visitar(unidad: Unidad , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+       + visitar(sinOcupante: SinOcupante , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+       + visitar(destruible:Destruible , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+
+}
+
+class Golpe implements Visitante {
+      - danio:Int
+      - direccion:Direccion
+
+      + Golpe(danio:int, direccion:Direccion)
+      + visitar(unidad: Unidad , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+      + visitar(sinOcupante: SinOcupante , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+      + visitar(destruible:Destruible , terreno:Terreno , destino:Casilla , mapa:Mapa ):void
+}
+
+class Empuje implements Visitante {
+      -direccion:Direccion
+
+      +Empuje(direccion: Direccion)
+      +visitar(unidad: Unidad, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+      +visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+}
+
+class Disparo implements Visitante {
+        - danio:int
+
+        + Disparo(danio:int)
+        + visitar(unidad: Unidad, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+}
+
+class DanioPorColision implements Visitante {
+        + visitar(unidad: Unidad, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+        + visitar(SinOcupante: sinOcupante, terreno:Terreno ,casillaActual: Casilla , mapa:Mapa ): void
+}
+
+abstract class Unidad extends Ocupante {
+        - vidaMax: int
+        - rangoDeMovimiento: int
+        - vidaActual: int
+
+        + Unidad(vidaMaxima: int, rangoDeMovimiento: int)
+        + puedeIngresar():boolean
+        + esUnidad(unidad:Unidad):boolean
+        + detieneDisparo():boolean
+        + aceptar(visitante:Visitante , terreno:Terreno , casillaActual:Casilla , mapa:Mapa ):void
+        + recibirDanio(danio:int , casillaActual:Casilla ):void
+        + estaViva():boolean
+        + verificarRangoDeMovimiento(distancia:int ):void
+        + mover(direccion:Direccion , distancia:int , tablero:Tablero ): void
+        + suVidaEsIgualA(comparacion:int ):boolean
+        + registrarMovimientoDesde(posicion:Posicion ):void
+
+
+}
+
+abstract class Vek extends Unidad{
+
+        + Vek(vidaMax: int, rangoDeMovimiento: int)
+}
+
+class Luciernaga extends Vek{
+        + Luciernaga()
+}
+
+abstract class Mech extends Unidad{
+        - arma: Arma
+        - estado: Estado
+
+        + Mech(vidaMax: int, movimiento: int, arma: Arma)
+        + cambiarEstado( estado:Estado):void
+        + registrarMovimientoDesde(posicion:Posicion):void
+        + mover(direccion: Direccion, distancia: int, tablero: Tablero):void
+        + atacar(posicionObjetivo: Posicion, tablero: Tablero): void
+        + deshacerMovimiento(tablero:Tablero):void
+}
+
+class Combate extends Mech{
+        + Combate()
+}
+
+class Canion extends Mech{
+        + Canion()
+}
+
+class Artilleria extends Mech{
+        + Artilleria()
+}
+
+class MovimientoDeshecho implements Estado{
+        + mover(mech:Mech , direccion:Direccion , distancia:int , tablero:Tablero ):void
+        + atacar( mech:Mech, arma:Arma , objetivo:Posicion , tablero:Tablero ):void
+        + deshacerMovimiento(mech:Mech , tablero: Tablero ):void
+}
+
+class Movido implements Estado{
+        - posicionAnterior:Posicion
+
+        + Movido(posicion:Posicion )
+        + mover(mech:Mech , direccion:Direccion , distancia:int , tablero:Tablero ):void
+        + atacar(mech:Mech , arma:Arma , objetivo:Posicion , tablero:Tablero ): void
+        + deshacerMovimiento(mech:Mech , tablero:Tablero ): void
+}
+
+class InicioTurno implements Estado{
+        + mover( mech:Mech , direccion:Direccion , distancia:int , tablero:Tablero ):void
+        + atacar(mech:Mech , arma:Arma , objetivo:Posicion , tablero:Tablero ):void
+        + deshacerMovimiento(mech:Mech , tablero:Tablero ):void
+}
+class Finalizado implements Estado{
+        + mover( mech:Mech , direccion:Direccion , distancia:int , tablero:Tablero ):void
+        + atacar(mech:Mech , arma:Arma , objetivo:Posicion , tablero:Tablero ):void
+        + deshacerMovimiento(mech:Mech , tablero:Tablero ):void
+}
+
+interface Estado{
+        + mover(mech:Mech , direccion:Direccion , distancia:int , tablero:Tablero): void
+        + atacar(mech:Mech , arma:Arma , objetivo:Posicion , tablero:Tablero): void
+        + deshacerMovimiento(mech:Mech , tablero:Tablero): void
+}
+
+class Punio extends Arma{
+        + Punio()
+        + ejecutarAtaque(origen: Posicion , objetivo:Posicion , tablero:Tablero ):void
+}
+
+class DisparoCanion extends Arma{
+        + DisparoCanion()
+        + ejecutarAtaque(origen: Posicion , objetivo:Posicion , tablero:Tablero ):void
+}
+
+abstract class Arma {
+
+       - danio:int
+
+       + ejecutarAtaque(origen: Posicion, objetivo: Posicion, tablero: Tablero):void
+}
+
+class Arco extends Arma{
+        + Arco()
+        + ejecutarAtaque(origen: Posicion, objetivo: Posicion, tablero: Tablero):void
+}
+
+
+class Tablero {
+        - mapa: Mapa
+
+        + Tablero(casillas: List<Casilla>)
+        + colocarUnidad(coordenadas: Posicion, unidad: Unidad): void
+        + moverUnidad(unidad: Unidad, direccion: Direccion, distancia: int): void
+        + revertirMovimiento(unidad:Unidad, posicionAnterior: Posicion):void
+        + aplicarGolpe(posicion:Posicion, danio: int, direccion: Direccion):void
+        + aplicarDisparo(objetivo: Posicion, danio: int):void
+        + empujarDesde(origen:Posicion, direccion:Direccion):void
+        + atacarDesdeUnidad(unidad:Unidad , arma:Arma , objetivo:Posicion ):void
+        + detieneDisparoEn(posicion:Posicion ):boolean
+        + casillaIgualQue(x: int, y: int, comparar: Casilla): boolean
+        + esCoordenadaValida(posicion: Posicion):boolean
+        + unidadEstaEn(unidad: Unidad,posicion: Posicion): boolean
+}
+
+class Mapa {
+        casillas: List<Casilla>
+
+        + Mapa(casillas: List<Casilla>)
+        + aplicarEfecto(posicion:Posicion , visitante:Visitante ):void
+        + esCoordenadaValida(posicion:Posicion ):boolean
+        + casillaEn(posicion:Posicion ):Casilla
+        + casillaDe(unidad:Unidad ):Casilla
+        + unidadEstaEn(unidad:Unidad , posicion:Posicion ):boolean
+}
+
+class Posicion {
+        - x: int
+        - y: int
+
+        + Posicion(x: int, y: int)
+        + desplazar(deltaX: int, deltaY: int): Posicion
+        + siguienteEn(direccion: Direccion): Posicion
+        + estaEnLineaRectaCon(otra:Posicion ): boolean
+        + estaEnArea(otra:Posicion ):boolean
+        + esAdyacenteA(objetivo:Posicion ):boolean
+        + calcularDireccionHacia(objetivo: Posicion): Direccion
+        + equals(o: Object): boolean
+        + hashCode():int
+}
+
+class SinOcupante extends Ocupante{
+        + puedeIngresar():boolean
+        + esUnidad(unidad:Unidad ):boolean
+        + detieneDisparo():boolean
+        + aceptar(visitante:Visitante , terreno:Terreno ,casillaActual: Casilla ,mapa: Mapa ):void
+}
+
+abstract class Ocupante{
+        + puedeIngresar():boolean
+        + esUnidad(unidad:Unidad ):boolean
+        + detieneDisparo():boolean
+        + aceptar(visitante:Visitante , terreno:Terreno ,casillaActual: Casilla ,mapa: Mapa ):void
+}
+
+class Izquierda implements Direccion {
+
+}
+
+interface Direccion {
+
+       + calcularSiguientePosicion(posicion: Posicion): Posicion
+}
+
+
+
+class Derecha implements Direccion {
+
+}
+
+
+
+class Arriba implements Direccion {
+
+}
+
+class Abajo implements Direccion {
+
+}
+
+class CasillaNula extends Casilla{
+        + CasillaNula()
+        # admitirOcupante(ocupante:Ocupante ): boolean
+
+}
+
+abstract class Casilla {
+
+        - posicion: Posicion
+        - terreno: Terreno
+        - ocupante: Ocupante
+
+        + Casilla(posicion: Posicion)
+        + Casilla(:posicion:Posicion , terreno:Terreno )
+        + aceptar(visitante:Visitante , mapa:Mapa ):void
+        + estaEn(otraPosicion:Posicion ):boolean
+        + tieneUnidad(unidad:Unidad ): boolean
+        # admitirOcupante(ocupante:Ocupante ): boolean
+        + colocarOcupante(ocupante:Ocupante ):void
+        + transferirOcupanteA(casillaDestino: Casilla):boolean
+        + vaciar():void
+        + tieneTerreno(terrenoAComparar:Terreno ):boolean
+        + tieneOcupante(ocupanteAComparar:Ocupante ):boolean
+        + siguienteEn(direccion:Direccion ):Posicion
+        + detieneDisparo():boolean
+        + notificarMovimientoA(unidad:Unidad ): void
+        + ejecutarAtaque(arma:Arma , objetivo:Posicion , tablero:Tablero ):void
+}
+
+abstract class Terreno{
+        + {abstract} reaccionarAlIngresoDe(unidad:Unidad):void
+        + {abstract} puedeIngresar(): boolean
+}
+
+class Suelo extends Terreno {
+
+}
+
+class Agua extends Terreno {
+
+}
+
+class Acido extends Terreno {
+
+}
+
+abstract class Obstaculo extends Ocupante{
+
+        + puedeIngresar():boolean
+        + esUnidad(unidad:Unidad ):boolean
+        + detieneDisparo():boolean
+}
+
+class Montania extends Obstaculo {
+
+       + aceptar(visitante:Visitante , terreno:Terreno , casillaActual:Casilla , mapa:Mapa ):void
+}
+
+class Edificio extends Obstaculo {
+
+       + Edificio()
+}
+
+abstract class Destruible extends Obstaculo{
+        -vida:int
+
+        + Destruible(vida:int )
+        + aceptar(visitante:Visitante , terreno:Terreno , casillaActual:Casilla , mapa:Mapa ):void
+        + recibirDanio(danio:int , casillaActual:Casilla ):void
+}
+
+Tablero o-- Mapa
+Mapa o-- Casilla
+Casilla o-- Posicion
+Casilla o-- Terreno
+Casilla o-- Ocupante
+Unidad --> Visitante
+Mech o--> Estado
+Mech o--> Arma
+Tablero --> Direccion
+
+
+
+
+
+
+
+@enduml
