@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public class DanioPorColision implements Visitante{
@@ -21,4 +22,7 @@ public class DanioPorColision implements Visitante{
 
     @Override
     public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Mapa mapa) {}
+
+    @Override
+    public void visitar(Montania montania, Terreno terreno, Casilla casillaActual, Mapa mapa) {}
 }
