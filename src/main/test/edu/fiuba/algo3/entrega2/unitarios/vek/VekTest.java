@@ -2,9 +2,11 @@ package edu.fiuba.algo3.entrega2.unitarios.vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Acido;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
+import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VekTest {
 
@@ -21,19 +26,27 @@ public class VekTest {
     private Luciernaga luciernaga;
     private Mech mech;
     private Saltador saltador;
+    private Avispon avispon;
 
 
     @BeforeEach
     public void setUp() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa.add(new Casilla(new Posicion(i, j)));
+                Posicion posicion = new Posicion(i, j);
+
+                if (i == 3 && j == 2) {
+                    mapa.add(new Casilla(posicion, new Acido()));
+                } else {
+                    mapa.add(new Casilla(posicion));
+                }
             }
         }
         tablero = new Tablero(mapa);
         luciernaga = new Luciernaga();
         mech = new Combate();
         saltador = new Saltador();
+        avispon = new Avispon();
 
     }
 
@@ -92,11 +105,7 @@ public class VekTest {
     @Test
     public void test06AlEmpujarUnVekContraUnObstaculoSeAplicaElDañoDeColision(){}
 
-    @Test
-    public void test07AlColocarUnVekTerrestreSobreAcidoQuedaContaminada(){}
 
-    @Test
-    public void test08AlAtacarAUnVekContaminadoRecibeElDobleDeDaño(){}
 
     @Test
     public void test09AlColocarseUnVekSobreLaCasillaDeEmergenciaBloqueaLaAparicionDelNuevoVek(){}
@@ -154,8 +163,7 @@ public class VekTest {
     public void test27ContaminacionDeLuciernagaNoSeAcumulaAlImpactarVariasVecesAUnMech(){}
 
 
-    @Test
-    public void test28AvisponTerminaEnSobreAcidoYNoQuedaContaminado(){}
+
 
 */
 
