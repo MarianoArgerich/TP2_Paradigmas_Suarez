@@ -7,6 +7,8 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
+import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +21,8 @@ public class RedElectricaTest {
     private Tablero tablero;
     private List<Casilla> mapa = new ArrayList<>();
     private Mech combate;
+    private Posicion posicionMech;
+    private Posicion posicionEdificio;
 
     @BeforeEach
     public void setUp() {
@@ -29,19 +33,18 @@ public class RedElectricaTest {
         }
         tablero = new Tablero(mapa);
         combate = new Combate();
-    }
+        posicionMech = new Posicion(2, 2);
+        posicionEdificio = new Posicion(2, 3);
 
-    @Test
-    public void testAlHacerDañoAUnEdificioLaRedElectricaSeReduceEn1() {
-        Posicion posicionMech = new Posicion(2, 2);
-        Posicion posicionEdificio = new Posicion(2, 3);
-
-        // Reemplazamos la casilla vacía (2,3) por una con el edificio
         mapa.removeIf(c -> c.estaEn(posicionEdificio));
 
         Casilla casillaEdificio = new Casilla(posicionEdificio);
         casillaEdificio.colocarOcupante(new Edificio());
         mapa.add(casillaEdificio);
+    }
+
+    @Test
+    public void testAlHacerDañoAUnEdificioLaRedElectricaSeReduceEn1() {
 
         tablero = new Tablero(mapa);
         tablero.colocarUnidad(posicionMech, combate);
@@ -53,16 +56,8 @@ public class RedElectricaTest {
 
     @Test
     public void testAlFallarElAtaqueAUnEdificioLaRedElectricaNoPierdeEnergia(){
-        Posicion posicionMech = new Posicion(2, 2);
-        Posicion posicionEdificio = new Posicion(2, 3);
+
         Posicion posicionErrada = new Posicion(2, 1);
-
-        // Reemplazamos la casilla vacía (2,3) por una con el edificio
-        mapa.removeIf(c -> c.estaEn(posicionEdificio));
-
-        Casilla casillaEdificio = new Casilla(posicionEdificio);
-        casillaEdificio.colocarOcupante(new Edificio());
-        mapa.add(casillaEdificio);
 
         tablero = new Tablero(mapa);
         tablero.colocarUnidad(posicionMech, combate);
@@ -72,6 +67,77 @@ public class RedElectricaTest {
         assertTrue(tablero.tieneEnergia(5));
     }
 
+    @Test
+    public void testUnVekEmpujadoContraUnEdificioReduceLaRedElectricaEn1(){
+        Vek vek = new Luciernaga();
+        Posicion posicionVek = new Posicion(2, 1);
+        Posicion posicionEdificioChocable = new Posicion(2,0);
+
+        mapa.removeIf(c -> c.estaEn(posicionEdificioChocable));
+
+        Casilla edificioChocable = new Casilla(posicionEdificioChocable);
+        edificioChocable.colocarOcupante(new Edificio());
+        mapa.add(edificioChocable);
+
+        tablero = new Tablero(mapa);
+        tablero.colocarUnidad(posicionVek, vek);
+        tablero.colocarUnidad(posicionMech, combate);
+
+        tablero.atacar(posicionMech,posicionVek);
+
+        assertTrue(tablero.tieneEnergia(4));
+
+    }
+
+
+    @Test
+    public void testAtacarUnEdificioPreviamenteDestruidoNoReduceLaEnergia(){
+        Mech mech2 = new Combate();
+        Posicion posicionMech2 = new Posicion(3,3);
+        tablero = new Tablero(mapa);
+        tablero.colocarUnidad(posicionMech, combate);
+        tablero.colocarUnidad(posicionMech2, mech2);
+
+        tablero.atacar(posicionMech2, posicionEdificio);
+        tablero.atacar(posicionMech, posicionEdificio);
+
+        assertTrue(tablero.tieneEnergia(4));
+
+    }
+
+    @Test
+    public void testAtacarDosEdificiosEnElMismoTurnoReduceLaEnergiaEn2(){
+        Posicion posicionEdificio2 = new Posicion(3,2);
+
+        mapa.removeIf(c -> c.estaEn(posicionEdificio2));
+
+        Casilla edificio2 = new Casilla(posicionEdificio2);
+        edificio2.colocarOcupante(new Edificio());
+        mapa.add(edificio2);
+
+        Mech mech2 = new Combate();
+        Posicion posicionMech2 = new Posicion(3,3);
+        tablero = new Tablero(mapa);
+        tablero.colocarUnidad(posicionMech, combate);
+        tablero.colocarUnidad(posicionMech2, mech2);
+
+        tablero.atacar(posicionMech,posicionEdificio);
+        tablero.atacar(posicionMech2,posicionEdificio2);
+
+        assertTrue(tablero.tieneEnergia(3));
+
+    }
+    /*
+    // realizar cuando Vek este implementado
+    @Test
+    public void testUnAtaqueDeVekAUnEdificioReduceLaRedElectrica(){
+    }
+
+    //Realizar cuando la Derrota este implementada
+    @Test
+    public void testDestruirCincoEdificiosLanzaLaExcepcionDeDerrota(){
+    }
+     */
 }
 
 

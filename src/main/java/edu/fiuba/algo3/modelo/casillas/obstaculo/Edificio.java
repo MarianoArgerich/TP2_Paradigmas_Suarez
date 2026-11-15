@@ -14,7 +14,7 @@ public class Edificio extends Destruible {
     @Override
     public void recibirDanio(int danio, Casilla casillaActual,Mapa mapa) {
         super.recibirDanio(danio, casillaActual, mapa);
-        mapa.reducirRedElectrica(1);
+        mapa.reducirRedElectrica();
     }
 
     @Override
