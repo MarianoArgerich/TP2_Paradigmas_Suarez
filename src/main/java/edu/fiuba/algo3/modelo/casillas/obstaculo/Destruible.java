@@ -20,7 +20,7 @@ public abstract class Destruible extends Obstaculo {
         visitante.visitar(this, terreno, casillaActual, mapa);
     }
 
-    public void recibirDanio(int danio, Casilla casillaActual){
+    public void recibirDanio(int danio, Casilla casillaActual, Mapa mapa){
         this.vida -= danio;
 
         if (this.vida <= 0) {

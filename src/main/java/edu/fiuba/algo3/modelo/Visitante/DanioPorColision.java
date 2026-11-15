@@ -16,7 +16,7 @@ public class DanioPorColision implements Visitante{
 
     @Override
     public void visitar(Destruible destruible, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        destruible.recibirDanio(1, casillaActual);
+        destruible.recibirDanio(1, casillaActual, mapa);
     }
 
     @Override
