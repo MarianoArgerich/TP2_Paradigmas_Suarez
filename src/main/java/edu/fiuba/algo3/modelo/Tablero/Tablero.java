@@ -55,4 +55,8 @@ public class Tablero {
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
     }
+
+    public boolean tieneEnergia(int energia) {
+        return mapa.tieneEnergia(energia);
+    }
 }

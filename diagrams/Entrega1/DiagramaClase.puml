@@ -298,7 +298,7 @@ class Montania extends Obstaculo {
        + aceptar(visitante:Visitante , terreno:Terreno , casillaActual:Casilla , mapa:Mapa ):void
 }
 
-class Edificio extends Obstaculo {
+class Edificio extends Destruible {
 
        + Edificio()
 }

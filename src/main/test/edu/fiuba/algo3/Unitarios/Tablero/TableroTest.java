@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.CasillaNula;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.excepciones.CoordenadaFueraDelTableroException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
@@ -39,7 +40,7 @@ public class TableroTest {
     @Test
     public void tableroValidaPosicionInexistente() {
         tablero = new Tablero(casillas);
-        assertThrows(CoordenadaFueraDelTableroException.class, () -> tablero.colocarUnidad(new Posicion(0, 1), new Combate()));
+        assertThrows(CasillaInvalidaException.class, () -> tablero.colocarUnidad(new Posicion(0, 1), new Combate()));
     }
 
 }
