@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
+import edu.fiuba.algo3.modelo.Visitante.Contaminacion;
 import edu.fiuba.algo3.modelo.Visitante.Disparo;
 import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
@@ -46,6 +47,10 @@ public class Tablero {
 
     public boolean detieneDisparoEn(Posicion posicion) {
         return mapa.detieneDisparoEn(posicion);
+    }
+
+    public void aplicarContaminacion(Posicion objetivo) {
+        mapa.aplicarEfecto(objetivo, new Contaminacion());
     }
 
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {

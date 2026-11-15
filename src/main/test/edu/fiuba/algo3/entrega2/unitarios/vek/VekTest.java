@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
+import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,7 @@ public class VekTest {
     private List<Casilla> mapa = new ArrayList<>();
     private Luciernaga luciernaga;
     private Mech mech;
+    private Saltador saltador;
 
 
     @BeforeEach
@@ -31,6 +33,8 @@ public class VekTest {
         tablero = new Tablero(mapa);
         luciernaga = new Luciernaga();
         mech = new Combate();
+        saltador = new Saltador();
+
     }
 
     @Test
@@ -42,12 +46,28 @@ public class VekTest {
         tablero.colocarUnidad(posicionAtacante, luciernaga);
         tablero.colocarUnidad(posicionAtacada, mech);
 
+        //act
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
+        //assert
+        assert (mech.estaContaminado());
+
+    }
+
+    @Test
+    public void test24LuciernagaAtacaAUnVekYLoDejaContaminado(){
+        //arrange
+        Posicion posicionAtacante = new Posicion(2, 2);
+        Posicion posicionAtacada = new Posicion(3, 2);
+
+        tablero.colocarUnidad(posicionAtacante, luciernaga);
+        tablero.colocarUnidad(posicionAtacada, saltador);
 
         //act
         tablero.atacar(posicionAtacante, posicionAtacada);
 
         //assert
-
+        assert (saltador.estaContaminado());
     }
 
 
@@ -125,13 +145,6 @@ public class VekTest {
     @Test
     public void test23AtaqueDeVekASeEjecutaAntesQueElDeVekBSiguiendoElOrdenAnunciado()
 
-    @Test
-    public void test24LuciernagaAtacaAUnVekYLoDejaContaminado(){}
-
-
-    @Test
-    public void test25LuciernagaAtacaAUnMechYLoDejaContaminado(){}
-
 
     @Test
     public void test26ContaminacionDeLuciernagaNoSeAcumulaAlImpactarVariasVecesAUnVek(){}
@@ -145,4 +158,4 @@ public class VekTest {
     public void test28AvisponTerminaEnSobreAcidoYNoQuedaContaminado(){}
 
 */
-}
+

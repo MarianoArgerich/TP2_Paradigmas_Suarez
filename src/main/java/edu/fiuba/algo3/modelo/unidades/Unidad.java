@@ -18,11 +18,13 @@ public abstract class Unidad extends Ocupante {
     private final int vidaMax;
     private final int rangoDeMovimiento;
     private int vidaActual;
+    private boolean contaminado;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
+        this.contaminado = false;
     }
 
     @Override
@@ -30,7 +32,7 @@ public abstract class Unidad extends Ocupante {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Unidad unidad = (Unidad) o;
-        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual && contaminado == unidad.contaminado;
     }
 
     @Override
@@ -77,5 +79,13 @@ public abstract class Unidad extends Ocupante {
     public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
         this.verificarRangoDeMovimiento(distancia);
         mapa.desplazarUnidad(origen, this, direccion, distancia);
+    }
+
+    public boolean estaContaminado() {
+        return this.contaminado;
+    }
+
+    public void contaminar() {
+        this.contaminado = true;
     }
 }
