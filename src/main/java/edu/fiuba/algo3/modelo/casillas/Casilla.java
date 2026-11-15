@@ -88,7 +88,8 @@ public class Casilla {
     }
 
     public void ejecutarAtaque(Posicion objetivo, Tablero tablero) {
-        this.ocupante.atacar(this.posicion ,objetivo, tablero);
+        this.ocupante.verificarAtaqueEn(this.terreno);
+        this.ocupante.atacar(this.posicion, objetivo, tablero);
     }
 
     public void deshacerMovimientoOcupante(Mapa mapa) {
@@ -101,5 +102,9 @@ public class Casilla {
 
     public boolean esSiguienteEn(Direccion direccion, Casilla otraCasilla) {
         return otraCasilla.estaEn(this.posicion.siguienteEn(direccion));
+    }
+
+    public void aplicarEfectoDelTerreno() {
+        this.ocupante.reaccionarAlTerreno(this.terreno, this);
     }
 }

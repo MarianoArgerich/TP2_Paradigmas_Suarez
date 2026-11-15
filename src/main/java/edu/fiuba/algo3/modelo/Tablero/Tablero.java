@@ -55,4 +55,5 @@ public class Tablero {
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
     }
+
 }

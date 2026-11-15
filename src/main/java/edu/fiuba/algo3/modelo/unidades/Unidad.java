@@ -78,4 +78,18 @@ public abstract class Unidad extends Ocupante {
         this.verificarRangoDeMovimiento(distancia);
         mapa.desplazarUnidad(origen, this, direccion, distancia);
     }
+
+    @Override
+    public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
+        terreno.reaccionarAlIngresoDe(this, casilla);
+    }
+
+    public void caerAlAguaEn(Casilla casilla) {}
+
+    @Override
+    public void verificarAtaqueEn(Terreno terreno) {
+        terreno.verificarAtaqueDe(this);
+    }
+
+    public void verificarAtaqueEnAgua() {}
 }
