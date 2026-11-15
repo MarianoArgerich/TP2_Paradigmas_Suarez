@@ -1,8 +1,57 @@
 package edu.fiuba.algo3.entrega2.unitarios.vek;
 
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
+import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
+import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VekTest {
+
+
+    private Tablero tablero;
+    private List<Casilla> mapa = new ArrayList<>();
+    private Luciernaga luciernaga;
+    private Mech mech;
+
+
+    @BeforeEach
+    public void setUp() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                mapa.add(new Casilla(new Posicion(i, j)));
+            }
+        }
+        tablero = new Tablero(mapa);
+        luciernaga = new Luciernaga();
+        mech = new Combate();
+    }
+
+    @Test
+    public void test25LuciernagaAtacaAUnMechYLoDejaContaminado() {
+        //arrange
+        Posicion posicionAtacante = new Posicion(2, 2);
+        Posicion posicionAtacada = new Posicion(3, 2);
+
+        tablero.colocarUnidad(posicionAtacante, luciernaga);
+        tablero.colocarUnidad(posicionAtacada, mech);
+
+
+        //act
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
+        //assert
+
+    }
+
+
+}
 /*
 
     @Test
