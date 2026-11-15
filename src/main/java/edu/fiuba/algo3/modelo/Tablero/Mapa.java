@@ -83,8 +83,8 @@ public class Mapa {
         origen.notificarMovimientoA(unidad);
     }
 
-    public void reducirRedElectrica(int cantidad) {
-        this.redElectrica.reducirEnergia(cantidad);
+    public void reducirRedElectrica() {
+        this.redElectrica.reducirEnergia();
     }
 
     public boolean tieneEnergia(int energia) {

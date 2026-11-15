@@ -9,12 +9,12 @@ public class RedElectrica {
         this.energia = 5;
     }
 
-    public void reducirEnergia(int cantidad) {
+    public void reducirEnergia() {
         if (!hayEnergia()){
             throw new NoHayMasEnergia("No se puede reducir la energia si ya no tiene mas");
         }
-        //devuelve el maximo entre la resta de mi energia actual y la que me quitan, y 0.
-        this.energia = Math.max(0, this.energia - cantidad);
+
+        this.energia = this.energia - 1;
     }
 
     private boolean hayEnergia() {
