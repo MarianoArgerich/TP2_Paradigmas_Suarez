@@ -25,9 +25,9 @@ public class ImpactoDeEmpuje implements Visitante {
 
     @Override
     public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla destino, Mapa mapa) {
-
         try {
             origen.transferirOcupanteA(destino);
+            destino.aplicarEfectoDelTerreno();
         }
         catch (CasillaInvalidaException e) {
             return;
