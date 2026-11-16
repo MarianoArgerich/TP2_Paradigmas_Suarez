@@ -19,7 +19,7 @@ public abstract class Unidad extends Ocupante {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;
-    private int vidaActual;
+    protected int vidaActual;
     private EstadoContaminacion estadoContaminacion;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
@@ -107,7 +107,7 @@ public abstract class Unidad extends Ocupante {
 
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
-        terreno.reaccionarAlIngresoDe(this, casilla);
+        terreno.reaccionarAlIngresoDe(this,casilla);
     }
 
     public void caerAlAguaEn(Casilla casilla) {}

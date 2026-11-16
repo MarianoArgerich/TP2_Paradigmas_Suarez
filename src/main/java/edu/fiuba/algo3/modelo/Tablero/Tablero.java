@@ -56,8 +56,9 @@ public class Tablero {
         mapa.deshacerMovimiento(posicionActual);
     }
 
-    public void contaminar(Posicion posicion){
+    public void contaminar(Posicion posicion) {
         mapa.contaminar(posicion);
+    }
     public boolean tieneEnergia(int energia) {
         return mapa.tieneEnergia(energia);
     }

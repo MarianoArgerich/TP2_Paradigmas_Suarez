@@ -83,8 +83,10 @@ public class Mapa {
         origen.notificarMovimientoA(unidad);
     }
 
-    public void contaminar(Posicion objetivo){
+    public void contaminar(Posicion objetivo) {
         casillaEn(objetivo).contaminar();
+    }
+
     public void reducirRedElectrica() {
         this.redElectrica.reducirEnergia();
     }

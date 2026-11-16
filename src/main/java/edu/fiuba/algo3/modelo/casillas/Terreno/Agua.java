@@ -7,6 +7,9 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 public class Agua extends Terreno {
 
     @Override
+    public void reaccionarAlIngresoDe(Unidad unidad){};
+
+    @Override
     public void reaccionarAlIngresoDe(Unidad unidad, Casilla casilla) {
         unidad.caerAlAguaEn(casilla);
     }

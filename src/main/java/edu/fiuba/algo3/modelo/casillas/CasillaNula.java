@@ -2,7 +2,6 @@ package edu.fiuba.algo3.modelo.casillas;
 
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
-import edu.fiuba.algo3.modelo.excepciones.CoordenadaFueraDelTableroException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -18,7 +17,7 @@ public class CasillaNula extends Casilla {
 
     @Override
     public void colocarUnidad(Unidad unidad) {
-        throw new CoordenadaFueraDelTableroException("La coordenada no pertenece al tablero");
+        throw new CasillaInvalidaException("No se puede colocar la unidad en una casilla ocupada o no transitable");
     }
 
     @Override

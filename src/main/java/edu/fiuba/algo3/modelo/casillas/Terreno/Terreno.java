@@ -7,6 +7,8 @@ public abstract class Terreno {
 
     public abstract void reaccionarAlIngresoDe(Unidad unidad);
 
+    public abstract void reaccionarAlIngresoDe(Unidad unidad, Casilla casilla);
+
     public abstract boolean puedeIngresar();
 
     @Override

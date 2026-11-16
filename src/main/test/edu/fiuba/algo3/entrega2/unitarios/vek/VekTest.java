@@ -37,6 +37,7 @@ public class VekTest {
     private Mech mech2;
     private Saltador saltador;
     private Avispon avispon;
+    private Posicion posicionAgua;
 
 
     @BeforeEach
@@ -157,7 +158,7 @@ public class VekTest {
 
 
 
-}
+
 /*
 
     @Test
@@ -188,7 +189,10 @@ public class VekTest {
 */
     @Test
     public void testLuciernagaEsEmpujadaAlAguaYSuCasillaSeVacia() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Luciernaga luciernaga = new Luciernaga();
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
 
@@ -199,7 +203,10 @@ public class VekTest {
 
     @Test
     public void testLuciernagaEsEmpujadaAlAguaYSeMuere() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Luciernaga luciernaga = new Luciernaga();
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
 
@@ -210,7 +217,10 @@ public class VekTest {
 
     @Test
     public void testSaltadorEsEmpujadaAlAguaYSuCasillaSeVacia() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Saltador saltador = new Saltador();
         tablero.colocarUnidad(new Posicion(2, 2), saltador);
 
@@ -221,7 +231,10 @@ public class VekTest {
 
     @Test
     public void testSaltadorEsEmpujadaAlAguaYSeMuere() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Saltador saltador = new Saltador();
         tablero.colocarUnidad(new Posicion(2, 2), saltador);
 
@@ -233,7 +246,10 @@ public class VekTest {
 
     @Test
     public void testAvisponEsEmpujadaAlAgua() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Avispon avispon = new Avispon();
         tablero.colocarUnidad(new Posicion(2, 2), avispon);
 
@@ -244,7 +260,10 @@ public class VekTest {
 
     @Test
     public void testAvisponEsEmpujadaAlAguaYNoSeMuere() {
-        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        posicionAgua = new Posicion(2,3);
+        mapa.removeIf(c -> c.estaEn(posicionAgua));
+        mapa.add(new Casilla(posicionAgua, new Agua()));
+        tablero = new Tablero(mapa);
         Avispon avispon = new Avispon();
         tablero.colocarUnidad(new Posicion(2, 2), avispon);
 
@@ -252,6 +271,7 @@ public class VekTest {
 
         assertTrue(avispon.suVidaEsIgualA(2));
     }
+}
 /*
     @Test
     public void test14LaIADeLosVekAplicaLasReglasDePrioridadEnOrden() {}

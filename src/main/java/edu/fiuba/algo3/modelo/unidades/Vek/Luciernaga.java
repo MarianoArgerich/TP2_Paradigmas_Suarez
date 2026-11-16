@@ -22,9 +22,6 @@ public class Luciernaga extends Vek {
         if (!origen.estaEnLineaRectaCon(objetivo)) {
             throw new AtaqueInvalidoException("La luciernaga solo puede atacar en linea recta");
         }
-    public void caerAlAguaEn(Casilla casilla) {
-        super.caerAlAguaEn(casilla);
-        this.vidaActual = 0;
 
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         Posicion actual = origen.siguienteEn(direccion);
@@ -37,4 +34,9 @@ public class Luciernaga extends Vek {
         tablero.contaminar(objetivo);
     }
 
+    @Override
+    public void caerAlAguaEn(Casilla casilla) {
+        this.vidaActual = 0;
+        super.caerAlAguaEn(casilla);
+    }
 }

@@ -6,6 +6,11 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 public class Acido extends Terreno {
 
     @Override
+    public void reaccionarAlIngresoDe(Unidad unidad, Casilla casilla) {
+        unidad.contaminarPorAcido();
+    }
+
+    @Override
     public void reaccionarAlIngresoDe(Unidad unidad) {
         unidad.contaminarPorAcido();
 
