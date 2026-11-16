@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Arma;
 
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -12,7 +14,7 @@ public class DisparoCanion extends Arma {
         this.danio = 1;
     }
 
-    public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
+    public void ejecutarAtaque(Posicion origen, Posicion objetivo, Mapa mapa) {
         if (!origen.estaEnLineaRectaCon(objetivo)) {
             throw new AtaqueInvalidoException("El canion solo puede atacar en linea recta");
         }
@@ -20,9 +22,9 @@ public class DisparoCanion extends Arma {
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         Posicion actual = origen.siguienteEn(direccion);
 
-        while (!tablero.detieneDisparoEn(actual)){
+        while (!mapa.detieneDisparoEn(actual)){
             actual = actual.siguienteEn(direccion);
         }
-        tablero.aplicarGolpe(actual, danio, direccion);
+        mapa.aplicarEfecto(actual,new Golpe( danio, direccion));
     }
 }

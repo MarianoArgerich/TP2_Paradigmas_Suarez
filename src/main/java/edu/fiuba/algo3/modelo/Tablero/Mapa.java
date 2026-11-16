@@ -6,6 +6,8 @@ import edu.fiuba.algo3.modelo.casillas.CasillaNula;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
+import edu.fiuba.algo3.modelo.representacion.TraductorTerreno;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 import java.util.List;
@@ -47,8 +49,8 @@ public class Mapa {
         return casillaEn(posicion).detieneDisparo();
     }
 
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero){
-        casillaEn(origen).ejecutarAtaque(objetivo, tablero);
+    public void atacar(Posicion origen, Posicion objetivo, Mapa mapa){
+        casillaEn(origen).ejecutarAtaque(objetivo, mapa);
     }
 
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
@@ -79,4 +81,8 @@ public class Mapa {
         }
         origen.notificarMovimientoA(unidad);
     }
+    public void traducirCasilla(Posicion posicion, TraductorTerreno traductorTerreno, TraductorEntidad traductorEntidad) {
+        casillaEn(posicion).traducirCon(traductorTerreno, traductorEntidad);
+    }
+
 }

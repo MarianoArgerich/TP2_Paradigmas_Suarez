@@ -31,8 +31,8 @@ public abstract class Mech extends Unidad {
         this.estado = new Movido(posicion);
     }
 
-    public void atacar(Posicion origen, Posicion posicionObjetivo, Tablero tablero) {
-        this.estado.atacar(this, this.arma, origen, posicionObjetivo, tablero);
+    public void atacar(Posicion origen, Posicion posicionObjetivo, Mapa mapa) {
+        this.estado.atacar(this, this.arma, origen, posicionObjetivo, mapa);
     }
 
     public void deshacerMovimientoDesde(Casilla casillaActual, Mapa mapa){

@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.casillas.Terreno;
 
+import edu.fiuba.algo3.modelo.representacion.TraductorTerreno;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public class Suelo extends Terreno {
@@ -13,5 +14,10 @@ public class Suelo extends Terreno {
     @Override
     public boolean puedeIngresar() {
         return true;
+    }
+
+    @Override
+    public void aceptarTraductor(TraductorTerreno traductor) {
+        traductor.traducirSuelo();
     }
 }

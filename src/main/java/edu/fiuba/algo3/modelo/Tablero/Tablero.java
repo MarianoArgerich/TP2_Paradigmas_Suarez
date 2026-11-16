@@ -6,15 +6,27 @@ import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
+import edu.fiuba.algo3.modelo.observador.Observador;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
+import edu.fiuba.algo3.modelo.representacion.TraductorTerreno;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tablero {
 
     private final Mapa mapa;
+    private final List<Observador> observadores = new ArrayList<>();
+
+    public void agregarObservador(Observador observador){
+        this.observadores.add(observador);
+    }
+
+    private void notificarObservadores() {
+        observadores.forEach(Observador::actualizar);
+    }
 
     public Tablero(List<Casilla> casillas){
         this.mapa = new Mapa(casillas);
@@ -22,30 +34,17 @@ public class Tablero {
 
     public void colocarUnidad(Posicion coordenadas, Unidad unidad) {
         mapa.colocarUnidad(coordenadas, unidad);
+        notificarObservadores();
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
         mapa.mover(origen, direccion, distancia);
-    }
-
-    public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
-        mapa.aplicarEfecto(posicion, new Golpe(danio, direccion));
-    }
-
-    public void aplicarDisparo(Posicion objetivo,int danio){
-        mapa.aplicarEfecto(objetivo, new Disparo(danio));
-    }
-
-    public void empujarDesde(Posicion origen, Direccion direccion) {
-        mapa.aplicarEfecto(origen, new Empuje(direccion));
+        notificarObservadores();
     }
 
     public void atacar(Posicion origen, Posicion objetivo) {
-        mapa.atacar(origen, objetivo, this);
-    }
-
-    public boolean detieneDisparoEn(Posicion posicion) {
-        return mapa.detieneDisparoEn(posicion);
+        mapa.atacar(origen, objetivo, this.mapa);
+        notificarObservadores();
     }
 
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
@@ -54,5 +53,10 @@ public class Tablero {
 
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
+        notificarObservadores();
+    }
+
+    public void traducirCasilla(Posicion posicion, TraductorTerreno traductorTerreno, TraductorEntidad traductorEntidad){
+        mapa.traducirCasilla(posicion, traductorTerreno, traductorEntidad);
     }
 }

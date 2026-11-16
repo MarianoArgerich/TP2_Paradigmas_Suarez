@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
 
 public class Montania extends Obstaculo {
 
@@ -21,5 +22,10 @@ public class Montania extends Obstaculo {
     @Override
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
 
+    }
+
+    @Override
+    public void aceptarTraductor(TraductorEntidad traductor) {
+        traductor.traducirMontania();
     }
 }

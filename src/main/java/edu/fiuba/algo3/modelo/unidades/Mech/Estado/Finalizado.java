@@ -18,7 +18,7 @@ public class Finalizado implements Estado {
     }
 
     @Override
-    public void atacar(Mech mech, Arma arma, Posicion origen,Posicion objetivo, Tablero tablero) {
+    public void atacar(Mech mech, Arma arma, Posicion origen,Posicion objetivo, Mapa mapa) {
         throw new YaAtacoException("El mech no debería poder atacar dos veces en un turno");
     }
     @Override

@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public class SinOcupante extends Ocupante{
@@ -29,7 +30,7 @@ public class SinOcupante extends Ocupante{
     }
 
     @Override
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
+    public void atacar(Posicion origen, Posicion objetivo, Mapa mapa) {
 
     }
 
@@ -41,5 +42,10 @@ public class SinOcupante extends Ocupante{
     @Override
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
         throw new UnidadInvalidaException("No hay una unidad en la casilla de origen");
+    }
+
+    @Override
+    public void aceptarTraductor(TraductorEntidad traductor) {
+        traductor.traducirVacio();
     }
 }

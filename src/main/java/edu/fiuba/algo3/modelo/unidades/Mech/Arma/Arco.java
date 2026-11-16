@@ -1,6 +1,9 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Arma;
 
+import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -14,7 +17,7 @@ public class Arco extends Arma{
     }
 
     @Override
-    public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
+    public void ejecutarAtaque(Posicion origen, Posicion objetivo, Mapa mapa) {
         if(origen.estaEnArea(objetivo)){
             throw new AtaqueInvalidoException("No se puede atacar a una casilla que este dentro del rango prohibido 3x3");
         }
@@ -22,12 +25,12 @@ public class Arco extends Arma{
             throw new AtaqueInvalidoException("No se puede atacar a una casilla que no este en linea recta");
         }
 
-        tablero.aplicarDisparo(objetivo, danio);
+        mapa.aplicarEfecto(objetivo, new Disparo(danio));
 
         List<Direccion> direcciones = List.of(new Arriba(), new Abajo(), new Izquierda(), new Derecha());
 
         for (Direccion direccion : direcciones) {
-            tablero.empujarDesde(direccion.calcularSiguientePosicion(objetivo), direccion);
+            mapa.aplicarEfecto(direccion.calcularSiguientePosicion(objetivo), new Empuje(direccion));
         }
 
     }

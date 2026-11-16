@@ -15,9 +15,9 @@ import java.util.Objects;
 
 public abstract class Unidad extends Ocupante {
 
-    private final int vidaMax;
-    private final int rangoDeMovimiento;
-    private int vidaActual;
+    protected final int vidaMax;
+    protected final int rangoDeMovimiento;
+    protected int vidaActual;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;

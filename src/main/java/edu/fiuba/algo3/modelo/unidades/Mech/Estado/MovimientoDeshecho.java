@@ -17,8 +17,8 @@ public class MovimientoDeshecho implements Estado {
     }
 
     @Override
-    public void atacar(Mech mech, Arma arma, Posicion origen,Posicion objetivo, Tablero tablero) {
-        arma.ejecutarAtaque(origen, objetivo, tablero);
+    public void atacar(Mech mech, Arma arma, Posicion origen,Posicion objetivo, Mapa mapa) {
+        arma.ejecutarAtaque(origen, objetivo, mapa);
         mech.cambiarEstado(new Finalizado());
     }
 

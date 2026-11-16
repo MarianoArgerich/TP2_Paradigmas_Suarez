@@ -10,6 +10,6 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 
 public interface Estado {
     void mover(Mech mech, Casilla origen, Direccion direccion, int distancia, Mapa mapa);
-    void atacar(Mech mech, Arma arma, Posicion origen, Posicion objetivo, Tablero tablero);
+    void atacar(Mech mech, Arma arma, Posicion origen, Posicion objetivo, Mapa mapa);
     void deshacerMovimiento(Mech mech, Casilla casillaActual, Mapa mapa);
 }

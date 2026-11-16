@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.casillas.obstaculo;
 import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
 
 public class Edificio extends Destruible {
 
@@ -13,5 +14,10 @@ public class Edificio extends Destruible {
     @Override
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
 
+    }
+
+    @Override
+    public void aceptarTraductor(TraductorEntidad traductor) {
+        traductor.traducirEdificio();
     }
 }

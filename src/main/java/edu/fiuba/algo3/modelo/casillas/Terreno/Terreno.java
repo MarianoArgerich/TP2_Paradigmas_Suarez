@@ -1,11 +1,14 @@
 package edu.fiuba.algo3.modelo.casillas.Terreno;
 
+import edu.fiuba.algo3.modelo.representacion.TraductorTerreno;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Terreno {
 
     public abstract void reaccionarAlIngresoDe(Unidad unidad);
     public abstract boolean puedeIngresar();
+    public abstract void aceptarTraductor(TraductorTerreno traductor);
+
 
     @Override
     public boolean equals(Object obj) {

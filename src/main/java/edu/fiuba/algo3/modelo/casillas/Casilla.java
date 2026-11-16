@@ -9,6 +9,8 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
+import edu.fiuba.algo3.modelo.representacion.TraductorTerreno;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -87,8 +89,8 @@ public class Casilla {
         unidad.registrarMovimientoDesde(this.posicion);
     }
 
-    public void ejecutarAtaque(Posicion objetivo, Tablero tablero) {
-        this.ocupante.atacar(this.posicion ,objetivo, tablero);
+    public void ejecutarAtaque(Posicion objetivo, Mapa mapa) {
+        this.ocupante.atacar(this.posicion ,objetivo, mapa);
     }
 
     public void deshacerMovimientoOcupante(Mapa mapa) {
@@ -101,5 +103,10 @@ public class Casilla {
 
     public boolean esSiguienteEn(Direccion direccion, Casilla otraCasilla) {
         return otraCasilla.estaEn(this.posicion.siguienteEn(direccion));
+    }
+
+    public void traducirCon(TraductorTerreno traductorTerreno, TraductorEntidad traductorEntidad){
+        this.terreno.aceptarTraductor(traductorTerreno);
+        this.ocupante.aceptarTraductor(traductorEntidad);
     }
 }

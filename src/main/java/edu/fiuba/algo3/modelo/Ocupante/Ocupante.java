@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.representacion.TraductorEntidad;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Ocupante {
@@ -23,9 +24,11 @@ public abstract class Ocupante {
         return obj != null && getClass() == obj.getClass();
     }
 
-    public abstract void atacar(Posicion origen, Posicion objetivo, Tablero tablero);
+    public abstract void atacar(Posicion origen, Posicion objetivo, Mapa mapa);
 
     public abstract void deshacerMovimientoDesde(Casilla casilla, Mapa mapa);
 
     public abstract void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa);
+
+    public abstract void aceptarTraductor(TraductorEntidad traductor);
 }
