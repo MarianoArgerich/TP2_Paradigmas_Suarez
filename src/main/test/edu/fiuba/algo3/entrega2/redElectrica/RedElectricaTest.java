@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega2.unitarios.redElectrica;
+package edu.fiuba.algo3.entrega2.redElectrica;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega2.unitarios.mech;
+package edu.fiuba.algo3.entrega2.mech;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

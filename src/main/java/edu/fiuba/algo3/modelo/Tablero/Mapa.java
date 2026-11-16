@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.CasillaNula;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -54,6 +55,12 @@ public class Mapa {
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         return casillaEn(posicion).tieneUnidad(unidad);
     }
+
+    public boolean edificioEn(Posicion posicion){return casillaEn(posicion).tieneOcupante(new Edificio());}
+
+    public boolean mechEn(Posicion posicion){return casillaEn(posicion).tieneMech();}
+
+    public boolean vekEn(Posicion posicion){return casillaEn(posicion).tieneVek();}
 
     private Casilla siguienteCasilla(Casilla origen, Direccion direccion) {
         return casillas.stream()

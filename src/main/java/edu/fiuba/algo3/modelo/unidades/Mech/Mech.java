@@ -43,4 +43,9 @@ public abstract class Mech extends Unidad {
     public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
         this.estado.mover(this, origen, direccion, distancia, mapa);
     }
+
+    @Override
+    public boolean esMech() {
+        return true;
+    }
 }

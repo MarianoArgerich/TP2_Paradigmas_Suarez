@@ -66,6 +66,10 @@ public abstract class Unidad extends Ocupante {
         }
     }
 
+    public boolean estaDentroDelRango(int distancia){
+        return(distancia <= rangoDeMovimiento);
+    }
+
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }

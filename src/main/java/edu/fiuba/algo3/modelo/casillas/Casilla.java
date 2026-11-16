@@ -75,6 +75,14 @@ public class Casilla {
         return this.ocupante.equals(ocupanteAComparar);
     }
 
+    public boolean tieneMech() {
+        return this.ocupante.esMech();
+    }
+
+    public boolean tieneVek() {
+        return this.ocupante.esVek();
+    }
+
     public Posicion siguienteEn(Direccion direccion) {
         return this.posicion.siguienteEn(direccion);
     }

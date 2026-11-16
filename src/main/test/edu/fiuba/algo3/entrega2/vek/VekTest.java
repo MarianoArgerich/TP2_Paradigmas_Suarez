@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega2.unitarios.vek;
+package edu.fiuba.algo3.entrega2.vek;
 
 import org.junit.jupiter.api.Test;
 

@@ -52,6 +52,21 @@ public class Tablero {
         return mapa.unidadEstaEn(unidad, posicion);
     }
 
+    public boolean edificioEn(Posicion posicion) {return mapa.edificioEn(posicion);}
+
+    public boolean mechEn(Posicion posicion) {return mapa.mechEn(posicion);}
+
+    public boolean vekEn(Posicion posicion) {return mapa.vekEn(posicion);}
+
+    public boolean posicionValida(Posicion posicion) {
+        return mapa.casillaEn(posicion).estaEn(posicion);
+    }
+
+    public void anunciarAtaque(Vek atacante, Direccion direccion) {
+        this.ataquesAnunciados.add(new AtaqueAnunciado(atacante, direccion));
+
+    }
+
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
     }

@@ -28,4 +28,16 @@ public abstract class Ocupante {
     public abstract void deshacerMovimientoDesde(Casilla casilla, Mapa mapa);
 
     public abstract void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa);
+
+    public boolean esMech() {
+        return false;
+    }
+
+    public boolean esVek() {
+        return false;
+    }
+
+    public boolean esEdificio() {
+        return false;
+    }
 }
