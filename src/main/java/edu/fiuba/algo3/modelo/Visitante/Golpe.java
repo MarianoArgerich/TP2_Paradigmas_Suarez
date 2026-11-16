@@ -21,7 +21,7 @@ public class Golpe implements Visitante {
 
     @Override
     public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        unidad.recibirDanio(danio, casillaActual);
+        unidad.aplicarDanio(danio, casillaActual);
 
         casillaActual.aceptar(new Empuje(direccion), mapa);
     }

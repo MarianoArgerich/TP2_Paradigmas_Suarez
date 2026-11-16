@@ -35,7 +35,7 @@ public class Mapa {
     }
 
     public void colocarUnidad(Posicion posicion, Unidad unidad) {
-        casillaEn(posicion).colocarOcupante(unidad);
+        casillaEn(posicion).colocarUnidad(unidad);
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
@@ -71,7 +71,7 @@ public class Mapa {
         for (int i = 0; i < distancia; i++){
             Casilla casillaSiguiente = siguienteCasilla(casillaActual, direccion);
             try {
-                casillaActual.transferirOcupanteA(casillaSiguiente);
+                casillaActual.transferirUnidadA(casillaSiguiente, unidad);
             } catch (CasillaInvalidaException e) {
                 if (!casillaActual.equals(origen)) {
                     casillaActual.transferirOcupanteA(origen);
@@ -83,6 +83,8 @@ public class Mapa {
         origen.notificarMovimientoA(unidad);
     }
 
+    public void contaminar(Posicion objetivo){
+        casillaEn(objetivo).contaminar();
     public void reducirRedElectrica() {
         this.redElectrica.reducirEnergia();
     }

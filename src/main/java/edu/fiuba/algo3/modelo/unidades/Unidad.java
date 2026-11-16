@@ -10,6 +10,8 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.EstadoContaminacion;
+import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.NoContaminado;
 
 import java.util.Objects;
 
@@ -17,12 +19,15 @@ public abstract class Unidad extends Ocupante {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;
-    protected int vidaActual;
+    private int vidaActual;
+    private EstadoContaminacion estadoContaminacion;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
+        this.estadoContaminacion = new NoContaminado();
+
     }
 
     @Override
@@ -53,8 +58,8 @@ public abstract class Unidad extends Ocupante {
         visitante.visitar(this,  terreno, casillaActual, mapa);
     }
 
-    public void recibirDanio(int danio, Casilla casillaActual){
-        this.vidaActual -= danio;
+    public void aplicarDanio(int danio, Casilla casillaActual){
+        this.vidaActual = Math.max(0, this.vidaActual - danio);
         if (this.vidaActual <= 0) {
             casillaActual.vaciar();
         }
@@ -80,6 +85,27 @@ public abstract class Unidad extends Ocupante {
     }
 
     @Override
+    public void contaminar(){
+        estadoContaminacion.contaminar(this);
+    }
+    public void cambiarEstadoContaminacion(EstadoContaminacion estadoContaminacion){
+        this.estadoContaminacion = estadoContaminacion;
+    }
+
+    public void contaminarPorAcido() {
+        this.estadoContaminacion.contaminarPorAcido(this);
+    }
+
+    public void salirDeAcido() {
+        this.estadoContaminacion.salirDeAcido(this);
+    }
+
+    public void recibirDanio(int danio, Casilla casillaActual) {
+        estadoContaminacion.recibirDanio(this, danio, casillaActual);
+    }
+
+
+
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
         terreno.reaccionarAlIngresoDe(this, casilla);
     }

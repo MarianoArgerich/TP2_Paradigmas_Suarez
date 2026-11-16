@@ -5,7 +5,8 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Terreno {
 
-    public abstract void reaccionarAlIngresoDe(Unidad unidad, Casilla casilla);
+    public abstract void reaccionarAlIngresoDe(Unidad unidad);
+
     public abstract boolean puedeIngresar();
 
     @Override

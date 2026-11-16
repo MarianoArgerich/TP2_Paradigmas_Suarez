@@ -6,8 +6,10 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Vek extends Unidad {
-    protected Vek(int vidaMax, int rangoDeMovimiento) {
+    protected int danio;
+    protected Vek(int vidaMax, int rangoDeMovimiento, int danio) {
         super(vidaMax, rangoDeMovimiento);
+        this.danio = danio;
     }
 
     @Override

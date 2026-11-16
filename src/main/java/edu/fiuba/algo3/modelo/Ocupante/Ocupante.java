@@ -29,6 +29,8 @@ public abstract class Ocupante {
 
     public abstract void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa);
 
+    public abstract void contaminar();
+
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
     public void verificarAtaqueEn(Terreno terreno) {}
 }

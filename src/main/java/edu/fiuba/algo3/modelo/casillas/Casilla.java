@@ -104,6 +104,30 @@ public class Casilla {
         return otraCasilla.estaEn(this.posicion.siguienteEn(direccion));
     }
 
+    public void contaminar(){
+        this.ocupante.contaminar();
+    }
+
+    public void colocarUnidad(Unidad unidad) {
+        if (this.terreno.puedeIngresar() && this.ocupante.puedeIngresar()) {
+            this.ocupante = unidad;
+            this.terreno.reaccionarAlIngresoDe(unidad);
+        } else {
+            throw new CasillaInvalidaException(
+                    "No se puede colocar la unidad en una casilla ocupada o no transitable"
+            );
+        }
+    }
+
+    public void transferirUnidadA(Casilla destino, Unidad unidad) {
+        destino.recibirUnidad(unidad);
+        this.vaciar();
+    }
+
+    protected void recibirUnidad(Unidad unidad) {
+        colocarUnidad(unidad);
+    }
+
     public void aplicarEfectoDelTerreno() {
         this.ocupante.reaccionarAlTerreno(this.terreno, this);
     }
