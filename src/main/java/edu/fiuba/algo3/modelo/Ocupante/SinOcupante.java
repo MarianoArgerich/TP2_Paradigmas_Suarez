@@ -42,4 +42,7 @@ public class SinOcupante extends Ocupante{
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
         throw new UnidadInvalidaException("No hay una unidad en la casilla de origen");
     }
+
+    @Override
+    public void contaminar() {}
 }

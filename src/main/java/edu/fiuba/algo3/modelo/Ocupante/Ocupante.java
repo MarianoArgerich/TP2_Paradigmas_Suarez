@@ -40,4 +40,9 @@ public abstract class Ocupante {
     public boolean esEdificio() {
         return false;
     }
+
+    public abstract void contaminar();
+
+    public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
+    public void verificarAtaqueEn(Terreno terreno) {}
 }

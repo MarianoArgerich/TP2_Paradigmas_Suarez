@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.unidades.Vek;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.*;
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.*;
@@ -16,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Vek extends Unidad {
-    
+    protected int danio;
     private final List<ReglaIA> reglasPrioridad;
-    
-    protected Vek(int vidaMax, int rangoDeMovimiento) {
+
+    protected Vek(int vidaMax, int rangoDeMovimiento, int danio) {
         super(vidaMax, rangoDeMovimiento);
+        this.danio = danio;
         this.reglasPrioridad = List.of(
                 new ReglaAtacarEdificio(),
                 new ReglaAtacarMech(),
@@ -151,122 +153,9 @@ public abstract class Vek extends Unidad {
 
     public abstract void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero);
 
-    /**
-    public Posicion moverseParaAtacarEdificio(Posicion posicionVek, Tablero tablero){
-
-        boolean encontrado = false;
-
-        Posicion objetivo = buscarEdificioParaAtacar(posicionVek, tablero);
-
-        if(!objetivo.equals(posicionVek)){
-            encontrado = true;
-        }
-
-        List<Direccion> direcciones = new ArrayList<>();
-        direcciones.add(new Arriba());
-        direcciones.add(new Abajo());
-        direcciones.add(new Derecha());
-        direcciones.add(new Izquierda());
-
-        int distanciaActual = 1;
-        Direccion direccionEncontrada = new SinDireccion();
-
-        while (this.estaDentroDelRango(distanciaActual) && !encontrado){
-            for (Direccion direccion : direcciones) {
-                Posicion posicionInicial = posicionVek.mover(direccion, distanciaActual);
-
-                objetivo = (buscarEdificioParaAtacar(posicionInicial, tablero));
-                if (!objetivo.equals(posicionInicial)){
-                    direccionEncontrada = direccion;
-                    encontrado = true;
-                    break;
-                }
-            }
-            distanciaActual++;
-        }
-
-        if (!objetivo.esAdyacenteA(posicionVek)) {
-            tablero.mover(posicionVek, direccionEncontrada, distanciaActual);
-        }
-
-        return objetivo;
+    @Override
+    public void caerAlAguaEn(Casilla casilla) {
+        casilla.vaciar();
     }
-    */
-
-    /**
-    private Posicion buscarEdificioParaAtacar(Posicion posicionInicial, Tablero tablero){
-
-        List<Direccion> direcciones = new ArrayList<>();
-        direcciones.add(new Arriba());
-        direcciones.add(new Abajo());
-        direcciones.add(new Derecha());
-        direcciones.add(new Izquierda());
-
-        for(Direccion candidato : direcciones){
-            Posicion posicionCandidato = posicionInicial.siguienteEn(candidato);
-            if(tablero.edificioEn(posicionCandidato)){
-                return posicionCandidato;
-            }
-        }
-        return posicionInicial;
-    }
-
-    private Posicion buscarMechParaAtacar(Posicion posicionInicial, Tablero tablero){
-
-        List<Direccion> direcciones = new ArrayList<>();
-        direcciones.add(new Arriba());
-        direcciones.add(new Abajo());
-        direcciones.add(new Derecha());
-        direcciones.add(new Izquierda());
-
-        for(Direccion candidato : direcciones){
-            Posicion posicionCandidato = posicionInicial.siguienteEn(candidato);
-            if(tablero.mechEn(posicionCandidato)){
-                return posicionCandidato;
-            }
-        }
-        return posicionInicial;
-    }
-    */
-    /**
-    public Posicion moverseParaAtacarMech(Posicion posicionVek, Tablero tablero){
-
-        boolean encontrado = false;
-
-        Posicion objetivo = buscarMechParaAtacar(posicionVek, tablero);
-
-        if(!objetivo.equals(posicionVek)){
-            encontrado = true;
-        }
-
-        List<Direccion> direcciones = new ArrayList<>();
-        direcciones.add(new Arriba());
-        direcciones.add(new Abajo());
-        direcciones.add(new Derecha());
-        direcciones.add(new Izquierda());
-
-        int distanciaActual = 1;
-        Direccion direccionEncontrada = new SinDireccion();
-
-        while (this.estaDentroDelRango(distanciaActual) && !encontrado){
-            for (Direccion direccion : direcciones) {
-                Posicion posicionInicial = posicionVek.mover(direccion, distanciaActual);
-
-                objetivo = (buscarMechParaAtacar(posicionInicial, tablero));
-                if (!objetivo.equals(posicionInicial)){
-                    direccionEncontrada = direccion;
-                    encontrado = true;
-                    break;
-                }
-            }
-            distanciaActual++;
-        }
-
-        if (!objetivo.esAdyacenteA(posicionVek)) {
-            tablero.mover(posicionVek, direccionEncontrada, distanciaActual);
-        }
-
-        return objetivo;
-    }
-    */
 }
+

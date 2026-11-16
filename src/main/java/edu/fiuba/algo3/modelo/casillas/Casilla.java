@@ -99,7 +99,8 @@ public class Casilla {
     }
 
     public void ejecutarAtaque(Posicion objetivo, Tablero tablero) {
-        this.ocupante.atacar(this.posicion ,objetivo, tablero);
+        this.ocupante.verificarAtaqueEn(this.terreno);
+        this.ocupante.atacar(this.posicion, objetivo, tablero);
     }
 
     public void deshacerMovimientoOcupante(Mapa mapa) {
@@ -139,5 +140,33 @@ public class Casilla {
         if (this.tieneUnidad(atacante)) {
             atacante.resolverAtaque(this.posicion, direccion, tablero);
         }
+    }
+
+    public void contaminar(){
+        this.ocupante.contaminar();
+    }
+
+    public void colocarUnidad(Unidad unidad) {
+        if (this.terreno.puedeIngresar() && this.ocupante.puedeIngresar()) {
+            this.ocupante = unidad;
+            this.terreno.reaccionarAlIngresoDe(unidad);
+        } else {
+            throw new CasillaInvalidaException(
+                    "No se puede colocar la unidad en una casilla ocupada o no transitable"
+            );
+        }
+    }
+
+    public void transferirUnidadA(Casilla destino, Unidad unidad) {
+        destino.recibirUnidad(unidad);
+        this.vaciar();
+    }
+
+    protected void recibirUnidad(Unidad unidad) {
+        colocarUnidad(unidad);
+    }
+
+    public void aplicarEfectoDelTerreno() {
+        this.ocupante.reaccionarAlTerreno(this.terreno, this);
     }
 }

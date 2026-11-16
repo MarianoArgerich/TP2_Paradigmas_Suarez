@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Estado;
@@ -47,5 +48,10 @@ public abstract class Mech extends Unidad {
     @Override
     public boolean esMech() {
         return true;
+    }
+
+    @Override
+    public void verificarAtaqueEnAgua() {
+        throw new AtaqueInvalidoException("Un Mech en el Agua no puede atacar");
     }
 }

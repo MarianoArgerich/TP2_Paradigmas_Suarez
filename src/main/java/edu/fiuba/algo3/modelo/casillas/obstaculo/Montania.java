@@ -10,7 +10,7 @@ public class Montania extends Obstaculo {
 
     @Override
     public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-
+        visitante.visitar(this, terreno, casillaActual, mapa);
     }
 
     @Override
@@ -22,4 +22,7 @@ public class Montania extends Obstaculo {
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
 
     }
+
+    @Override
+    public void contaminar() {}
 }

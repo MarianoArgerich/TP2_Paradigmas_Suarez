@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
@@ -15,9 +16,11 @@ import java.util.List;
 
 public class Mapa {
     private final List<Casilla> casillas;
+    private final RedElectrica redElectrica;
 
     public Mapa(List<Casilla> casillas) {
         this.casillas = casillas;
+        this.redElectrica= new RedElectrica();
     }
 
     public void aplicarEfecto(Posicion posicion, Visitante visitante){
@@ -35,7 +38,7 @@ public class Mapa {
     }
 
     public void colocarUnidad(Posicion posicion, Unidad unidad) {
-        casillaEn(posicion).colocarOcupante(unidad);
+        casillaEn(posicion).colocarUnidad(unidad);
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
@@ -77,7 +80,7 @@ public class Mapa {
         for (int i = 0; i < distancia; i++){
             Casilla casillaSiguiente = siguienteCasilla(casillaActual, direccion);
             try {
-                casillaActual.transferirOcupanteA(casillaSiguiente);
+                casillaActual.transferirUnidadA(casillaSiguiente, unidad);
             } catch (CasillaInvalidaException e) {
                 if (!casillaActual.equals(origen)) {
                     casillaActual.transferirOcupanteA(origen);
@@ -114,6 +117,19 @@ public class Mapa {
         for (Casilla casilla : casillas) {
             casilla.ejecutarAtaqueVek(atacante, direccion, tablero);
         }
+    }
+
+
+    public void contaminar(Posicion objetivo) {
+        casillaEn(objetivo).contaminar();
+    }
+
+    public void reducirRedElectrica() {
+        this.redElectrica.reducirEnergia();
+    }
+
+    public boolean tieneEnergia(int energia) {
+        return this.redElectrica.suEnergiaEsIgualA(energia);
     }
 
 }
