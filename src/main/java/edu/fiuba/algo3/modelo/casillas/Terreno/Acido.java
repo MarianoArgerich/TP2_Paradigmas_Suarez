@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.casillas.Terreno;
 
+import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public class Acido extends Terreno {
@@ -9,6 +10,7 @@ public class Acido extends Terreno {
         unidad.contaminarPorAcido();
 
     }
+
     @Override
     public boolean puedeIngresar() {
         return true;

@@ -12,6 +12,12 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import org.junit.jupiter.api.BeforeEach;
+import edu.fiuba.algo3.modelo.casillas.Terreno.Agua;
+import edu.fiuba.algo3.modelo.direccion.Arriba;
+import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
+import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
+import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -155,7 +161,7 @@ public class VekTest {
 /*
 
     @Test
-    public void test01AlEmpujarUnVek1ContraOtroVek2ElVek1NoSeMueve(){
+    public void test01AlEmpujarUnVek1ContraOtroVek2ElVek1NoSeMueve(){}
 
     @Test
     public void test02AlEmpujarUnVekContraOtroVekSeAplicaElDañoDeColision(){}
@@ -179,16 +185,74 @@ public class VekTest {
 
     @Test
     public void test10AlColocarseUnVekSobreLaCasillaDeEmergenciaRecibeUnoDeDaño(){}
+*/
+    @Test
+    public void testLuciernagaEsEmpujadaAlAguaYSuCasillaSeVacia() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Luciernaga luciernaga = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertFalse(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
+    }
 
     @Test
-    public void test11LuciernagaEsEmpujadaAlAguaYSeMuere() {}
+    public void testLuciernagaEsEmpujadaAlAguaYSeMuere() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Luciernaga luciernaga = new Luciernaga();
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertTrue(luciernaga.suVidaEsIgualA(0));
+    }
 
     @Test
-    public void test12SaltadorEsEmpujadaAlAguaYSeMuere() {}
+    public void testSaltadorEsEmpujadaAlAguaYSuCasillaSeVacia() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Saltador saltador = new Saltador();
+        tablero.colocarUnidad(new Posicion(2, 2), saltador);
+
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertFalse(tablero.unidadEstaEn(saltador, new Posicion(2, 2)));
+    }
 
     @Test
-    public void test13AvisponEsEmpujadaAlAguaYNoSeMuere() {}
+    public void testSaltadorEsEmpujadaAlAguaYSeMuere() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Saltador saltador = new Saltador();
+        tablero.colocarUnidad(new Posicion(2, 2), saltador);
 
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertTrue(saltador.suVidaEsIgualA(0));
+    }
+
+
+    @Test
+    public void testAvisponEsEmpujadaAlAgua() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Avispon avispon = new Avispon();
+        tablero.colocarUnidad(new Posicion(2, 2), avispon);
+
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertTrue(tablero.unidadEstaEn(avispon, new Posicion(2, 3)));
+    }
+
+    @Test
+    public void testAvisponEsEmpujadaAlAguaYNoSeMuere() {
+        Tablero tablero = tableroConAguaEn(new Posicion(2, 3));
+        Avispon avispon = new Avispon();
+        tablero.colocarUnidad(new Posicion(2, 2), avispon);
+
+        tablero.empujarDesde(new Posicion(2, 2), new Arriba());
+
+        assertTrue(avispon.suVidaEsIgualA(2));
+    }
+/*
     @Test
     public void test14LaIADeLosVekAplicaLasReglasDePrioridadEnOrden() {}
 
@@ -219,7 +283,7 @@ public class VekTest {
     public void test22AtaquesAnunciadosDelSaltadorSeEjecutanEnFaseDeResolucion(){}
 
     @Test
-    public void test23AtaqueDeVekASeEjecutaAntesQueElDeVekBSiguiendoElOrdenAnunciado()
+    public void test23AtaqueDeVekASeEjecutaAntesQueElDeVekBSiguiendoElOrdenAnunciado(){}
 
 
     @Test

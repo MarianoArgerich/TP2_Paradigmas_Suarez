@@ -58,5 +58,7 @@ public class Tablero {
 
     public void contaminar(Posicion posicion){
         mapa.contaminar(posicion);
+    public boolean tieneEnergia(int energia) {
+        return mapa.tieneEnergia(energia);
     }
 }

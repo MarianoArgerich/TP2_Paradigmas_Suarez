@@ -106,4 +106,16 @@ public abstract class Unidad extends Ocupante {
 
 
 
+    public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
+        terreno.reaccionarAlIngresoDe(this, casilla);
+    }
+
+    public void caerAlAguaEn(Casilla casilla) {}
+
+    @Override
+    public void verificarAtaqueEn(Terreno terreno) {
+        terreno.verificarAtaqueDe(this);
+    }
+
+    public void verificarAtaqueEnAgua() {}
 }

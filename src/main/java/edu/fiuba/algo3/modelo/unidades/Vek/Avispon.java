@@ -14,6 +14,10 @@ public class Avispon extends Vek {
     }
 
     @Override
+    public void caerAlAguaEn(Casilla casilla) {
+    }
+
+    @Override
     public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
     }
 }

@@ -31,4 +31,6 @@ public abstract class Ocupante {
 
     public abstract void contaminar();
 
+    public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
+    public void verificarAtaqueEn(Terreno terreno) {}
 }
