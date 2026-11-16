@@ -6,15 +6,18 @@ import edu.fiuba.algo3.modelo.casillas.CasillaNula;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 import java.util.List;
 
 public class Mapa {
     private final List<Casilla> casillas;
+    private final RedElectrica redElectrica;
 
     public Mapa(List<Casilla> casillas) {
         this.casillas = casillas;
+        this.redElectrica= new RedElectrica();
     }
 
     public void aplicarEfecto(Posicion posicion, Visitante visitante){
@@ -79,4 +82,13 @@ public class Mapa {
         }
         origen.notificarMovimientoA(unidad);
     }
+
+    public void reducirRedElectrica() {
+        this.redElectrica.reducirEnergia();
+    }
+
+    public boolean tieneEnergia(int energia) {
+        return this.redElectrica.suEnergiaEsIgualA(energia);
+    }
+
 }
