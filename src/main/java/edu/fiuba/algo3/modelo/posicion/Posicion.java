@@ -78,4 +78,16 @@ public class Posicion {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public boolean esMenorQue(Posicion otra) {
+        if (this.y != otra.y) {
+            return this.y < otra.y;
+        }
+        return this.x < otra.x;
+    }
+
+
+    public int distanciaA(Posicion otra) {
+        return Math.abs(this.x - otra.x) + Math.abs(this.y - otra.y);
+    }
 }
