@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
+import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -37,5 +38,10 @@ public class ImpactoDeEmpuje implements Visitante {
     public void visitar(Destruible destruible, Terreno terreno, Casilla destino, Mapa mapa) {
         origen.aceptar(new DanioPorColision(), mapa);
         destino.aceptar(new DanioPorColision(), mapa);
+    }
+
+    @Override
+    public void visitar(Montania montania, Terreno terreno, Casilla destino, Mapa mapa) {
+        origen.aceptar(new DanioPorColision(), mapa);
     }
 }
