@@ -13,4 +13,9 @@ public class Agua extends Terreno {
     public boolean puedeIngresar() {
         return true;
     }
+
+    @Override
+    public boolean esSeguroParaTerrestre() {
+        return false;
+    }
 }

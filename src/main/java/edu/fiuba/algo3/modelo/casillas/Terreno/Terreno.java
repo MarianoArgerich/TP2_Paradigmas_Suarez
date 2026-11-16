@@ -12,4 +12,8 @@ public abstract class Terreno {
         if (this == obj) return true;
         return obj != null && getClass() == obj.getClass();
     }
+
+    public boolean esSeguroParaTerrestre() {
+        return true;
+    }
 }

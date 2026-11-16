@@ -9,12 +9,16 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.Vek.IA.AtaqueAnunciado;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tablero {
 
     private final Mapa mapa;
+    private final List<AtaqueAnunciado> ataquesAnunciados = new ArrayList<>();
 
     public Tablero(List<Casilla> casillas){
         this.mapa = new Mapa(casillas);
@@ -70,4 +74,41 @@ public class Tablero {
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
     }
+
+    public boolean puedeTerminarVekEn(Vek vek, Posicion candidata) {
+        return mapa.puedeTerminarVekEn(vek, candidata);
+    }
+
+    public List<Posicion> obtenerPosicionesDeEdificios() {
+        return mapa.obtenerPosicionesDeEdificios();
+    }
+
+    public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
+        for (AtaqueAnunciado ataque : ataquesAnunciados) {
+            if (ataque.amenazaA(posicion, this)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hayAtaquesAnunciados() {
+        return !ataquesAnunciados.isEmpty();
+    }
+
+    public void resolverAtaques() {
+        for (AtaqueAnunciado ataque : ataquesAnunciados) {
+            ataque.resolver(this);
+        }
+        ataquesAnunciados.clear();
+    }
+
+    public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo) {
+        return mapa.vekAmenazaEnDireccion(atacante, direccion, posicionObjetivo, this);
+    }
+
+    public void ejecutarAtaqueVek(Vek atacante, Direccion direccion) {
+        mapa.ejecutarAtaqueVek(atacante, direccion, this);
+    }
+
 }

@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.casillas;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
 public class CasillaNula extends Casilla {
     public CasillaNula() {
@@ -22,5 +23,10 @@ public class CasillaNula extends Casilla {
     @Override
     public boolean detieneDisparo(){
         return true;
+    }
+
+    @Override
+    public boolean puedeTerminarVek(Vek vek) {
+        return false;
     }
 }

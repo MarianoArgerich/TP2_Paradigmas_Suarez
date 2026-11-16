@@ -8,7 +8,9 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Mapa {
@@ -86,4 +88,32 @@ public class Mapa {
         }
         origen.notificarMovimientoA(unidad);
     }
+
+    public boolean puedeTerminarVekEn(Vek vek, Posicion candidata) {
+        return casillaEn(candidata).puedeTerminarVek(vek);
+    }
+
+    public List<Posicion> obtenerPosicionesDeEdificios() {
+        List<Posicion> posiciones = new ArrayList<>();
+        for (Casilla casilla : casillas) {
+            casilla.agregarPosicionSiTieneEdificio(posiciones);
+        }
+        return posiciones;
+    }
+
+    public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo, Tablero tablero) {
+        for (Casilla casilla : casillas) {
+            if (casilla.amenazaPosicion(atacante, direccion, posicionObjetivo, tablero)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ejecutarAtaqueVek(Vek atacante, Direccion direccion, Tablero tablero) {
+        for (Casilla casilla : casillas) {
+            casilla.ejecutarAtaqueVek(atacante, direccion, tablero);
+        }
+    }
+
 }

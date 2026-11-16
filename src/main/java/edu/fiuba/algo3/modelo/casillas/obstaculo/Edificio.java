@@ -11,6 +11,11 @@ public class Edificio extends Destruible {
     }
 
     @Override
+    public boolean esEdificio() {
+        return true;
+    }
+
+    @Override
     public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
 
     }
