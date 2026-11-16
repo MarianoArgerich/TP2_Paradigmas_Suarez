@@ -17,7 +17,7 @@ public abstract class Unidad extends Ocupante {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;
-    private int vidaActual;
+    protected int vidaActual;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;

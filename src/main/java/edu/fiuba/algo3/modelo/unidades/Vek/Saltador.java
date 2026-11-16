@@ -10,4 +10,11 @@ public class Saltador extends Vek {
     @Override
     public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
     }
+
+    @Override
+    public void caerAlAguaEn(Casilla casilla) {
+        super.caerAlAguaEn(casilla);
+        this.vidaActual = 0;
+
+    }
 }
