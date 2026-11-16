@@ -1,13 +1,11 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
-import edu.fiuba.algo3.modelo.Visitante.Contaminacion;
 import edu.fiuba.algo3.modelo.Visitante.Disparo;
 import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
@@ -49,9 +47,6 @@ public class Tablero {
         return mapa.detieneDisparoEn(posicion);
     }
 
-    public void aplicarContaminacion(Posicion objetivo) {
-        mapa.aplicarEfecto(objetivo, new Contaminacion());
-    }
 
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         return mapa.unidadEstaEn(unidad, posicion);
@@ -59,5 +54,9 @@ public class Tablero {
 
     public void deshacerMovimiento(Posicion posicionActual) {
         mapa.deshacerMovimiento(posicionActual);
+    }
+
+    public void contaminar(Posicion posicion){
+        mapa.contaminar(posicion);
     }
 }

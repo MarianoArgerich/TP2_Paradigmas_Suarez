@@ -6,6 +6,7 @@ public class Acido extends Terreno {
 
     @Override
     public void reaccionarAlIngresoDe(Unidad unidad) {
+        unidad.contaminarPorAcido();
 
     }
     @Override

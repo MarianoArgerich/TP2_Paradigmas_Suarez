@@ -4,6 +4,8 @@ import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Acido;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Artilleria;
+import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
@@ -23,8 +25,10 @@ public class VekTest {
 
     private Tablero tablero;
     private List<Casilla> mapa = new ArrayList<>();
-    private Luciernaga luciernaga;
-    private Mech mech;
+    private Luciernaga luciernaga1;
+    private Luciernaga luciernaga2;
+    private Mech mech1;
+    private Mech mech2;
     private Saltador saltador;
     private Avispon avispon;
 
@@ -43,45 +47,108 @@ public class VekTest {
             }
         }
         tablero = new Tablero(mapa);
-        luciernaga = new Luciernaga();
-        mech = new Combate();
+        luciernaga1 = new Luciernaga();
+        mech1 = new Combate();
         saltador = new Saltador();
         avispon = new Avispon();
+        luciernaga2 = new Luciernaga();
+        mech2 = new Canion();
 
     }
 
+
+    //verificar si es unitario
     @Test
-    public void test25LuciernagaAtacaAUnMechYLoDejaContaminado() {
+    public void test25LuciernagaAtacaAUnMechYLoDejaContaminadoHaciendoleElDobleDeDanio() {
         //arrange
         Posicion posicionAtacante = new Posicion(2, 2);
         Posicion posicionAtacada = new Posicion(3, 2);
 
-        tablero.colocarUnidad(posicionAtacante, luciernaga);
-        tablero.colocarUnidad(posicionAtacada, mech);
+        tablero.colocarUnidad(posicionAtacante, luciernaga1);
+        tablero.colocarUnidad(posicionAtacada, mech1);
 
         //act
         tablero.atacar(posicionAtacante, posicionAtacada);
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
 
         //assert
-        assert (mech.estaContaminado());
+        assertTrue(mech1.suVidaEsIgualA(0), "El mech atacado por la luciernaga debe recibir el doble de daño al estar contaminado");
 
     }
 
+    //verificar si es unitario
     @Test
-    public void test24LuciernagaAtacaAUnVekYLoDejaContaminado(){
+    public void test24LuciernagaAtacaAUnVekYLoDejaContaminadoHaciendoleElDobleDeDanio(){
         //arrange
         Posicion posicionAtacante = new Posicion(2, 2);
         Posicion posicionAtacada = new Posicion(3, 2);
 
-        tablero.colocarUnidad(posicionAtacante, luciernaga);
+        tablero.colocarUnidad(posicionAtacante, luciernaga1);
+        tablero.colocarUnidad(posicionAtacada, luciernaga2);
+
+        //act
+        tablero.atacar(posicionAtacante, posicionAtacada);
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
+        //assert
+        assertTrue(luciernaga2.suVidaEsIgualA(0), "El vek atacado por la luciernaga debe recibir el doble de daño al estar contaminado");
+
+    }
+
+    @Test
+    public void testVekTerrestreTerminaEnAcidoYQuedaContaminadoRecibiendoElDobleDeDanioAlSerAtacado() {
+        //arrange
+        Posicion posicionAtacante = new Posicion(2, 2);
+        Posicion posicionAtacada = new Posicion(3, 2);
+
+        tablero.colocarUnidad(posicionAtacante, mech2);
         tablero.colocarUnidad(posicionAtacada, saltador);
 
         //act
         tablero.atacar(posicionAtacante, posicionAtacada);
 
         //assert
-        assert (saltador.estaContaminado());
+        assertTrue(saltador.suVidaEsIgualA(1), "El vek atacado por la otra unidad debe recibir el doble de daño al estar contaminado");
     }
+
+    @Test
+    public void testMechTerminaEnAcidoYQuedaContaminadoRecibiendoElDobleDeDanioAlSerAtacado() {
+        //arrange
+        Posicion posicionAtacante = new Posicion(2, 2);
+        Posicion posicionAtacada = new Posicion(3, 2);
+
+        tablero.colocarUnidad(posicionAtacante, luciernaga1);
+        tablero.colocarUnidad(posicionAtacada, mech1);
+
+        //act
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
+
+        //assert
+        assertTrue(mech1.suVidaEsIgualA(1), "El mech atacado por la luciernaga debe recibir el doble de daño al estar contaminado");
+    }
+
+    @Test
+    public void testVekAvisponTerminaEnAcidoYNoQuedaContaminadoRecibiendoElDanioNormalAlSerAtacado() {
+        //arrange
+        Posicion posicionAtacante = new Posicion(2, 2);
+        Posicion posicionAtacada = new Posicion(3, 2);
+
+        tablero.colocarUnidad(posicionAtacante, luciernaga1);
+        tablero.colocarUnidad(posicionAtacada, avispon);
+
+        //act
+        tablero.atacar(posicionAtacante, posicionAtacada);
+
+        //assert
+        assertTrue(avispon.suVidaEsIgualA(1), "El vek atacado por la otra unidad debe recibir el daño normal al no estar contaminado");
+
+    }
+
+
+
+
 
 
 }

@@ -10,6 +10,10 @@ public class Avispon extends Vek {
     }
 
     @Override
+    public void contaminarPorAcido() {
+    }
+
+    @Override
     public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
     }
 }

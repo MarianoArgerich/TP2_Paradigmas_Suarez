@@ -31,7 +31,7 @@ public class Luciernaga extends Vek {
         }
         tablero.aplicarDisparo(actual, this.danio);
 
-        tablero.aplicarContaminacion(objetivo);
+        tablero.contaminar(objetivo);
     }
 
 }
