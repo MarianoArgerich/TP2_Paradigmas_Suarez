@@ -18,9 +18,5 @@ public abstract class Obstaculo extends Ocupante {
         return true;
     }
 
-    @Override
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-
-    }
 
 }

@@ -10,29 +10,33 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.capacidades.Contaminable;
+import edu.fiuba.algo3.modelo.unidades.capacidades.Movible;
+import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.EstadoContaminacion;
+import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.NoContaminado;
 
 import java.util.Objects;
 
-public abstract class Unidad extends Ocupante {
+public abstract class Unidad extends Ocupante implements Movible, Contaminable {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;
-    private int vidaActual;
+    protected int vidaActual;
+    private EstadoContaminacion estadoContaminacion;
 
     protected Unidad(int vidaMax, int rangoDeMovimiento) {
         this.vidaMax = vidaMax;
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
+        this.estadoContaminacion = new NoContaminado();
+
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Unidad unidad = (Unidad) o;
-        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+        return this == o;
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);
@@ -53,8 +57,8 @@ public abstract class Unidad extends Ocupante {
         visitante.visitar(this,  terreno, casillaActual, mapa);
     }
 
-    public void recibirDanio(int danio, Casilla casillaActual){
-        this.vidaActual -= danio;
+    public void aplicarDanio(int danio, Casilla casillaActual){
+        this.vidaActual = Math.max(0, this.vidaActual - danio);
         if (this.vidaActual <= 0) {
             casillaActual.vaciar();
         }
@@ -64,6 +68,10 @@ public abstract class Unidad extends Ocupante {
         if (distancia > rangoDeMovimiento) {
             throw new DistanciaInvalidaException("Fuera de rango");
         }
+    }
+
+    public boolean estaDentroDelRango(int distancia){
+        return(distancia <= rangoDeMovimiento);
     }
 
     public boolean suVidaEsIgualA(int comparacion) {
@@ -77,5 +85,45 @@ public abstract class Unidad extends Ocupante {
     public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
         this.verificarRangoDeMovimiento(distancia);
         mapa.desplazarUnidad(origen, this, direccion, distancia);
+    }
+
+    @Override
+    public void contaminar(){
+        estadoContaminacion.contaminar(this);
+    }
+    public void cambiarEstadoContaminacion(EstadoContaminacion estadoContaminacion){
+        this.estadoContaminacion = estadoContaminacion;
+    }
+
+    public void contaminarPorAcido() {
+        this.estadoContaminacion.contaminarPorAcido(this);
+    }
+
+    public void salirDeAcido() {
+        this.estadoContaminacion.salirDeAcido(this);
+    }
+
+    public void recibirDanio(int danio, Casilla casillaActual) {
+        estadoContaminacion.recibirDanio(this, danio, casillaActual);
+    }
+
+
+
+    public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
+        terreno.reaccionarAlIngresoDe(this,casilla);
+    }
+
+    public void caerAlAguaEn(Casilla casilla) {}
+
+    @Override
+    public void verificarAtaqueEn(Terreno terreno) {
+        terreno.verificarAtaqueDe(this);
+    }
+
+    public void verificarAtaqueEnAgua() {}
+
+    @Override
+    public boolean esAptoParaEmergencia(){
+        return true;
     }
 }

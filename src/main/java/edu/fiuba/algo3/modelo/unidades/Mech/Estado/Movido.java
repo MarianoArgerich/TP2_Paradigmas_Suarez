@@ -34,6 +34,7 @@ public class Movido implements Estado {
         Casilla casillaAnterior = mapa.casillaEn(this.posicionAnterior);
         try {
             casillaActual.transferirOcupanteA(casillaAnterior);
+            mech.salirDeAcido();
             mech.cambiarEstado(new MovimientoDeshecho());
         } catch (CasillaInvalidaException e) {
             throw new NoSePuedeDeshacerMovimiento("No se puede colocar la unidad en una casilla ocupada");

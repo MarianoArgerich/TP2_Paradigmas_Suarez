@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.posicion;
 
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.direccion.*;
 
 import java.util.Objects;
@@ -16,6 +17,15 @@ public class Posicion {
 
     public Posicion desplazar(int deltaX, int deltaY){
         return new Posicion(x + deltaX, y + deltaY);
+    }
+
+    public Posicion mover(Direccion direccion, int distancia){
+        Posicion resultado = this;
+        while(distancia > 0){
+            resultado.siguienteEn(direccion);
+            distancia -= 1;
+        }
+        return resultado;
     }
 
     public Posicion siguienteEn(Direccion direccion){
@@ -67,5 +77,17 @@ public class Posicion {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public boolean esMenorQue(Posicion otra) {
+        if (this.y != otra.y) {
+            return this.y < otra.y;
+        }
+        return this.x < otra.x;
+    }
+
+
+    public int distanciaA(Posicion otra) {
+        return Math.abs(this.x - otra.x) + Math.abs(this.y - otra.y);
     }
 }
