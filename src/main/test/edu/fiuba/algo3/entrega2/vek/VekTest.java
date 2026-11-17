@@ -188,10 +188,34 @@ public class VekTest {
         assertFalse(tablero.tieneEmergenciaAnunciadaEn(posicionEmergencia));
     }
 
+    @Test
+    public void test10AlColocarseUnMechSobreLaCasillaDeEmergenciaRecibeUnoDeDaño(){
+        Posicion posicionEmergencia = new Posicion(4, 4);
+
+        Emergencia faseEmergencia = new Emergencia();
+
+        tablero.anunciarEmergencia(posicionEmergencia, saltador);
+        tablero.colocarUnidad(posicionEmergencia, mech1);
+
+        faseEmergencia.ejecutar(List.of(new Posicion(4,4)), List.of(saltador), List.of(), List.of(), tablero);
+
+        assertTrue(mech1.suVidaEsIgualA(2));
+
+    }
 
     @Test
-    public void test10AlColocarseUnVekSobreLaCasillaDeEmergenciaRecibeUnoDeDaño(){
-        //TODO: cuando la ia y fases esten terminadas
+    public void test10AlColocarseUnMechSobreLaCasillaDeEmergenciaNoDejaQueAparezcaElVek(){
+        Posicion posicionEmergencia = new Posicion(4, 4);
+
+        Emergencia faseEmergencia = new Emergencia();
+
+        tablero.anunciarEmergencia(posicionEmergencia, saltador);
+        tablero.colocarUnidad(posicionEmergencia, mech1);
+
+        faseEmergencia.ejecutar(List.of(new Posicion(4,4)), List.of(saltador), List.of(), List.of(), tablero);
+
+        assertFalse(tablero.tieneEmergenciaAnunciadaEn(posicionEmergencia));
+
     }
 
     @Test
