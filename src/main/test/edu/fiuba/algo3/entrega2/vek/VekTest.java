@@ -335,7 +335,7 @@ public class VekTest {
         faseVek.ejecutar(List.of(new Posicion(1, 1)), List.of(luciernaga),
                 List.of(new Posicion(2, 4)), List.of(mech), tablero);
 
-        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 0)));
+        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 1)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 4)));
     }
 
@@ -476,20 +476,19 @@ public class VekTest {
 
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
-        tablero.colocarUnidad(new Posicion(4, 5), mech2);
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga), List.of(new Posicion(2, 5), new Posicion(4, 5)), List.of(mech, mech2), tablero);
+        tablero.colocarUnidad(new Posicion(3, 5), mech2);
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga), List.of(new Posicion(2, 5), new Posicion(3, 5)), List.of(mech, mech2), tablero);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
 
         tablero.empujarDesde(new Posicion(2, 2), new Derecha());
-        tablero.empujarDesde(new Posicion(3, 2), new Derecha());
 
-        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(4, 2)));
+        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(3, 2)));
         assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
-        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(4, 5)));
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
 
-        faseResolucion.ejecutar(List.of(new Posicion(4, 2)), List.of(luciernaga), List.of(new Posicion(2, 5), new Posicion(4, 5)), List.of(mech, mech2), tablero);
+        faseResolucion.ejecutar(List.of(new Posicion(3, 2)), List.of(luciernaga), List.of(new Posicion(2, 5), new Posicion(3, 5)), List.of(mech, mech2), tablero);
         assertTrue(mech2.suVidaEsIgualA(2));
     }
 

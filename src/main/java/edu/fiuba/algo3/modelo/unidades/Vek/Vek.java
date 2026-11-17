@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.*;
@@ -48,38 +49,42 @@ public abstract class Vek extends Unidad implements Atacante {
         }
     }
 
-    public List<Posicion> obtenerDestinosValidos(Posicion origen, Tablero tablero) {
-        List<Posicion> visitadas = new ArrayList<>();
-        List<Integer> distancias = new ArrayList<>();
-        visitadas.add(origen);
-        distancias.add(0);
+    public List<Desplazamiento> obtenerDesplazamientosValidos(Posicion origen, Tablero tablero) {
+        List<Desplazamiento> desplazamientos = new ArrayList<>();
+        desplazamientos.add(Desplazamiento.sinMover(origen));
 
-        int indice = 0;
-        while (indice < visitadas.size()) {
-            Posicion actual = visitadas.get(indice);
-            int distanciaActual = distancias.get(indice);
-            indice++;
+        List<Desplazamiento> movimientosRectos = new ArrayList<>();
+        for (Direccion direccion : direccionesOrtogonales()) {
+            Posicion actual = origen;
+            int distancia = 1;
 
-            if (estaDentroDelRango(distanciaActual + 1)) {
-                for (Direccion direccion : direccionesOrtogonales()) {
-                    Posicion vecina = actual.siguienteEn(direccion);
-                    if (!visitadas.contains(vecina)){
-                        visitadas.add(vecina);
-                        distancias.add(distanciaActual + 1);
-                    }
+            while (estaDentroDelRango(distancia)) {
+                actual = actual.siguienteEn(direccion);
+                if (!tablero.puedeTerminarVekEn(this, actual)) {
+                    break;
+                }
+                movimientosRectos.add(new Desplazamiento(origen, direccion, distancia));
+                distancia++;
+            }
+        }
+
+        ordenarDesplazamientosDeterministicamente(movimientosRectos);
+        desplazamientos.addAll(movimientosRectos);
+        return desplazamientos;
+    }
+
+    private void ordenarDesplazamientosDeterministicamente(List<Desplazamiento> movimientos) {
+        for (int i = 0; i < movimientos.size() - 1; i++) {
+            int indiceMenor = i;
+            for (int j = i + 1; j < movimientos.size(); j++) {
+                if (movimientos.get(j).esMenorQue(movimientos.get(indiceMenor))) {
+                    indiceMenor = j;
                 }
             }
+            Desplazamiento temporal = movimientos.get(i);
+            movimientos.set(i, movimientos.get(indiceMenor));
+            movimientos.set(indiceMenor, temporal);
         }
-
-        List<Posicion> destinosValidos = new ArrayList<>();
-        for (Posicion candidata : visitadas) {
-            if (candidata.equals(origen) || tablero.puedeTerminarVekEn(this, candidata)) {
-                destinosValidos.add(candidata);
-            }
-        }
-
-        ordenarDeterministicamente(destinosValidos);
-        return destinosValidos;
     }
 
     protected void ordenarDeterministicamente(List<Posicion> posiciones) {
@@ -94,38 +99,6 @@ public abstract class Vek extends Unidad implements Atacante {
             posiciones.set(i, posiciones.get(indiceMenor));
             posiciones.set(indiceMenor, temporal);
         }
-    }
-
-    public List<Direccion> calcularCaminoHasta(Posicion origen, Posicion destino, Tablero tablero) {
-        List<Posicion> visitadas = new ArrayList<>();
-        List<List<Direccion>> caminos = new ArrayList<>();
-        visitadas.add(origen);
-        caminos.add(new ArrayList<>());
-
-        int indice = 0;
-        while (indice < visitadas.size()) {
-            Posicion actual = visitadas.get(indice);
-            List<Direccion> caminoActual = caminos.get(indice);
-            indice++;
-
-            if (actual.equals(destino)) {
-                return caminoActual;
-            }
-
-            if (estaDentroDelRango(caminoActual.size() + 1)) {
-                for (Direccion direccion: direccionesOrtogonales()) {
-                    Posicion vecina = actual.siguienteEn(direccion);
-                    if (!visitadas.contains(vecina)) {
-                        List<Direccion> nuevoCamino = new ArrayList<>(caminoActual);
-                        nuevoCamino.add(direccion);
-                        visitadas.add(vecina);
-                        caminos.add(nuevoCamino);
-                    }
-                }
-            }
-
-        }
-        return new ArrayList<>();
     }
 
     public List<Posicion> obtenerCasillasAtacablesDesde(Posicion origen, Tablero tablero){
