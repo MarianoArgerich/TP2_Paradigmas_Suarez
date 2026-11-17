@@ -143,7 +143,4 @@ public class Mapa {
         }
         return posiciones;
     }
-/*
-    public List<Posicion> obtenerPosicionesDeEmergenciaValidas()
-*/
 }

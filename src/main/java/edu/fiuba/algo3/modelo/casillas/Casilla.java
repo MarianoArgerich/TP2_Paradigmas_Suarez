@@ -179,4 +179,6 @@ public class Casilla {
             posiciones.add(this.posicion);
         }
     }
+
+
 }

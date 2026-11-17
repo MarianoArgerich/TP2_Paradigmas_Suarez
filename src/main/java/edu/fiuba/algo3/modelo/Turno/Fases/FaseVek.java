@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FaseVek implements Fase {
-/*
+
     private GeneradorEmergencias generadorEmergencias;
 
     private Random random;
@@ -25,7 +25,8 @@ public class FaseVek implements Fase {
         this.random = null;
         this.posicionParaEmergencia = posicionFija;
     }
-*/
+
+    @Override
     public void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero){
 
 

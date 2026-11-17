@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
+import edu.fiuba.algo3.modelo.Turno.Fases.EmergenciaAnunciada;
+import edu.fiuba.algo3.modelo.Turno.Fases.GeneradorEmergenciasAleatorio;
 import edu.fiuba.algo3.modelo.Visitante.Disparo;
 import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
@@ -20,6 +22,7 @@ public class Tablero {
 
     private final Mapa mapa;
     private final List<AtaqueAnunciado> ataquesAnunciados = new ArrayList<>();
+    private AparicionVek emergenciaActual = new SinEmergencia();
 
     public Tablero(List<Casilla> casillas){
         this.mapa = new Mapa(casillas);
@@ -126,18 +129,29 @@ public class Tablero {
         mapa.ejecutarAtaqueVek(atacante, direccion, this);
     }
 
+    public boolean tieneEmergenciaAnunciadaEn(Posicion posicion){
+        return this.emergenciaActual.estaEn(posicion);
+    }
+
+    public intentarEmergenciaEn(Posicion posicion, Vek vek){
+        mapa.aplicarEfecto(posicion, new EmergenciaVek(vek));
+    }
+
+    public void resolverEmergencia() {
+        this.emergenciaActual.resolver(this);
+        this.emergenciaActual = new SinEmergencia();
+    }
+
     public void anunciarEmergencia(Posicion posicion, Vek vek) {
-        if (!mapa.esAptaParaEmergencia(posicion) || tieneEmergenciaAnunciadaEn(posicion)) {
+        if (!mapa.esAptaParaEmergencia(posicion)) {
             throw new CasillaInvalidaException("No se puede anunciar una emergencia en esa casilla");
         }
 
-        emergenciasAnunciadas.add(new EmergenciaAnunciada(posicion, vek));
+        this.emergenciaActual = new EmergenciaAnunciada(posicion, vek);
     }
 
     public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
-        List<Posicion> disponibles = mapa.obtenerPosicionesDeSueloLibre();
-        disponibles.removeIf(this::tieneEmergenciaAnunciadaEn);
-        return disponibles;
+        return mapa.obtenerPosicionesDeSueloLibre();
     }
     
 }

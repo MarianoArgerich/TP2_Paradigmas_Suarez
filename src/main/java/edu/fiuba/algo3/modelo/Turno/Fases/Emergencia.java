@@ -11,6 +11,7 @@ import java.util.List;
 public class Emergencia implements Fase {
 
     public void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero){
-        //TODO: aparece el vek anunciado o aplica daño a lo que lo bloquee
+        tablero.resolverEmergencias();
+
     };
 }

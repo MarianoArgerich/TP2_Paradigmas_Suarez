@@ -119,4 +119,9 @@ public abstract class Unidad extends Ocupante {
     }
 
     public void verificarAtaqueEnAgua() {}
+
+    @Override
+    public boolean esAptoParaEmergencia(){
+        return true;
+    }
 }
