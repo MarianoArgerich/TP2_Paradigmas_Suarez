@@ -13,5 +13,5 @@ public interface EstadoContaminacion {
 
      void recibirDanio(Unidad unidad, int danio, Casilla casillaActual);
 
-     int modificarDanio(int danio);
+
 }

@@ -19,8 +19,6 @@ public class ContaminadoPorLuciernaga implements EstadoContaminacion {
         unidad.aplicarDanio(danio * 2, casillaActual);
     }
 
-    public int modificarDanio(int danio) {
-        return danio * 2;
-    }
+
 
 }

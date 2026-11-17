@@ -22,8 +22,5 @@ public class NoContaminado implements EstadoContaminacion{
         unidad.aplicarDanio(danio, casillaActual);
     }
 
-    @Override
-    public int modificarDanio(int danio) {
-        return danio;
-    }
+
 }

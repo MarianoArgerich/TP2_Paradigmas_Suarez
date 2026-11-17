@@ -9,5 +9,5 @@ public class ReglaAtacarMech extends ReglaAtacar {
     protected boolean esObjetivoValido(Posicion objetivo, Tablero tablero) {
         return tablero.mechEn(objetivo);
     }
-
+    //TODO: viola tell don't ask
 }

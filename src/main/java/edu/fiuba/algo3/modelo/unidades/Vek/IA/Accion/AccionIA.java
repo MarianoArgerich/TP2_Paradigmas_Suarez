@@ -5,5 +5,6 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
 public interface AccionIA {
     boolean esValida();
+    //TODO:viola tell don't ask
     void ejecutar(Vek vek, Tablero tablero);
 }

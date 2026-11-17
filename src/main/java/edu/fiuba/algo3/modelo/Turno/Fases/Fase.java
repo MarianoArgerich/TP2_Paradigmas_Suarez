@@ -9,5 +9,5 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import java.util.List;
 
 public interface Fase {
-    public void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero);
-}
+    void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero);
+} 

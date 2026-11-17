@@ -27,6 +27,6 @@ public abstract class ReglaAtacar implements ReglaIA {
         }
         return new AccionNula();
     }
-
+    //TODO: viola tell don't ask
     protected abstract boolean esObjetivoValido(Posicion objetivo, Tablero tablero);
 }

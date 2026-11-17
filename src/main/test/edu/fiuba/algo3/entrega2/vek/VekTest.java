@@ -51,9 +51,11 @@ public class VekTest {
     public void setUp() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                mapa.add(new Casilla(new Posicion(i, j), new Suelo()));
+                Posicion posicion = new Posicion(i, j);
+                mapa.add(new Casilla(posicion));
             }
         }
+
         tablero = new Tablero(mapa);
         faseVek = new FaseVek();
         faseResolucion = new Resolucion();
