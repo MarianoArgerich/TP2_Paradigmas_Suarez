@@ -2,6 +2,10 @@ package edu.fiuba.algo3.modelo.Turno.Fases;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
+import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
+import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,4 +25,11 @@ public class GeneradorEmergenciasAleatorio implements GeneradorEmergencias {
         Collections.shuffle(candidatas, random);
         tablero.anunciarEmergencia(candidatas.get(0), crearVekAleatorio());
     }
+
+    private Vek crearVekAleatorio() {
+        List<Vek> veks = List.of(new Luciernaga(), new Saltador(), new Avispon());
+        Collections.shuffle(veks, random);
+        return veks.get(0);
+    }
+
 }

@@ -14,32 +14,21 @@ public class FaseVek implements Fase {
 
     private GeneradorEmergencias generadorEmergencias;
 
-    private Random random;
-    private Posicion posicionParaEmergencia;
 
     public FaseVek() {
-        this.random = new Random();
-        this.posicionParaEmergencia = null;
+        this(new GeneradorEmergenciasAleatorio());
     }
 
-    public FaseVek(Posicion posicionFija) {
-        this.random = null;
-        this.posicionParaEmergencia = posicionFija;
+    public FaseVek(GeneradorEmergencias generadorEmergencias) {
+        this.generadorEmergencias = generadorEmergencias;
     }
 
     @Override
     public void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero){
-
-
         for (int i = 0; i < veks.size(); i++) {
             veks.get(i).ejecutarTurnoIA(posicionesVeks.get(i), tablero);
         }
 
-        anunciarAparicionDeVek();
-    }
-
-    private void anunciarAparicionDeVek(){
-
-        return;
+        generadorEmergencias.generarEn(tablero);
     }
 }

@@ -4,6 +4,7 @@ package edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Turno.Fases.EmergenciaAnunciada;
 import edu.fiuba.algo3.modelo.Turno.Fases.GeneradorEmergenciasAleatorio;
 import edu.fiuba.algo3.modelo.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Visitante.EmergenciaVek;
 import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
@@ -153,5 +154,5 @@ public class Tablero {
     public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
         return mapa.obtenerPosicionesDeSueloLibre();
     }
-    
+
 }
