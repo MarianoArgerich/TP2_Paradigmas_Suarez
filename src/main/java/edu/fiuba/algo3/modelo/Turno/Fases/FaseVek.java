@@ -9,6 +9,7 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FaseVek implements Fase {
 
     private GeneradorEmergencias generadorEmergencias;
