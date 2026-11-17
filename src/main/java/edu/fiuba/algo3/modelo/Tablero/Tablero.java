@@ -103,7 +103,7 @@ public class Tablero {
         return mapa.obtenerPosicionesDeEdificios();
     }
 
-    //TODO: viola tell don't ask
+
     public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
         for (AtaqueAnunciado ataque : ataquesAnunciados) {
             if (ataque.amenazaA(posicion, this)) {
@@ -112,7 +112,7 @@ public class Tablero {
         }
         return false;
     }
-    //TODO: viola tell don't ask
+
     public boolean hayAtaquesAnunciados() {
         return !ataquesAnunciados.isEmpty();
     }
