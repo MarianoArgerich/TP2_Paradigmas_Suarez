@@ -32,12 +32,9 @@ public abstract class Unidad extends Ocupante {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Unidad unidad = (Unidad) o;
-        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+        return this == o;
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);
@@ -69,6 +66,10 @@ public abstract class Unidad extends Ocupante {
         if (distancia > rangoDeMovimiento) {
             throw new DistanciaInvalidaException("Fuera de rango");
         }
+    }
+
+    public boolean estaDentroDelRango(int distancia){
+        return(distancia <= rangoDeMovimiento);
     }
 
     public boolean suVidaEsIgualA(int comparacion) {
@@ -118,4 +119,9 @@ public abstract class Unidad extends Ocupante {
     }
 
     public void verificarAtaqueEnAgua() {}
+
+    @Override
+    public boolean esAptoParaEmergencia(){
+        return true;
+    }
 }

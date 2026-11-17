@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega2.unitarios.redElectrica;
+package edu.fiuba.algo3.entrega2.redElectrica;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;

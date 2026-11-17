@@ -12,6 +12,11 @@ public class Edificio extends Destruible {
     }
 
     @Override
+    public boolean esEdificio() {
+        return true;
+    }
+
+    @Override
     public void recibirDanio(int danio, Casilla casillaActual,Mapa mapa) {
         super.recibirDanio(danio, casillaActual, mapa);
         mapa.reducirRedElectrica();

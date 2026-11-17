@@ -29,8 +29,24 @@ public abstract class Ocupante {
 
     public abstract void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa);
 
+    public boolean esMech() {
+        return false;
+    }
+
+    public boolean esVek() {
+        return false;
+    }
+
+    public boolean esEdificio() {
+        return false;
+    }
+
     public abstract void contaminar();
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
     public void verificarAtaqueEn(Terreno terreno) {}
+
+    public boolean esAptoParaEmergencia(){
+        return false;
+    }
 }

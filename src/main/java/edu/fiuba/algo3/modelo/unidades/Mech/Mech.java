@@ -46,6 +46,11 @@ public abstract class Mech extends Unidad {
     }
 
     @Override
+    public boolean esMech() {
+        return true;
+    }
+
+    @Override
     public void verificarAtaqueEnAgua() {
         throw new AtaqueInvalidoException("Un Mech en el Agua no puede atacar");
     }

@@ -11,6 +11,9 @@ import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
+
+import java.util.List;
 
 public class Casilla {
 
@@ -75,6 +78,14 @@ public class Casilla {
         return this.ocupante.equals(ocupanteAComparar);
     }
 
+    public boolean tieneMech() {
+        return this.ocupante.esMech();
+    }
+
+    public boolean tieneVek() {
+        return this.ocupante.esVek();
+    }
+
     public Posicion siguienteEn(Direccion direccion) {
         return this.posicion.siguienteEn(direccion);
     }
@@ -104,6 +115,33 @@ public class Casilla {
         return otraCasilla.estaEn(this.posicion.siguienteEn(direccion));
     }
 
+    public boolean puedeTerminarVek(Vek vek) {
+        return this.terreno.puedeIngresar() && this.ocupante.puedeIngresar() && vek.puedeTerminarEn(this.terreno);
+    }
+
+    public void agregarPosicionSiTieneEdificio(List<Posicion> posiciones) {
+        if (this.tieneEdificio()){
+            posiciones.add(this.posicion);
+        }
+    }
+
+    private boolean tieneEdificio() {
+        return this.ocupante.esEdificio();
+    }
+
+    public boolean amenazaPosicion(Vek atacante, Direccion direccion, Posicion posicionObjetivo, Tablero tablero) {
+        if (this.tieneUnidad(atacante)) {
+            return atacante.amenazaDesde(this.posicion, direccion, posicionObjetivo, tablero);
+        }
+        return false;
+    }
+
+    public void ejecutarAtaqueVek(Vek atacante, Direccion direccion, Tablero tablero) {
+        if (this.tieneUnidad(atacante)) {
+            atacante.resolverAtaque(this.posicion, direccion, tablero);
+        }
+    }
+
     public void contaminar(){
         this.ocupante.contaminar();
     }
@@ -131,4 +169,16 @@ public class Casilla {
     public void aplicarEfectoDelTerreno() {
         this.ocupante.reaccionarAlTerreno(this.terreno, this);
     }
+
+    public boolean esAptoParaEmergencia() {
+        return this.terreno.esAptoParaEmergencia() && this.ocupante.esAptoParaEmergencia();
+    }
+
+    public void agregarPosicionSiEsAptaParaEmergencia(List<Posicion> posiciones) {
+        if (esAptoParaEmergencia()) {
+            posiciones.add(this.posicion);
+        }
+    }
+
+
 }

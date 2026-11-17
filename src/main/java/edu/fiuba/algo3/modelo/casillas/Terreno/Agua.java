@@ -20,6 +20,11 @@ public class Agua extends Terreno {
     }
 
     @Override
+    public boolean esSeguroParaTerrestre() {
+        return false;
+    }
+
+    @Override
     public void verificarAtaqueDe(Unidad unidad) {
         unidad.verificarAtaqueEnAgua();
     }

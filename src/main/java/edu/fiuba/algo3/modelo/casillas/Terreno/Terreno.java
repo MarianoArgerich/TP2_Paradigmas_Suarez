@@ -17,5 +17,13 @@ public abstract class Terreno {
         return obj != null && getClass() == obj.getClass();
     }
 
+    public boolean esSeguroParaTerrestre() {
+        return true;
+    }
+
     public void verificarAtaqueDe(Unidad unidad) {}
+
+    public boolean esAptoParaEmergencia(){
+        return false;
+    }
 }
