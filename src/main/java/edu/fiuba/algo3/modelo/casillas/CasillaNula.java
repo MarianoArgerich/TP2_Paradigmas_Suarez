@@ -45,4 +45,9 @@ public class CasillaNula extends Casilla {
     public boolean puedeTerminarVek(Vek vek) {
         return false;
     }
+
+    @Override
+    public boolean esAptoParaEmergencia() {
+        return false;
+    }
 }

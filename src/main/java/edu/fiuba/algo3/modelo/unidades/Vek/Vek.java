@@ -151,7 +151,10 @@ public abstract class Vek extends Unidad {
         return origen.siguienteEn(direccion).equals(objetivo);
     }
 
-    public abstract void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero);
+    public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
+        Posicion objetivo = posicionActual.siguienteEn(direccion);
+        tablero.aplicarDisparo(objetivo, this.danio);
+    }
 
     @Override
     public void caerAlAguaEn(Casilla casilla) {

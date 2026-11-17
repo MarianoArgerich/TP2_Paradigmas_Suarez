@@ -17,4 +17,9 @@ public class Suelo extends Terreno {
     public boolean puedeIngresar() {
         return true;
     }
+
+    @Override
+    public boolean esAptoParaEmergencia() {
+        return true;
+    }
 }

@@ -32,12 +32,9 @@ public abstract class Unidad extends Ocupante {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Unidad unidad = (Unidad) o;
-        return vidaMax == unidad.vidaMax && rangoDeMovimiento == unidad.rangoDeMovimiento && vidaActual == unidad.vidaActual;
+        return this == o;
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);

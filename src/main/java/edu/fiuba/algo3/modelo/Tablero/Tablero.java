@@ -6,8 +6,10 @@ import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.Vek.Ataque.DisparoAcido;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.AtaqueAnunciado;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
@@ -33,6 +35,10 @@ public class Tablero {
 
     public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
         mapa.aplicarEfecto(posicion, new Golpe(danio, direccion));
+    }
+
+    public void aplicarDisparoAcido(Posicion objetivo, int danio) {
+        mapa.aplicarEfecto(objetivo, new DisparoAcido(danio));
     }
 
     public void aplicarDisparo(Posicion objetivo,int danio){
@@ -78,6 +84,7 @@ public class Tablero {
     public void contaminar(Posicion posicion) {
         mapa.contaminar(posicion);
     }
+
     public boolean tieneEnergia(int energia) {
         return mapa.tieneEnergia(energia);
     }
@@ -90,6 +97,7 @@ public class Tablero {
         return mapa.obtenerPosicionesDeEdificios();
     }
 
+    //TODO: viola tell don't ask
     public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
         for (AtaqueAnunciado ataque : ataquesAnunciados) {
             if (ataque.amenazaA(posicion, this)) {
@@ -98,7 +106,7 @@ public class Tablero {
         }
         return false;
     }
-
+    //TODO: viola tell don't ask
     public boolean hayAtaquesAnunciados() {
         return !ataquesAnunciados.isEmpty();
     }
@@ -118,4 +126,18 @@ public class Tablero {
         mapa.ejecutarAtaqueVek(atacante, direccion, this);
     }
 
+    public void anunciarEmergencia(Posicion posicion, Vek vek) {
+        if (!mapa.esAptaParaEmergencia(posicion) || tieneEmergenciaAnunciadaEn(posicion)) {
+            throw new CasillaInvalidaException("No se puede anunciar una emergencia en esa casilla");
+        }
+
+        emergenciasAnunciadas.add(new EmergenciaAnunciada(posicion, vek));
+    }
+
+    public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
+        List<Posicion> disponibles = mapa.obtenerPosicionesDeSueloLibre();
+        disponibles.removeIf(this::tieneEmergenciaAnunciadaEn);
+        return disponibles;
+    }
+    
 }

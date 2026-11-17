@@ -36,7 +36,7 @@ public class Luciernaga extends Vek {
         while (!tablero.detieneDisparoEn(actual)){
             actual = actual.siguienteEn(direccion);
         }
-        tablero.aplicarDisparo(actual, this.danio);
+        tablero.aplicarDisparoAcido(actual, this.danio);
 
         tablero.contaminar(objetivo);
     }
@@ -68,8 +68,14 @@ public class Luciernaga extends Vek {
 
     @Override
     public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo, Tablero tablero) {
-        Posicion impacto = buscarPrimerImpactoEnLinea(origen, direccion , tablero);
-        return impacto.equals(objetivo);
+        Posicion actual = origen.siguienteEn(direccion);
+        while (!tablero.detieneDisparoEn(actual)) {
+            if (actual.equals(objetivo)) {
+                return true;
+            }
+            actual = actual.siguienteEn(direccion);
+        }
+        return tablero.posicionValida(actual) && actual.equals(objetivo);
     }
 
     private Posicion buscarPrimerImpactoEnLinea(Posicion origen, Direccion direccion, Tablero tablero) {
@@ -85,6 +91,6 @@ public class Luciernaga extends Vek {
     @Override
     public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
         Posicion objetivo = buscarPrimerImpactoEnLinea(posicionActual, direccion, tablero);
-        tablero.aplicarDisparo(objetivo, 1);
+        tablero.aplicarDisparoAcido(objetivo, this.danio);
     }
 }

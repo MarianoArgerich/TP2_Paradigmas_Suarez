@@ -45,4 +45,8 @@ public abstract class Ocupante {
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
     public void verificarAtaqueEn(Terreno terreno) {}
+
+    public boolean esAptoParaEmergencia(){
+        return false;
+    }
 }

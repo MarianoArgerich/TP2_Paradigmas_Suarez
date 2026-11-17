@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Resolucion implements Fase {
 
+    @Override
     public void ejecutar(List<Posicion> posicionesVeks, List<Vek> veks, List<Posicion> posicionesMechs, List<Mech> mechs, Tablero tablero){
-        //TODO ejecutar ataque de veks vivos
+        tablero.resolverAtaques();
     };
 }

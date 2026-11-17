@@ -22,4 +22,8 @@ public abstract class Terreno {
     }
 
     public void verificarAtaqueDe(Unidad unidad) {}
+
+    public boolean esAptoParaEmergencia(){
+        return false;
+    }
 }

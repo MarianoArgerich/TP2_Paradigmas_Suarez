@@ -169,4 +169,14 @@ public class Casilla {
     public void aplicarEfectoDelTerreno() {
         this.ocupante.reaccionarAlTerreno(this.terreno, this);
     }
+
+    public boolean esAptoParaEmergencia() {
+        return this.terreno.esAptoParaEmergencia() && this.ocupante.esAptoParaEmergencia();
+    }
+
+    public void agregarPosicionSiEsAptaParaEmergencia(List<Posicion> posiciones) {
+        if (esAptoParaEmergencia()) {
+            posiciones.add(this.posicion);
+        }
+    }
 }

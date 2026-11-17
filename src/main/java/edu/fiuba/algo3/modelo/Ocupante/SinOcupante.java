@@ -45,4 +45,9 @@ public class SinOcupante extends Ocupante{
 
     @Override
     public void contaminar() {}
+
+    @Override
+    public boolean esAptoParaEmergencia() {
+        return true;
+    }
 }
