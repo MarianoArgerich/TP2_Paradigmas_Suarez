@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades.Mech;
 
 import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
@@ -13,7 +14,7 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Movido;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Atacante;
 import edu.fiuba.algo3.modelo.unidades.capacidades.DeshaceMovimiento;
-import edu.fiuba.algo3.modelo.Visitante.VisitanteAtaque;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante {
 
@@ -60,7 +61,11 @@ public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante
     }
 
     @Override
-    public void aceptarAtaque(VisitanteAtaque visitante) {
+    public void aceptarAtaque(SegundoVisitante visitante) {
+        visitante.visitar(this);
+    }
+    @Override
+    public void aceptarMovimiento(SegundoVisitante visitante) {
         visitante.visitar(this);
     }
 }

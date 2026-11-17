@@ -3,9 +3,7 @@ import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
 import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.AtaqueDesdeCasilla;
-import edu.fiuba.algo3.modelo.Visitante.Visitante;
-import edu.fiuba.algo3.modelo.Visitante.VisitanteAtaque;
+import edu.fiuba.algo3.modelo.Visitante.*;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -101,7 +99,7 @@ public class Casilla {
     }
 
     public void ejecutarAtaque(Posicion objetivo, Tablero tablero) {
-        VisitanteAtaque ataque = new AtaqueDesdeCasilla(
+        SegundoVisitante ataque = new AtaqueDesdeCasilla(
                 this.posicion,
                 objetivo,
                 tablero,
@@ -112,11 +110,23 @@ public class Casilla {
     }
 
     public void deshacerMovimientoOcupante(Mapa mapa) {
-        this.ocupante.deshacerMovimientoDesde(this, mapa);
+        SegundoVisitante deshacer = new DeshacerMovimientoDesdeCasilla(
+                this,
+                mapa
+        );
+
+        this.ocupante.aceptarMovimiento(deshacer);
     }
 
     public void moverOcupante(Direccion direccion, int distancia, Mapa mapa) {
-        this.ocupante.moverDesde(this, direccion, distancia, mapa);
+        SegundoVisitante movimiento = new MoverDesdeCasilla(
+                this,
+                direccion,
+                distancia,
+                mapa
+        );
+
+        this.ocupante.aceptarMovimiento(movimiento);
     }
 
     public boolean esSiguienteEn(Direccion direccion, Casilla otraCasilla) {

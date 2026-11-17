@@ -26,7 +26,4 @@ public class Avispon extends Vek {
         return true;
     }
 
-    @Override
-    public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
-    }
 }

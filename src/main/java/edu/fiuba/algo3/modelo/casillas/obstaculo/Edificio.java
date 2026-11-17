@@ -23,9 +23,5 @@ public class Edificio extends Destruible {
     }
 
     @Override
-    public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
-
-    }
-    @Override
     public void contaminar() {}
 }

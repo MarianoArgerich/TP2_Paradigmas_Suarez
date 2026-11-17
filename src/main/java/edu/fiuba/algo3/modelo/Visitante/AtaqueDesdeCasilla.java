@@ -10,7 +10,7 @@ import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
-public class AtaqueDesdeCasilla implements VisitanteAtaque {
+public class AtaqueDesdeCasilla implements SegundoVisitante {
     private final Posicion origen;
     private final Posicion objetivo;
     private final Tablero tablero;

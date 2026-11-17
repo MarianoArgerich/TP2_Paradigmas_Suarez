@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
@@ -12,7 +13,7 @@ import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAcercarseAEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarMech;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaIA;
-import edu.fiuba.algo3.modelo.Visitante.VisitanteAtaque;
+
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Atacante;
 
@@ -174,7 +175,12 @@ public abstract class Vek extends Unidad implements Atacante {
     }
 
     @Override
-    public void aceptarAtaque(VisitanteAtaque visitante) {
+    public void aceptarAtaque(SegundoVisitante visitante) {
+        visitante.visitar(this);
+    }
+
+    @Override
+    public void aceptarMovimiento(SegundoVisitante visitante) {
         visitante.visitar(this);
     }
 }
