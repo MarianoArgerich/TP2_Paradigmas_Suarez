@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
@@ -13,10 +14,13 @@ import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarMech;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaIA;
 
+import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
+import edu.fiuba.algo3.modelo.unidades.capacidades.Atacante;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vek extends Unidad {
+public abstract class Vek extends Unidad implements Atacante {
     protected int danio;
     private final List<ReglaIA> reglasPrioridad;
 
@@ -140,7 +144,16 @@ public abstract class Vek extends Unidad {
 
 
     @Override
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {}
+    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
+        if (!origen.esAdyacenteA(objetivo)) {
+            throw new AtaqueInvalidoException(
+                    "El objetivo debe estar en una casilla adyacente"
+            );
+        }
+
+        Direccion direccion = origen.calcularDireccionHacia(objetivo);
+        this.resolverAtaque(origen, direccion, tablero);
+    }
 
     @Override
     public boolean esVek() {
@@ -160,5 +173,12 @@ public abstract class Vek extends Unidad {
     public void caerAlAguaEn(Casilla casilla) {
         casilla.vaciar();
     }
+
+    @Override
+    public void aceptar(SegundoVisitante visitante) {
+        visitante.visitar(this);
+    }
+
+
 }
 

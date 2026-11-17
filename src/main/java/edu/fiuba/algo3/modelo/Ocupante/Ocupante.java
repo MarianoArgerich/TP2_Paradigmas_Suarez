@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 public abstract class Ocupante {
 
@@ -23,11 +24,6 @@ public abstract class Ocupante {
         return obj != null && getClass() == obj.getClass();
     }
 
-    public abstract void atacar(Posicion origen, Posicion objetivo, Tablero tablero);
-
-    public abstract void deshacerMovimientoDesde(Casilla casilla, Mapa mapa);
-
-    public abstract void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa);
 
     public boolean esMech() {
         return false;
@@ -41,7 +37,7 @@ public abstract class Ocupante {
         return false;
     }
 
-    public abstract void contaminar();
+
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
     public void verificarAtaqueEn(Terreno terreno) {}
@@ -49,4 +45,6 @@ public abstract class Ocupante {
     public boolean esAptoParaEmergencia(){
         return false;
     }
+
+    public abstract void aceptar(SegundoVisitante visitante);
 }

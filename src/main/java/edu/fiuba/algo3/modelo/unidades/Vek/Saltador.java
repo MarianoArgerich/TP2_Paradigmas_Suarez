@@ -14,10 +14,6 @@ public class Saltador extends Vek {
         super(2, 3, 2);
     }
 
-    @Override
-    public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
-
-    }
 
     @Override
     public void caerAlAguaEn(Casilla casilla) {

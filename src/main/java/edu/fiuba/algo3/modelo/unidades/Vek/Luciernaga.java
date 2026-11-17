@@ -19,9 +19,6 @@ public class Luciernaga extends Vek {
         super(3, 2, 1);
     }
 
-    @Override
-    public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
-    }
 
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
