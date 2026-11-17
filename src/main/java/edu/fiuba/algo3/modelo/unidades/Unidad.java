@@ -10,12 +10,15 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.capacidades.Contaminable;
+import edu.fiuba.algo3.modelo.unidades.capacidades.Movible;
+import edu.fiuba.algo3.modelo.unidades.capacidades.ReaccionaAlTerreno;
 import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.EstadoContaminacion;
 import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.NoContaminado;
 
 import java.util.Objects;
 
-public abstract class Unidad extends Ocupante {
+public abstract class Unidad extends Ocupante implements Movible, Contaminable, ReaccionaAlTerreno {
 
     private final int vidaMax;
     private final int rangoDeMovimiento;

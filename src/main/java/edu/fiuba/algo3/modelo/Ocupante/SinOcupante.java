@@ -9,6 +9,7 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.Visitante.VisitanteAtaque;
 
 public class SinOcupante extends Ocupante{
 
@@ -28,10 +29,6 @@ public class SinOcupante extends Ocupante{
         visitante.visitar(this, terreno, casillaActual, mapa);
     }
 
-    @Override
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-
-    }
 
     @Override
     public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
@@ -49,5 +46,10 @@ public class SinOcupante extends Ocupante{
     @Override
     public boolean esAptoParaEmergencia() {
         return true;
+    }
+
+    @Override
+    public void aceptarAtaque(VisitanteAtaque visitante) {
+        visitante.visitar(this);
     }
 }

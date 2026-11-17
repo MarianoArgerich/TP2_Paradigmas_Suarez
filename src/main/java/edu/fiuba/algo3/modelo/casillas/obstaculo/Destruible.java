@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.Visitante.VisitanteAtaque;
 
 public abstract class Destruible extends Obstaculo {
 
@@ -31,5 +32,10 @@ public abstract class Destruible extends Obstaculo {
     @Override
     public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
 
+    }
+
+    @Override
+    public void aceptarAtaque(VisitanteAtaque visitante) {
+        visitante.visitar(this);
     }
 }
