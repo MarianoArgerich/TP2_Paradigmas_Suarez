@@ -2,8 +2,9 @@ package edu.fiuba.algo3.modelo.Tablero;
 
 
 import edu.fiuba.algo3.modelo.Turno.Fases.EmergenciaAnunciada;
-import edu.fiuba.algo3.modelo.Turno.Fases.GeneradorEmergenciasAleatorio;
+import edu.fiuba.algo3.modelo.Turno.Fases.SinEmergencia;
 import edu.fiuba.algo3.modelo.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Turno.Fases.AparicionVek;
 import edu.fiuba.algo3.modelo.Visitante.EmergenciaVek;
 import edu.fiuba.algo3.modelo.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.Visitante.Golpe;
@@ -134,7 +135,7 @@ public class Tablero {
         return this.emergenciaActual.estaEn(posicion);
     }
 
-    public intentarEmergenciaEn(Posicion posicion, Vek vek){
+    public void intentarEmergenciaEn(Posicion posicion, Vek vek){
         mapa.aplicarEfecto(posicion, new EmergenciaVek(vek));
     }
 

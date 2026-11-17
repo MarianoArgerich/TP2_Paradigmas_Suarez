@@ -178,10 +178,14 @@ public class VekTest {
         Posicion posicionEmergencia = new Posicion(4, 4);
         Vek vekBloqueador = new Luciernaga();
         Vek vekEntrante = new Saltador();
-
-        FaseVek faseVekDeterministica = new FaseVek();
         Emergencia faseEmergencia = new Emergencia();
 
+        tablero.anunciarEmergencia(posicionEmergencia, vekEntrante);
+        tablero.colocarUnidad(posicionEmergencia, vekBloqueador);
+
+        faseEmergencia.ejecutar(List.of(new Posicion(4,4)), List.of(vekBloqueador), List.of(), List.of(), tablero);
+
+        assertFalse(tablero.tieneEmergenciaAnunciadaEn(posicionEmergencia));
     }
 
 

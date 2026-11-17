@@ -27,9 +27,10 @@ public class GeneradorEmergenciasAleatorio implements GeneradorEmergencias {
     }
 
     private Vek crearVekAleatorio() {
-        List<Vek> veks = List.of(new Luciernaga(), new Saltador(), new Avispon());
-        Collections.shuffle(veks, random);
-        return veks.get(0);
+        int tipo = random.nextInt(3);
+        if (tipo == 0) return new  Luciernaga();
+        if (tipo == 1) return new Saltador();
+        return new Avispon();
     }
 
 }
