@@ -37,7 +37,7 @@ public class FaseVek implements Fase {
     }
 
     private void anunciarAparicionDeVek(){
-        //TODO
+
         return;
     }
 }

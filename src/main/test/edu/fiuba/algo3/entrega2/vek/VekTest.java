@@ -345,7 +345,98 @@ public class VekTest {
         assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
     }
-        //puede ser un vek cualquiera segun Joaquin
+
+    @Test
+    public void testEmpujarAUnaLuciernagaPrevioAAtacar() {
+        Vek luciernaga = new Luciernaga();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        tablero.empujarDesde(new Posicion(2, 2), new Derecha());
+
+        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(3, 2)));
+    }
+
+    @Test
+    public void testAlEmpujarAUnaLuciernagaSuAtaqueSeDesplazaConEl() {
+        Vek luciernaga = new Luciernaga();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        tablero.empujarDesde(new Posicion(2, 2), new Derecha());
+
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
+    }
+
+    @Test
+    public void testAlEmpujarAUnSaltadorSuAtaqueSeDesplazaConEl() {
+        Vek saltador = new Saltador();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 3), saltador);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(saltador), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+
+        tablero.empujarDesde(new Posicion(2, 4), new Derecha());
+
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
+    }
+
+    @Test
+    public void testAlEmpujarAUnSaltadorPrevioAAtacar() {
+        Vek saltador = new Saltador();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 3), saltador);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(saltador), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        tablero.empujarDesde(new Posicion(2, 4), new Derecha());
+
+        assertTrue(tablero.unidadEstaEn(saltador, new Posicion(3, 4)));
+    }
+
+    @Test
+    public void testAlEmpujarAUnAvisponPrevioAAtacar() {
+        Vek avispon = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 3), avispon);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(avispon), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        tablero.empujarDesde(new Posicion(2, 4), new Derecha());
+
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
+    }
+
+    @Test
+    public void testAlEmpujarAUnAvisponSuAtaqueSeDesplazaConEl() {
+        Vek avispon = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 3), avispon);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(avispon), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+
+        assertTrue(tablero.unidadEstaEn(avispon, new Posicion(2, 4)));
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
+
+        tablero.empujarDesde(new Posicion(2, 4), new Derecha());
+
+        assertTrue(tablero.unidadEstaEn(avispon, new Posicion(3, 4)));
+        assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
+    }
+
 
     @Test
     public void test16AlEmpujarAUnVekSuAtaqueSeDesplazaConElApuntandoAOtroMechDañandolo() {
@@ -371,10 +462,88 @@ public class VekTest {
         faseResolucion.ejecutar(List.of(new Posicion(4, 2)), List.of(luciernaga), List.of(new Posicion(2, 5), new Posicion(4, 5)), List.of(mech, mech2), tablero);
         assertTrue(mech2.suVidaEsIgualA(2));
     }
-        //puede ser un vek cualquiera segun Joaquin
 
     @Test
-    public void test17LuciernagaAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia(){
+    public void test16AlEmpujarAUnVekSuAtaqueSeDesplazaConElApuntandoAOtroVekDañandolo() {
+        Vek luciernaga = new Luciernaga();
+        Vek luciernaga2 = new Luciernaga();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+        tablero.colocarUnidad(new Posicion(3, 5), luciernaga2);
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+
+        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
+
+        tablero.empujarDesde(new Posicion(2, 2), new Derecha());
+
+        assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(3, 2)));
+        assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
+
+        faseResolucion.ejecutar(List.of(new Posicion(3, 2)), List.of(luciernaga), List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        assertTrue(luciernaga2.suVidaEsIgualA(2));
+    }
+
+    @Test
+    public void testSaltadorAnunciaSuAtaqueEnFaseVek() {
+        Vek saltador = new Saltador();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), saltador);
+        tablero.colocarUnidad(new Posicion(2, 3), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltador),
+                List.of(new Posicion(2, 3)), List.of(mech), tablero);
+
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 3)));
+    }
+
+    @Test
+    public void testSaltadorAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia() {
+        Vek saltador = new Saltador();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), saltador);
+        tablero.colocarUnidad(new Posicion(2, 3), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltador),
+                List.of(new Posicion(2, 3)), List.of(mech), tablero);
+
+        assertTrue(mech.suVidaEsIgualA(3));
+    }
+
+
+    @Test
+    public void test18AvisponAnunciaSuAtaqueEnFaseVek() {
+        Vek avispon = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), avispon);
+        tablero.colocarUnidad(new Posicion(2, 4), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avispon), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+
+        assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 4)));
+    }
+
+    @Test
+    public void test18AvisponAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia() {
+        Vek avispon = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), avispon);
+        tablero.colocarUnidad(new Posicion(2, 4), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avispon), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+
+        assertTrue(mech.suVidaEsIgualA(3));
+    }
+
+    @Test
+    public void testLuciernagaAnunciaSuAtaqueEnFaseVek() {
         Vek luciernaga = new Luciernaga();
         Mech mech = new Combate();
 
@@ -385,15 +554,24 @@ public class VekTest {
                 List.of(new Posicion(2, 5)), List.of(mech), tablero);
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
-        assertTrue(mech.suVidaEsIgualA(3));
+
     }
-    /*
-    @Test
-    public void test18AvisponAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia(){}
 
     @Test
-    public void test19SaltadorAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia(){}
-    */
+    public void testLuciernagaAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia() {
+        Vek luciernaga = new Luciernaga();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
+        tablero.colocarUnidad(new Posicion(2, 5), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
+                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+
+
+        assertTrue(mech.suVidaEsIgualA(3));
+    }
+
     @Test
     public void testAtaquesAnunciadosDelaLuciernagaSeEjecutanEnFaseDeResolucion() {
         Vek luciernaga = new Luciernaga();
@@ -412,15 +590,53 @@ public class VekTest {
         assertTrue(mech.suVidaEsIgualA(2));
     }
 
-    /*
-    @Test
-    public void test21AtaquesAnunciadosDelAvisponSeEjecutanEnFaseDeResolucion(){}
+
 
     @Test
-    public void test22AtaquesAnunciadosDelSaltadorSeEjecutanEnFaseDeResolucion(){}
-    */
+    public void testAtaqueAnunciadosDelAvisponSeEjecutaEnFaseDeResolucion() {
+        Vek avispon = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), avispon);
+        tablero.colocarUnidad(new Posicion(2, 4), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avispon), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+        faseResolucion.ejecutar(List.of(new Posicion(2, 3)), List.of(avispon), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+
+        assertTrue(mech.suVidaEsIgualA(2));
+    }
+
+
+    @Test
+    public void testAtaquesAnunciadosDelSaltadorSeEjecutanEnFaseDeResolucion(){
+        Vek saltador = new Saltador();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(2, 2), saltador);
+        tablero.colocarUnidad(new Posicion(2, 4), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltador), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+        faseResolucion.ejecutar(List.of(new Posicion(2, 3)), List.of(saltador), List.of(new Posicion(2, 4)), List.of(mech), tablero);
+
+        assertTrue(mech.suVidaEsIgualA(1));
+    }
+
     @Test
     public void test23AtaqueDeVekASeEjecutaAntesQueElDeVekBSiguiendoElOrdenAnunciado() {
+        Vek luciernagaA = new Luciernaga();
+        Vek avisponB = new Avispon();
+        Mech mech = new Combate();
+
+        tablero.colocarUnidad(new Posicion(0, 2), luciernagaA);
+        tablero.colocarUnidad(new Posicion(4, 2), avisponB);
+        tablero.colocarUnidad(new Posicion(3, 2), mech);
+
+        faseVek.ejecutar(List.of(new Posicion(0, 2), new Posicion(4, 2)), List.of(luciernagaA, avisponB), List.of(new Posicion(3, 2)), List.of(mech), tablero
+        );
+
+        faseResolucion.ejecutar(List.of(new Posicion(0, 2), new Posicion(3, 1)), List.of(luciernagaA, avisponB), List.of(new Posicion(3, 2)), List.of(mech), tablero);
+
+        assertTrue(mech.suVidaEsIgualA(0));
     }
 
 

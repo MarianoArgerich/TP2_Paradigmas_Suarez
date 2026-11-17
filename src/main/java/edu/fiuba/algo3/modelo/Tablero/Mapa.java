@@ -132,4 +132,18 @@ public class Mapa {
         return this.redElectrica.suEnergiaEsIgualA(energia);
     }
 
+    public boolean esAptaParaEmergencia(Posicion posicion) {
+        return casillaEn(posicion).esAptoParaEmergencia();
+    }
+
+    public List<Posicion> obtenerPosicionesDeSueloLibre(){
+        List<Posicion> posiciones = new ArrayList<>();
+        for (Casilla casilla : casillas) {
+            casilla.agregarPosicionSiEsAptaParaEmergencia(posiciones);
+        }
+        return posiciones;
+    }
+/*
+    public List<Posicion> obtenerPosicionesDeEmergenciaValidas()
+*/
 }
