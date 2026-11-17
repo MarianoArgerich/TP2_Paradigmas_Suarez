@@ -37,7 +37,7 @@ public abstract class Ocupante {
         return false;
     }
 
-    public abstract void contaminar();
+
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
     public void verificarAtaqueEn(Terreno terreno) {}
@@ -46,7 +46,5 @@ public abstract class Ocupante {
         return false;
     }
 
-    public abstract void aceptarAtaque(SegundoVisitante visitante);
-
-    public abstract void aceptarMovimiento(SegundoVisitante visitante);
+    public abstract void aceptar(SegundoVisitante visitante);
 }

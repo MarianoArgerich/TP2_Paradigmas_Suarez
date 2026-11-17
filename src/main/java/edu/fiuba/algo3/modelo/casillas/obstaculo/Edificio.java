@@ -22,6 +22,4 @@ public class Edificio extends Destruible {
         mapa.reducirRedElectrica();
     }
 
-    @Override
-    public void contaminar() {}
 }

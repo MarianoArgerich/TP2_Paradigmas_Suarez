@@ -15,16 +15,10 @@ public class Montania extends Obstaculo {
         visitante.visitar(this, terreno, casillaActual, mapa);
     }
 
-    @Override
-    public void contaminar() {}
+
 
     @Override
-    public void aceptarAtaque(SegundoVisitante visitante) {
-        visitante.visitar(this);
-    }
-
-    @Override
-    public void aceptarMovimiento(SegundoVisitante visitante) {
+    public void aceptar(SegundoVisitante visitante) {
         visitante.visitar(this);
     }
 }

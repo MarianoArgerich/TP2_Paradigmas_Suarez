@@ -61,11 +61,8 @@ public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante
     }
 
     @Override
-    public void aceptarAtaque(SegundoVisitante visitante) {
+    public void aceptar(SegundoVisitante visitante) {
         visitante.visitar(this);
     }
-    @Override
-    public void aceptarMovimiento(SegundoVisitante visitante) {
-        visitante.visitar(this);
-    }
+
 }

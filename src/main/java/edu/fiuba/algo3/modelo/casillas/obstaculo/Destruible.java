@@ -32,12 +32,8 @@ public abstract class Destruible extends Obstaculo {
 
 
     @Override
-    public void aceptarAtaque(SegundoVisitante visitante) {
+    public void aceptar(SegundoVisitante visitante) {
         visitante.visitar(this);
     }
 
-    @Override
-    public void aceptarMovimiento(SegundoVisitante visitante) {
-        visitante.visitar(this);
-    }
 }

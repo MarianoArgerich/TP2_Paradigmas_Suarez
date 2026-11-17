@@ -106,7 +106,7 @@ public class Casilla {
                 this.terreno
         );
 
-        this.ocupante.aceptarAtaque(ataque);
+        this.ocupante.aceptar(ataque);
     }
 
     public void deshacerMovimientoOcupante(Mapa mapa) {
@@ -115,7 +115,7 @@ public class Casilla {
                 mapa
         );
 
-        this.ocupante.aceptarMovimiento(deshacer);
+        this.ocupante.aceptar(deshacer);
     }
 
     public void moverOcupante(Direccion direccion, int distancia, Mapa mapa) {
@@ -126,7 +126,7 @@ public class Casilla {
                 mapa
         );
 
-        this.ocupante.aceptarMovimiento(movimiento);
+        this.ocupante.aceptar(movimiento);
     }
 
     public boolean esSiguienteEn(Direccion direccion, Casilla otraCasilla) {
@@ -160,8 +160,10 @@ public class Casilla {
         }
     }
 
-    public void contaminar(){
-        this.ocupante.contaminar();
+    public void contaminar() {
+        SegundoVisitante contaminacion = new ContaminarOcupante();
+
+        this.ocupante.aceptar(contaminacion);
     }
 
     public void colocarUnidad(Unidad unidad) {
