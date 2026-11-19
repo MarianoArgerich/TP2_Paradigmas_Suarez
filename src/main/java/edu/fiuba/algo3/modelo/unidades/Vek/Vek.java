@@ -1,14 +1,13 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.Vek.IA.*;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionIA;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAcercarseAEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarEdificio;

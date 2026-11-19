@@ -1,15 +1,14 @@
 package edu.fiuba.algo3.modelo.casillas;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.*;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.*;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
@@ -30,9 +29,9 @@ public class Casilla {
         this.ocupante = new SinOcupante();
     }
 
-    public void aceptar(Visitante visitante, Mapa mapa){
+    public void aceptar(Visitante visitante, Tablero tablero){
 
-        this.ocupante.aceptar(visitante, terreno, this, mapa);
+        this.ocupante.aceptar(visitante, terreno, this, tablero);
 
     }
 
@@ -109,21 +108,21 @@ public class Casilla {
         this.ocupante.aceptar(ataque);
     }
 
-    public void deshacerMovimientoOcupante(Mapa mapa) {
+    public void deshacerMovimientoOcupante(Tablero tablero) {
         SegundoVisitante deshacer = new DeshacerMovimientoDesdeCasilla(
                 this,
-                mapa
+                tablero
         );
 
         this.ocupante.aceptar(deshacer);
     }
 
-    public void moverOcupante(Direccion direccion, int distancia, Mapa mapa) {
+    public void moverOcupante(Direccion direccion, int distancia, Tablero tablero) {
         SegundoVisitante movimiento = new MoverDesdeCasilla(
                 this,
                 direccion,
                 distancia,
-                mapa
+                tablero
         );
 
         this.ocupante.aceptar(movimiento);
