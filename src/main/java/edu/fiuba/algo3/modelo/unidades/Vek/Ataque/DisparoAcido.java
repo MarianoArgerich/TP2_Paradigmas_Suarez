@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.modelo.unidades.Vek.Ataque;
 
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
-import edu.fiuba.algo3.modelo.Visitante.Visitante;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;

@@ -1,8 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades.Mech;
 
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
@@ -14,7 +13,6 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Movido;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Atacante;
 import edu.fiuba.algo3.modelo.unidades.capacidades.DeshaceMovimiento;
-import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante {
 
@@ -41,13 +39,13 @@ public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante
         this.estado.atacar(this, this.arma, origen, posicionObjetivo, tablero);
     }
 
-    public void deshacerMovimientoDesde(Casilla casillaActual, Mapa mapa){
-        this.estado.deshacerMovimiento(this, casillaActual, mapa);
+    public void deshacerMovimientoDesde(Casilla casillaActual, Tablero tablero){
+        this.estado.deshacerMovimiento(this, casillaActual, tablero);
     }
 
     @Override
-    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
-        this.estado.mover(this, origen, direccion, distancia, mapa);
+    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
+        this.estado.mover(this, origen, direccion, distancia, tablero);
     }
 
     @Override

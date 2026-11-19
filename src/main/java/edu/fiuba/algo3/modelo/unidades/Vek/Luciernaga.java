@@ -1,14 +1,9 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
-import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
-import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.Visitante;
+package edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;

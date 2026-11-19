@@ -1,7 +1,7 @@
-package edu.fiuba.algo3.modelo.Visitante;
+package edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
@@ -16,18 +16,18 @@ public class MoverDesdeCasilla implements SegundoVisitante {
     private final Casilla origen;
     private final Direccion direccion;
     private final int distancia;
-    private final Mapa mapa;
+    private final Tablero tablero;
 
     public MoverDesdeCasilla(
             Casilla origen,
             Direccion direccion,
             int distancia,
-            Mapa mapa
+            Tablero tablero
     ) {
         this.origen = origen;
         this.direccion = direccion;
         this.distancia = distancia;
-        this.mapa = mapa;
+        this.tablero = tablero;
     }
 
     private void mover(Movible movible) {
@@ -35,7 +35,7 @@ public class MoverDesdeCasilla implements SegundoVisitante {
                 this.origen,
                 this.direccion,
                 this.distancia,
-                this.mapa
+                this.tablero
         );
     }
 

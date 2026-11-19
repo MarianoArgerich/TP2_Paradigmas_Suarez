@@ -1,8 +1,8 @@
-package edu.fiuba.algo3.modelo.Visitante;
+package edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
 
 
 import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
+import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
@@ -13,19 +13,19 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 public class DeshacerMovimientoDesdeCasilla implements SegundoVisitante {
 
     private final Casilla casillaActual;
-    private final Mapa mapa;
+    private final Tablero tablero;
 
     public DeshacerMovimientoDesdeCasilla(
             Casilla casillaActual,
-            Mapa mapa
+            Tablero tablero
     ) {
         this.casillaActual = casillaActual;
-        this.mapa = mapa;
+        this.tablero = tablero;
     }
 
     @Override
     public void visitar(Mech mech) {
-        mech.deshacerMovimientoDesde(this.casillaActual, this.mapa);
+        mech.deshacerMovimientoDesde(this.casillaActual, this.tablero);
     }
 
     @Override
