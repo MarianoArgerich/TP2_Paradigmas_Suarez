@@ -10,8 +10,8 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 public class Montania extends Obstaculo {
 
     @Override
-    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        visitante.visitar(this, terreno, casillaActual, mapa);
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
+        visitante.visitar(this, terreno, casillaActual, tablero);
     }
 
 

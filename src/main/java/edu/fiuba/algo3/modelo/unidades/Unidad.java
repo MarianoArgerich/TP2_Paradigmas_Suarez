@@ -28,7 +28,6 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         this.vidaActual = this.vidaMax;
         this.rangoDeMovimiento = rangoDeMovimiento;
         this.estadoContaminacion = new NoContaminado();
-
     }
 
     @Override
@@ -51,9 +50,8 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         return true;
     }
 
-    @Override
-    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        visitante.visitar(this,  terreno, casillaActual, mapa);
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
+        visitante.visitar(this,  terreno, casillaActual, tablero);
     }
 
     public void aplicarDanio(int danio, Casilla casillaActual){
@@ -81,9 +79,9 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
     }
 
     @Override
-    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
+    public void moverDesde(Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
         this.verificarRangoDeMovimiento(distancia);
-        mapa.desplazarUnidad(origen, this, direccion, distancia);
+        tablero.desplazarUnidad(origen, this, direccion, distancia);
     }
 
     @Override

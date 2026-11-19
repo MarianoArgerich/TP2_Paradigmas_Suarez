@@ -21,8 +21,8 @@ public class SinOcupante extends Ocupante{
     }
 
     @Override
-    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        visitante.visitar(this, terreno, casillaActual, mapa);
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
+        visitante.visitar(this, terreno, casillaActual, tablero);
     }
 
 

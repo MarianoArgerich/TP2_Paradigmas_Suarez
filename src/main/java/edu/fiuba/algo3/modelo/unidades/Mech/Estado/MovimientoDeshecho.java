@@ -12,7 +12,7 @@ public class MovimientoDeshecho implements Estado {
     @Override
     public void mover(Mech mech, Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
         mech.verificarRangoDeMovimiento(distancia);
-        mapa.desplazarUnidad(origen, mech, direccion, distancia);
+        tablero.desplazarUnidad(origen, mech, direccion, distancia);
     }
 
     @Override

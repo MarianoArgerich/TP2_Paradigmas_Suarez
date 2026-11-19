@@ -18,21 +18,21 @@ public class DisparoAcido implements Visitante {
     }
 
     @Override
-    public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Mapa mapa) {
+    public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Tablero tablero) {
         unidad.recibirDanio(danio, casillaActual);
         unidad.contaminar();
     }
 
     @Override
-    public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
+    public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
     }
 
     @Override
-    public void visitar(Destruible destruible, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        destruible.recibirDanio(danio, casillaActual, mapa);
+    public void visitar(Destruible destruible, Terreno terreno, Casilla casillaActual, Tablero tablero) {
+        destruible.recibirDanio(danio, casillaActual, tablero);
     }
 
     @Override
-    public void visitar(Montania montania, Terreno terreno, Casilla casillaActual, Mapa mapa) {
+    public void visitar(Montania montania, Terreno terreno, Casilla casillaActual, Tablero tablero) {
     }
 }

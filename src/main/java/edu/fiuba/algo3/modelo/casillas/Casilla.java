@@ -108,21 +108,21 @@ public class Casilla {
         this.ocupante.aceptar(ataque);
     }
 
-    public void deshacerMovimientoOcupante(Mapa mapa) {
+    public void deshacerMovimientoOcupante(Tablero tablero) {
         SegundoVisitante deshacer = new DeshacerMovimientoDesdeCasilla(
                 this,
-                mapa
+                tablero
         );
 
         this.ocupante.aceptar(deshacer);
     }
 
-    public void moverOcupante(Direccion direccion, int distancia, Mapa mapa) {
+    public void moverOcupante(Direccion direccion, int distancia, Tablero tablero) {
         SegundoVisitante movimiento = new MoverDesdeCasilla(
                 this,
                 direccion,
                 distancia,
-                mapa
+                tablero
         );
 
         this.ocupante.aceptar(movimiento);

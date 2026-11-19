@@ -52,43 +52,42 @@ public class Tablero {
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
-        mapa.mover(origen, direccion, distancia);
+        casillaEn(origen).moverOcupante(direccion, distancia, this);;
     }
 
     public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
-        mapa.aplicarEfecto(posicion, new Golpe(danio, direccion));
+        this.aplicarEfecto(posicion, new Golpe(danio, direccion));
     }
 
     public void aplicarDisparoAcido(Posicion objetivo, int danio) {
-        mapa.aplicarEfecto(objetivo, new DisparoAcido(danio));
+        this.aplicarEfecto(objetivo, new DisparoAcido(danio));
     }
 
     public void aplicarDisparo(Posicion objetivo,int danio){
-        mapa.aplicarEfecto(objetivo, new Disparo(danio));
+        this.aplicarEfecto(objetivo, new Disparo(danio));
     }
 
     public void empujarDesde(Posicion origen, Direccion direccion) {
-        mapa.aplicarEfecto(origen, new Empuje(direccion));
+        this.aplicarEfecto(origen, new Empuje(direccion));
     }
 
     public void atacar(Posicion origen, Posicion objetivo) {
-        mapa.atacar(origen, objetivo, this);
+        casillaEn(origen).ejecutarAtaque(objetivo, this);;
     }
 
-    public boolean detieneDisparoEn(Posicion posicion) {
-        return mapa.detieneDisparoEn(posicion);
+    public boolean detieneDisparoEn(Posicion posicion) {return casillaEn(posicion).detieneDisparo();
     }
 
 
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
-        return mapa.unidadEstaEn(unidad, posicion);
+        return casillaEn(posicion).tieneUnidad(unidad);
     }
 
-    public boolean edificioEn(Posicion posicion) {return mapa.edificioEn(posicion);}
+    public boolean edificioEn(Posicion posicion) {return casillaEn(posicion).tieneOcupante(new Edificio());}
 
-    public boolean mechEn(Posicion posicion) {return mapa.mechEn(posicion);}
+    public boolean mechEn(Posicion posicion) {return casillaEn(posicion).tieneMech();}
 
-    public boolean vekEn(Posicion posicion) {return mapa.vekEn(posicion);}
+    public boolean vekEn(Posicion posicion) {return casillaEn(posicion).tieneVek();}
 
     public boolean posicionValida(Posicion posicion) {
         return casillaEn(posicion).estaEn(posicion);
@@ -190,6 +189,33 @@ public class Tablero {
             casilla.agregarPosicionSiEsAptaParaEmergencia(posiciones);
         }
         return posiciones;
+    }
+
+
+    public void desplazarUnidad(Casilla origen, Unidad unidad, Direccion direccion, int distancia){
+        Casilla casillaActual = origen;
+
+        for (int i = 0; i < distancia; i++){
+            Casilla casillaSiguiente = siguienteCasilla(casillaActual, direccion);
+            try {
+                casillaActual.transferirUnidadA(casillaSiguiente, unidad);
+            } catch (CasillaInvalidaException e) {
+                if (!casillaActual.equals(origen)) {
+                    casillaActual.transferirOcupanteA(origen);
+                }
+                return;
+            }
+            casillaActual = siguienteCasilla(casillaActual, direccion);
+        }
+        origen.notificarMovimientoA(unidad);
+    }
+
+
+    private Casilla siguienteCasilla(Casilla origen, Direccion direccion) {
+        return casillas.stream()
+                .filter(casilla -> origen.esSiguienteEn(direccion, casilla))
+                .findFirst()
+                .orElse(new CasillaNula());
     }
 
 }
