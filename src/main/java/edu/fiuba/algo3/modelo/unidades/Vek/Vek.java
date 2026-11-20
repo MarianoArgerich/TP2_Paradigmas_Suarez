@@ -72,33 +72,9 @@ public abstract class Vek extends Unidad implements Atacante {
         return desplazamientos;
     }
 
-    private void ordenarDesplazamientosDeterministicamente(List<Desplazamiento> movimientos) {
-        for (int i = 0; i < movimientos.size() - 1; i++) {
-            int indiceMenor = i;
-            for (int j = i + 1; j < movimientos.size(); j++) {
-                if (movimientos.get(j).esMenorQue(movimientos.get(indiceMenor))) {
-                    indiceMenor = j;
-                }
-            }
-            Desplazamiento temporal = movimientos.get(i);
-            movimientos.set(i, movimientos.get(indiceMenor));
-            movimientos.set(indiceMenor, temporal);
-        }
-    }
+    public void alExplorarAgua(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {}
 
-    protected void ordenarDeterministicamente(List<Posicion> posiciones) {
-        for (int i = 0; i < posiciones.size() - 1; i++) {
-            int indiceMenor = i;
-            for (int j = i + 1; j < posiciones.size(); j++) {
-                if (posiciones.get(j).esMenorQue(posiciones.get(indiceMenor))) {
-                    indiceMenor = j;
-                }
-            }
-            Posicion temporal = posiciones.get(i);
-            posiciones.set(i, posiciones.get(indiceMenor));
-            posiciones.set(indiceMenor, temporal);
-        }
-    }
+    public void alExplorarAcido(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {}
 
     public List<Posicion> obtenerCasillasAtacablesDesde(Posicion origen, Tablero tablero){
         List<Posicion> atacables = new ArrayList<>();

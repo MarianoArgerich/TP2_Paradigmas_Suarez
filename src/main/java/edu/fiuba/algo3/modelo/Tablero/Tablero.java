@@ -19,7 +19,9 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Tablero {
 
@@ -40,11 +42,12 @@ public class Tablero {
                 .ifPresent(casilla -> casilla.aceptar(visitante, this));
     }
 
-    public Casilla casillaEn(Posicion posicion) {
+    //TODO: tell don't ask
+    private Casilla casillaEn(Posicion posicion) {
         return casillas.stream()
                 .filter(casilla -> casilla.estaEn(posicion))
                 .findFirst()
-                .orElse(new CasillaNula());
+                .orElseThrow(() -> new CasillaInvalidaException("No se encontro la casilla con esa posicion"));
     }
 
     public void colocarUnidad(Posicion posicion, Unidad unidad) {
@@ -52,45 +55,23 @@ public class Tablero {
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
-        casillaEn(origen).moverOcupante(direccion, distancia, this);;
-    }
-
-    public void aplicarGolpe(Posicion posicion, int danio, Direccion direccion) {
-        this.aplicarEfecto(posicion, new Golpe(danio, direccion));
-    }
-
-    public void aplicarDisparoAcido(Posicion objetivo, int danio) {
-        this.aplicarEfecto(objetivo, new DisparoAcido(danio));
-    }
-
-    public void aplicarDisparo(Posicion objetivo,int danio){
-        this.aplicarEfecto(objetivo, new Disparo(danio));
-    }
-
-    public void empujarDesde(Posicion origen, Direccion direccion) {
-        this.aplicarEfecto(origen, new Empuje(direccion));
+        try {
+            casillaEn(origen).moverOcupante(direccion, distancia, this);
+        }
+        catch (CasillaInvalidaException e){
+        }
     }
 
     public void atacar(Posicion origen, Posicion objetivo) {
-        casillaEn(origen).ejecutarAtaque(objetivo, this);;
+        try {
+            casillaEn(origen).ejecutarAtaque(objetivo, this);
+        }
+        catch (CasillaInvalidaException e){
+        }
     }
-
-    public boolean detieneDisparoEn(Posicion posicion) {return casillaEn(posicion).detieneDisparo();
-    }
-
-
+    //TODO: tell don't ask
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         return casillaEn(posicion).tieneUnidad(unidad);
-    }
-
-    public boolean edificioEn(Posicion posicion) {return casillaEn(posicion).tieneOcupante(new Edificio());}
-
-    public boolean mechEn(Posicion posicion) {return casillaEn(posicion).tieneMech();}
-
-    public boolean vekEn(Posicion posicion) {return casillaEn(posicion).tieneVek();}
-
-    public boolean posicionValida(Posicion posicion) {
-        return casillaEn(posicion).estaEn(posicion);
     }
 
     public void anunciarAtaque(Vek atacante, Direccion direccion) {
@@ -99,7 +80,11 @@ public class Tablero {
     }
 
     public void deshacerMovimiento(Posicion posicionActual) {
-        casillaEn(posicionActual).deshacerMovimientoOcupante(this);
+        try {
+            casillaEn(posicionActual).deshacerMovimientoOcupante(this);
+        }
+        catch (CasillaInvalidaException e){
+        }
     }
 
     public void contaminar(Posicion posicion) {
@@ -129,6 +114,7 @@ public class Tablero {
 
     public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
         for (AtaqueAnunciado ataque : ataquesAnunciados) {
+            //TODO: posible tell dont askj
             if (ataque.amenazaA(posicion, this)) {
                 return true;
             }
@@ -159,6 +145,8 @@ public class Tablero {
     public void ejecutarAtaqueVek(Vek atacante, Direccion direccion) {
         for (Casilla casilla : casillas) {
             casilla.ejecutarAtaqueVek(atacante, direccion, this);
+        }
+        catch (CasillaInvalidaException e){
         }
     }
 
