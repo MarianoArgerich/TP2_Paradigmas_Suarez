@@ -45,6 +45,7 @@ public abstract class Vek extends Unidad implements Atacante {
                 accion.ejecutar(this, tablero);
                 return;
             }
+            //TODO: tell don't ask
         }
     }
 

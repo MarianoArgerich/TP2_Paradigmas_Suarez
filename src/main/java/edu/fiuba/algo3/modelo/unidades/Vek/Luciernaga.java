@@ -17,7 +17,7 @@ public class Luciernaga extends Vek {
 
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-
+        //TODO: tell don't ask
         if (!origen.estaEnLineaRectaCon(objetivo)) {
             throw new AtaqueInvalidoException("La luciernaga solo puede atacar en linea recta");
         }

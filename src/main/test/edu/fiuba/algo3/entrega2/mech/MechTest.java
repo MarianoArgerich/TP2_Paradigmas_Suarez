@@ -181,7 +181,6 @@ public class MechTest {
 
         assertThrows(AtaqueInvalidoException.class,
                 () -> tablero.atacar(new Posicion(2, 2), new Posicion(2, 3)));
-        //este ultimo assert mepa que ta demas
         assertTrue(luciernaga.suVidaEsIgualA(3));
     }
 

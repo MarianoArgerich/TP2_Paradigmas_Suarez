@@ -39,6 +39,7 @@ public class Casilla {
         return this.posicion.equals(otraPosicion);
     }
 
+    //TODO: tell don't ask, hacerlo volar
     public boolean tieneUnidad(Unidad unidad){
         return this.ocupante.equals(unidad);
     }

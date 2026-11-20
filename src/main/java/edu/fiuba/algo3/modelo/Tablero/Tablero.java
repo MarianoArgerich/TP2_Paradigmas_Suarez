@@ -149,7 +149,7 @@ public class Tablero {
         catch (CasillaInvalidaException e){
         }
     }
-
+    //TODO: revisar booleano
     public boolean tieneEmergenciaAnunciadaEn(Posicion posicion){
         return this.emergenciaActual.estaEn(posicion);
     }
@@ -171,6 +171,14 @@ public class Tablero {
         this.emergenciaActual = new EmergenciaAnunciada(posicion, vek);
     }
 
+    public void anunciarEmergencia(Posicion posicion, Vek vek) {
+        try {
+            casillaEn(posicion).validarEmergencia();
+            this.emergenciaActual = new EmergenciaAnunciada(posicion, vek);
+        } catch (CasillaInvalidaException e) {}
+    }
+
+    //TODO: esta raro el agregar si es apto
     public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {

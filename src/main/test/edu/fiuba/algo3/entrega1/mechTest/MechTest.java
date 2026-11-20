@@ -45,7 +45,7 @@ public class MechTest {
 
     @Test
     public void testMechNoPuedeMoverseMasAllaDeSuRango() {
-        // Mech en (0, 0). Intenta moverse a (4, 0) solo tiene 3 pasos
+
         Posicion coordenadas = new Posicion(0, 0);
         tablero.colocarUnidad(coordenadas, mech1);
 

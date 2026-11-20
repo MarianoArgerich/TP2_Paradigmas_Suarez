@@ -16,7 +16,7 @@ public abstract class ReglaAtacar implements ReglaIA {
     @Override
     public AccionIA evaluar(Vek vek, Posicion origen, Tablero tablero){
         List<Desplazamiento> desplazamientos = vek.obtenerDesplazamientosValidos(origen, tablero);
-
+        //TODO: VIola tell don't ask esValida
         for (Desplazamiento desplazamiento : desplazamientos) {
             List<Posicion> atacables = vek.obtenerCasillasAtacablesDesde(desplazamiento.destino(), tablero);
             for (Posicion candidataObjetivo : atacables) {
