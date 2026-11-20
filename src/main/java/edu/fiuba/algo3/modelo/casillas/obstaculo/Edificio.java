@@ -1,7 +1,11 @@
 package edu.fiuba.algo3.modelo.casillas.obstaculo;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.posicion.Posicion;
+
+import java.util.List;
 
 public class Edificio extends Destruible {
 
@@ -9,9 +13,10 @@ public class Edificio extends Destruible {
         super(1);
     }
 
+
     @Override
-    public boolean esEdificio() {
-        return true;
+    public void aceptar(SegundoVisitante visitante) {
+        visitante.visitar(this);
     }
 
     @Override
@@ -20,4 +25,8 @@ public class Edificio extends Destruible {
         tablero.reducirRedElectrica();
     }
 
+    @Override
+    public void agregarPosicionSiTieneEdificio(Posicion posicion, List<Posicion> posiciones) {
+        posiciones.add(posicion);
+    }
 }

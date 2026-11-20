@@ -2,7 +2,8 @@ package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.ExploradorMovimientoVek;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
@@ -55,20 +56,11 @@ public abstract class Vek extends Unidad implements Atacante {
 
         List<Desplazamiento> movimientosRectos = new ArrayList<>();
         for (Direccion direccion : direccionesOrtogonales()) {
-            Posicion actual = origen;
-            int distancia = 1;
-
-            while (estaDentroDelRango(distancia)) {
-                actual = actual.siguienteEn(direccion);
-                if (!tablero.puedeTerminarVekEn(this, actual)) {
-                    break;
-                }
-                movimientosRectos.add(new Desplazamiento(origen, direccion, distancia));
-                distancia++;
-            }
+            ExploradorMovimientoVek explorador = new ExploradorMovimientoVek(this, origen, direccion, this.rangoDeMovimiento, movimientosRectos);
+            explorador.explorarDesde(origen, tablero);
         }
 
-        ordenarDesplazamientosDeterministicamente(movimientosRectos);
+        movimientosRectos.sort((a, b) -> a.esMenorQue(b) ? -1 : (b.esMenorQue(a) ? 1 : 0));
         desplazamientos.addAll(movimientosRectos);
         return desplazamientos;
     }
@@ -80,18 +72,18 @@ public abstract class Vek extends Unidad implements Atacante {
     public List<Posicion> obtenerCasillasAtacablesDesde(Posicion origen, Tablero tablero){
         List<Posicion> atacables = new ArrayList<>();
         for (Direccion direccion : direccionesOrtogonales()) {
-            atacables.add(origen.siguienteEn(direccion));
+            atacables.add(calcularObjetivoEn(origen, direccion, tablero));
         }
-        ordenarDeterministicamente(atacables);
+        atacables.sort((a, b) -> a.esMenorQue(b) ? -1 : (b.esMenorQue(a) ? 1 : 0));
         return atacables;
     }
 
-
-    public boolean puedeTerminarEn(Terreno terreno){
-        return terreno.esSeguroParaTerrestre();
+    protected Posicion calcularObjetivoEn(Posicion origen, Direccion direccion, Tablero tablero) {
+        return origen.siguienteEn(direccion);
     }
 
 
+    //TODO:  TEll don't ask ES ADYACENTE A
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
         if (!origen.esAdyacenteA(objetivo)) {
@@ -104,18 +96,13 @@ public abstract class Vek extends Unidad implements Atacante {
         this.resolverAtaque(origen, direccion, tablero);
     }
 
-    @Override
-    public boolean esVek() {
-        return true;
-    }
-
     public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo,Tablero tablero) {
-        return origen.siguienteEn(direccion).equals(objetivo);
+        return calcularObjetivoEn(origen, direccion, tablero).equals(objetivo);
     }
 
     public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
         Posicion objetivo = posicionActual.siguienteEn(direccion);
-        tablero.aplicarDisparo(objetivo, this.danio);
+        tablero.aplicarEfecto(objetivo, new Disparo(danio));
     }
 
     @Override

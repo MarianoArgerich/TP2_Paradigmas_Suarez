@@ -10,7 +10,7 @@ import edu.fiuba.algo3.modelo.excepciones.NoSePuedeDeshacerMovimiento;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
-public class DeshacerMovimientoDesdeCasilla implements SegundoVisitante {
+public class DeshacerMovimientoDesdeCasilla extends SegundoVisitante {
 
     private final Casilla casillaActual;
     private final Tablero tablero;

@@ -1,9 +1,11 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Arma;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Vek.Ataque.DisparoAcido;
 
 import java.util.List;
 
@@ -22,12 +24,12 @@ public class Arco extends Arma{
             throw new AtaqueInvalidoException("No se puede atacar a una casilla que no este en linea recta");
         }
 
-        tablero.aplicarDisparo(objetivo, danio);
+        tablero.aplicarEfecto(objetivo, new DisparoAcido(danio));
 
         List<Direccion> direcciones = List.of(new Arriba(), new Abajo(), new Izquierda(), new Derecha());
 
         for (Direccion direccion : direcciones) {
-            tablero.empujarDesde(direccion.calcularSiguientePosicion(objetivo), direccion);
+            tablero.aplicarEfecto(direccion.calcularSiguientePosicion(objetivo), new Empuje(direccion));
         }
 
     }

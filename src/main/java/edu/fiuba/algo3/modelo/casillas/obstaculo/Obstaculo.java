@@ -7,16 +7,4 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 
 public abstract class Obstaculo extends Ocupante {
 
-    @Override
-    public boolean puedeIngresar() {
-        return false;
-    }
-
-
-    @Override
-    public boolean detieneDisparo() {
-        return true;
-    }
-
-
 }

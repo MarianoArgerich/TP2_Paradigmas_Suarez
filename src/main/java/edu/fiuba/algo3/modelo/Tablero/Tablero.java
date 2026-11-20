@@ -4,16 +4,14 @@ package edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Turno.Fases.EmergenciaAnunciada;
 import edu.fiuba.algo3.modelo.Turno.Fases.SinEmergencia;
 import edu.fiuba.algo3.modelo.Turno.Fases.AparicionVek;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.CasillaNula;
-import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.Vek.Ataque.DisparoAcido;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.AtaqueAnunciado;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
@@ -36,10 +34,10 @@ public class Tablero {
     }
 
     public void aplicarEfecto(Posicion posicion, Visitante visitante){
-        casillas.stream()
-                .filter(casilla -> casilla.estaEn(posicion))
-                .findFirst()
-                .ifPresent(casilla -> casilla.aceptar(visitante, this));
+        try {
+            casillaEn(posicion).aceptar(visitante, this);
+        } catch (CasillaInvalidaException e){
+        }
     }
 
     //TODO: tell don't ask
@@ -50,8 +48,18 @@ public class Tablero {
                 .orElseThrow(() -> new CasillaInvalidaException("No se encontro la casilla con esa posicion"));
     }
 
+    public void transferirOcupanteA(Casilla origen, Posicion destino){
+        try {
+            origen.transferirOcupanteA(casillaEn(destino));
+        }
+        catch (CasillaInvalidaException e){}
+    }
+
     public void colocarUnidad(Posicion posicion, Unidad unidad) {
-        casillaEn(posicion).colocarUnidad(unidad);
+        try {
+            casillaEn(posicion).colocarOcupante(unidad);
+        }catch (CasillaInvalidaException e){
+        }
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia){
@@ -71,7 +79,11 @@ public class Tablero {
     }
     //TODO: tell don't ask
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
-        return casillaEn(posicion).tieneUnidad(unidad);
+        try {
+            return casillaEn(posicion).tieneUnidad(unidad);
+        } catch (CasillaInvalidaException e){
+            return false;
+        }
     }
 
     public void anunciarAtaque(Vek atacante, Direccion direccion) {
@@ -86,11 +98,7 @@ public class Tablero {
         catch (CasillaInvalidaException e){
         }
     }
-
-    public void contaminar(Posicion posicion) {
-        casillaEn(posicion).contaminar();
-    }
-
+    //TODO: tell don't ask
     public boolean tieneEnergia(int energia) {
         return this.redElectrica.suEnergiaEsIgualA(energia);
     }
@@ -98,11 +106,7 @@ public class Tablero {
     public void reducirRedElectrica() {
         this.redElectrica.reducirEnergia();
     }
-
-    public boolean puedeTerminarVekEn(Vek vek, Posicion candidata) {
-        return casillaEn(candidata).puedeTerminarVek(vek);
-    }
-
+    //TODO: esta raro el agregar si tiene edificio, no se si es tell don't ask o que
     public List<Posicion> obtenerPosicionesDeEdificios() {
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {
@@ -133,18 +137,25 @@ public class Tablero {
         ataquesAnunciados.clear();
     }
 
+    private Casilla casillaDe(Unidad unidad) {
+        return casillas.stream()
+                .filter(casilla -> casilla.tieneUnidad(unidad))
+                .findFirst()
+                .orElseThrow(() -> new CasillaInvalidaException("No se encontro la casilla con esa unidad"));
+    }
+
     public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo) {
-        for (Casilla casilla : casillas) {
-            if (casilla.amenazaPosicion(atacante, direccion, posicionObjetivo, this)) {
-                return true;
-            }
+        try {
+            return casillaDe(atacante).amenazaPosicion(atacante, direccion, posicionObjetivo, this);
         }
-        return false;
+        catch (CasillaInvalidaException e){
+            return false;
+        }
     }
 
     public void ejecutarAtaqueVek(Vek atacante, Direccion direccion) {
-        for (Casilla casilla : casillas) {
-            casilla.ejecutarAtaqueVek(atacante, direccion, this);
+        try {
+            casillaDe(atacante).ejecutarAtaqueVek(atacante, direccion, this);
         }
         catch (CasillaInvalidaException e){
         }
@@ -154,21 +165,24 @@ public class Tablero {
         return this.emergenciaActual.estaEn(posicion);
     }
 
-    public void intentarEmergenciaEn(Posicion posicion, Vek vek){
-        aplicarEfecto(posicion, new EmergenciaVek(vek));
-    }
-
     public void resolverEmergencia() {
         this.emergenciaActual.resolver(this);
         this.emergenciaActual = new SinEmergencia();
     }
 
-    public void anunciarEmergencia(Posicion posicion, Vek vek) {
-        if (!casillaEn(posicion).esAptoParaEmergencia()) {
-            throw new CasillaInvalidaException("No se puede anunciar una emergencia en esa casilla");
+    public void anunciarEmergencia(Vek vek) {
+        List<Posicion> candidatas = obtenerPosicionesDisponiblesParaEmergencia();
+        if(candidatas.isEmpty()){
+            return;
         }
+        Collections.shuffle(candidatas, new Random());
 
-        this.emergenciaActual = new EmergenciaAnunciada(posicion, vek);
+        try {
+            casillaEn(candidatas.get(0)).validarEmergencia();
+            this.emergenciaActual = new EmergenciaAnunciada(candidatas.get(0), vek);
+        }
+        catch (CasillaInvalidaException e){
+        }
     }
 
     public void anunciarEmergencia(Posicion posicion, Vek vek) {
@@ -187,31 +201,10 @@ public class Tablero {
         return posiciones;
     }
 
-
-    public void desplazarUnidad(Casilla origen, Unidad unidad, Direccion direccion, int distancia){
-        Casilla casillaActual = origen;
-
-        for (int i = 0; i < distancia; i++){
-            Casilla casillaSiguiente = siguienteCasilla(casillaActual, direccion);
-            try {
-                casillaActual.transferirUnidadA(casillaSiguiente, unidad);
-            } catch (CasillaInvalidaException e) {
-                if (!casillaActual.equals(origen)) {
-                    casillaActual.transferirOcupanteA(origen);
-                }
-                return;
-            }
-            casillaActual = siguienteCasilla(casillaActual, direccion);
+    public void aplicarEnOcupante(Posicion posicion, SegundoVisitante visitante) {
+        try {
+            casillaEn(posicion).aceptar(visitante);
+        }catch (CasillaInvalidaException e){
         }
-        origen.notificarMovimientoA(unidad);
     }
-
-
-    private Casilla siguienteCasilla(Casilla origen, Direccion direccion) {
-        return casillas.stream()
-                .filter(casilla -> origen.esSiguienteEn(direccion, casilla))
-                .findFirst()
-                .orElse(new CasillaNula());
-    }
-
 }

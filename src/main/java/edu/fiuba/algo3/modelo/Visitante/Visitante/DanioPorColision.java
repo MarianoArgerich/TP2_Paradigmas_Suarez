@@ -8,7 +8,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class DanioPorColision implements Visitante {
+public class DanioPorColision extends Visitante {
 
     @Override
     public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Tablero tablero) {

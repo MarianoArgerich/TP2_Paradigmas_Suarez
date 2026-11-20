@@ -10,7 +10,7 @@ import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Empuje implements Visitante {
+public class Empuje extends Visitante {
 
     private final Direccion direccion;
 
@@ -21,7 +21,6 @@ public class Empuje implements Visitante {
 
     @Override
     public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Tablero tablero) {
-
         Posicion destino = casillaActual.siguienteEn(direccion);
         tablero.aplicarEfecto(destino, new ImpactoDeEmpuje(casillaActual));
     }

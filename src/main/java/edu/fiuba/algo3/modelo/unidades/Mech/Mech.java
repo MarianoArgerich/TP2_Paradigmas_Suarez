@@ -48,9 +48,8 @@ public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante
         this.estado.mover(this, origen, direccion, distancia, tablero);
     }
 
-    @Override
-    public boolean esMech() {
-        return true;
+    public void ejecutarDesplazamiento(Casilla origen, Direccion direccion, int distancia, Tablero tablero){
+        super.moverDesde(origen, direccion, distancia, tablero);
     }
 
     @Override

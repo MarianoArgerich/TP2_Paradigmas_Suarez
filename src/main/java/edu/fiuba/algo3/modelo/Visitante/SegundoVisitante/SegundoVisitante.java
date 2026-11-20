@@ -6,15 +6,15 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
-public interface SegundoVisitante {
+public abstract class SegundoVisitante {
 
-    void visitar(Mech mech);
+    public void visitar(Mech mech) {}
 
-    void visitar(Vek vek);
+    public void visitar(Vek vek) {}
 
-    void visitar(SinOcupante sinOcupante);
+    public void visitar(SinOcupante sinOcupante) {}
 
-    void visitar(Destruible destruible);
+    public void visitar(Destruible destruible) {}
 
-    void visitar(Montania montania);
+    public void visitar(Montania montania) {}
 }

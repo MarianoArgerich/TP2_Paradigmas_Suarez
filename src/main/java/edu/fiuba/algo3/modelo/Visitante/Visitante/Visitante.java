@@ -7,9 +7,9 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
-public interface Visitante {
-    void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Tablero tablero);
-    void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Tablero tablero);
-    void visitar(Destruible destruible, Terreno terreno, Casilla casillaActual,Tablero tablero);
-    void visitar(Montania montania, Terreno terreno, Casilla casillaActual, Tablero tablero);
+public abstract class Visitante {
+    public void visitar(Unidad unidad, Terreno terreno, Casilla casillaActual, Tablero tablero) {}
+    public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Tablero tablero) {}
+    public void visitar(Destruible destruible, Terreno terreno, Casilla casillaActual,Tablero tablero) {}
+    public void visitar(Montania montania, Terreno terreno, Casilla casillaActual, Tablero tablero) {}
 }

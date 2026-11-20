@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Arma;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Golpe;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Proyectil;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
@@ -18,11 +20,6 @@ public class DisparoCanion extends Arma {
         }
 
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
-        Posicion actual = origen.siguienteEn(direccion);
-
-        while (!tablero.detieneDisparoEn(actual)){
-            actual = actual.siguienteEn(direccion);
-        }
-        tablero.aplicarGolpe(actual, danio, direccion);
+        tablero.aplicarEfecto(origen.siguienteEn(direccion), new Proyectil(direccion, new Golpe(danio, direccion)));
     }
 }

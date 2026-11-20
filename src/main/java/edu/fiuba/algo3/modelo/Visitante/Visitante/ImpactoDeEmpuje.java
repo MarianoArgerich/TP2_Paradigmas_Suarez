@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class ImpactoDeEmpuje implements Visitante {
+public class ImpactoDeEmpuje extends Visitante {
     private final Casilla origen;
 
     public ImpactoDeEmpuje(Casilla origen) {
@@ -25,13 +25,7 @@ public class ImpactoDeEmpuje implements Visitante {
 
     @Override
     public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla destino, Tablero tablero) {
-        try {
-            origen.transferirOcupanteA(destino);
-            destino.aplicarEfectoDelTerreno();
-        }
-        catch (CasillaInvalidaException e) {
-            return;
-        }
+        origen.transferirOcupanteA(destino);
     }
 
     @Override
