@@ -38,7 +38,6 @@ public abstract class Ocupante {
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {}
 
     public void verificarAtaqueEn(Terreno terreno) {}
-    //TODO: esta raro el si tiene
-    //Solucionado cambiando el nombre a agregarPosicionDeEdificioA(posiciones)
+
     public void agregarPosicionDeEdificioA(Posicion posicion, List<Posicion> posiciones) {}
 }

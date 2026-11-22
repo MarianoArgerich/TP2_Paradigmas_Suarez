@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.modelo.posicion;
 
 import edu.fiuba.algo3.modelo.direccion.*;
-import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
+import edu.fiuba.algo3.modelo.excepciones.ObjetivoDesalineadoException;
 
 import java.util.Objects;
 
@@ -36,8 +36,7 @@ public class Posicion {
 
     public Direccion calcularDireccionHacia(Posicion objetivo) {
         if (!estaEnLineaRectaCon(objetivo)){
-            //TODO: Colocar exception correcta
-            throw new AtaqueInvalidoException("El objetivo no esta alineado");
+            throw new ObjetivoDesalineadoException("El objetivo no esta alineado para atacar");
         }
         int deltaX = objetivo.x - this.x;
         int deltaY = objetivo.y - this.y;

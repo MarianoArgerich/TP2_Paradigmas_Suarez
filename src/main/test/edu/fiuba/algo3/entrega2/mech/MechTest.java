@@ -8,11 +8,9 @@ import edu.fiuba.algo3.modelo.direccion.Arriba;
 import edu.fiuba.algo3.modelo.direccion.Derecha;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
-import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.canion;
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,8 +42,8 @@ public class MechTest {
             }
         }
         tablero = new Tablero(mapa);
-        mech1 = new Combate();
-        mech2 = new Canion();
+        mech1 = combate();
+        mech2 = canion();
     }
 
     @Test

@@ -2,14 +2,9 @@ package edu.fiuba.algo3.entrega1.mechTest;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.direccion.Abajo;
-import edu.fiuba.algo3.modelo.direccion.Arriba;
-import edu.fiuba.algo3.modelo.direccion.Derecha;
-import edu.fiuba.algo3.modelo.direccion.Izquierda;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
-import edu.fiuba.algo3.modelo.unidades.Mech.Artilleria;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.artilleria;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArtilleriaTest {
@@ -35,7 +31,7 @@ public class ArtilleriaTest {
         }
 
         tablero = new Tablero(mapa);
-        artillero = new Artilleria();
+        artillero = artilleria();
     }
 
 

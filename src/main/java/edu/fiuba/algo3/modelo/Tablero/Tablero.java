@@ -124,6 +124,8 @@ public class Tablero {
                 .orElseThrow(() -> new CasillaInvalidaException("No se encontro la casilla con esa unidad"));
     }
 
+/**
+    SEGURAMENTE SE USE PARA EL METODO DEL METODO QUE SE USA PARA TEST, Atte. Alex
     public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo) {
         try {
             return casillaDe(atacante).amenazaPosicion(atacante, direccion, posicionObjetivo, this);
@@ -132,6 +134,7 @@ public class Tablero {
             return false;
         }
     }
+     */
 
     public void ejecutarAtaqueVek(Vek atacante, Direccion direccion) {
         try {

@@ -2,7 +2,6 @@ package edu.fiuba.algo3.modelo.unidades.Vek.IA;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
 public class AtaqueAnunciado {
@@ -14,10 +13,12 @@ public class AtaqueAnunciado {
         this.atacante = atacante;
         this.direccion = direccion;
     }
-
+/**
+    SEGURAMENTE PARA EL METODO QUE SE USARIA PARA TEST, Atte. Alex
     public boolean amenazaA(Posicion posicionObjetivo, Tablero tablero) {
         return tablero.vekAmenazaEnDireccion(atacante, direccion, posicionObjetivo);
     }
+ */
 
     public void resolver(Tablero tablero) {
         tablero.ejecutarAtaqueVek(atacante, direccion);

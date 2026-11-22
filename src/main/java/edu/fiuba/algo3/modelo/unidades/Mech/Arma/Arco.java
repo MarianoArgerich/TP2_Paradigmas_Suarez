@@ -17,9 +17,6 @@ public class Arco extends Arma{
 
     @Override
     public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
-        //TODO: revisar ambos if
-        //Solucionado: Ambos if son necesarios. Delegan en Posicion la logica de si esta en area y si esta en linea
-        // recta, arco no sabe que significa eso ni deberia saberlo.
         if(origen.estaEnArea(objetivo)){
             throw new AtaqueInvalidoException("No se puede atacar a una casilla que este dentro del rango prohibido 3x3");
         }

@@ -14,10 +14,7 @@ import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.direccion.Arriba;
-import edu.fiuba.algo3.modelo.direccion.Derecha;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
@@ -29,6 +26,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.canion;
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,11 +60,11 @@ public class VekTest {
         faseVek = new FaseVek();
         faseResolucion = new Resolucion();
         luciernaga1 = new Luciernaga();
-        mech1 = new Combate();
+        mech1 = combate();
         saltador = new Saltador();
         avispon = new Avispon();
         luciernaga2 = new Luciernaga();
-        mech2 = new Canion();
+        mech2 = canion();
     }
 
     private void colocarObstaculo(Posicion posicion, Ocupante obstaculo) {
@@ -590,7 +589,7 @@ public class VekTest {
     @Test
     public void testLuciernagaAnunciaSuAtaqueEnFaseVekSinAplicarDanioTodavia() {
         Vek luciernaga = new Luciernaga();
-        Mech mech = new Combate();
+        Mech mech = combate();
 
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
@@ -605,7 +604,7 @@ public class VekTest {
     @Test
     public void testAtaquesAnunciadosDelaLuciernagaSeEjecutanEnFaseDeResolucion() {
         Vek luciernaga = new Luciernaga();
-        Mech mech = new Combate();
+        Mech mech = combate();
 
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
@@ -625,7 +624,7 @@ public class VekTest {
     @Test
     public void testAtaqueAnunciadosDelAvisponSeEjecutaEnFaseDeResolucion() {
         Vek avispon = new Avispon();
-        Mech mech = new Combate();
+        Mech mech = combate();
 
         tablero.colocarUnidad(new Posicion(2, 2), avispon);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
@@ -640,7 +639,7 @@ public class VekTest {
     @Test
     public void testAtaquesAnunciadosDelSaltadorSeEjecutanEnFaseDeResolucion(){
         Vek saltador = new Saltador();
-        Mech mech = new Combate();
+        Mech mech = combate();
 
         tablero.colocarUnidad(new Posicion(2, 2), saltador);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
@@ -655,7 +654,7 @@ public class VekTest {
     public void test23AtaqueDeVekASeEjecutaAntesQueElDeVekBSiguiendoElOrdenAnunciado() {
         Vek luciernagaA = new Luciernaga();
         Vek avisponB = new Avispon();
-        Mech mech = new Combate();
+        Mech mech = combate();
 
         tablero.colocarUnidad(new Posicion(0, 2), luciernagaA);
         tablero.colocarUnidad(new Posicion(4, 2), avisponB);

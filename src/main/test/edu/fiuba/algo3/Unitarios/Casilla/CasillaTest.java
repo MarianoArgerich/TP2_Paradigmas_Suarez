@@ -1,16 +1,16 @@
 package edu.fiuba.algo3.Unitarios.Casilla;
 
-import edu.fiuba.algo3.modelo.Ocupante.SinOcupante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.*;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
+import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import org.junit.jupiter.api.Test;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -36,7 +36,7 @@ public class CasillaTest {
         Casilla casilla = new Casilla(new Posicion(0, 0));
         casilla.colocarOcupante(new Saltador());
 
-        assertThrows(CasillaInvalidaException.class, () -> casilla.colocarOcupante(new Combate()));
+        assertThrows(CasillaInvalidaException.class, () -> casilla.colocarOcupante(combate()));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CasillaTest {
         Casilla origen = new Casilla(new Posicion(0, 0));
         Casilla destino = new Casilla(new Posicion(1, 0));
         origen.colocarOcupante(new Saltador());
-        destino.colocarOcupante(new Combate());
+        destino.colocarOcupante(combate());
 
         assertThrows(CasillaInvalidaException.class, () -> origen.transferirOcupanteA(destino));
     }
@@ -53,7 +53,7 @@ public class CasillaTest {
     public void transferirUnidadADestinoOcupadoLanzaExcepcion() {
         Casilla origen = new Casilla(new Posicion(0, 0));
         Casilla destino = new Casilla(new Posicion(1, 0));
-        Combate mech = new Combate();
+        Mech mech = combate();
         origen.colocarOcupante(mech);
         destino.colocarOcupante(new Saltador());
 

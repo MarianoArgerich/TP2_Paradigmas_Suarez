@@ -5,7 +5,6 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arco;
-import edu.fiuba.algo3.modelo.unidades.Mech.Artilleria;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.artilleria;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,7 +84,7 @@ public class ArcoTest {
         Posicion objetivoAdyacente = new Posicion(4, 5);
         Posicion objetivoValido = new Posicion(4, 6);
         Luciernaga vek = new Luciernaga();
-        Mech artillero = new Artilleria();
+        Mech artillero = artilleria();
 
         tablero.colocarUnidad(origen, artillero);
         tablero.colocarUnidad(objetivoValido, vek);

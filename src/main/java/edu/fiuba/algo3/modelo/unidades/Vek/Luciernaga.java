@@ -5,12 +5,8 @@ import edu.fiuba.algo3.modelo.Visitante.Visitante.LineaDeTiro;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.Proyectil;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Vek.Ataque.DisparoAcido;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Luciernaga extends Vek {
     public Luciernaga() {
@@ -38,12 +34,15 @@ public class Luciernaga extends Vek {
         return lineaDeTiro.destinoFinal();
     }
 
+/**
+    SEGURAMENTE PARA EL METODO DEL METODO DEL METODO DEL METODO DEL TEST, Atte Alex.
     @Override
     public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo, Tablero tablero) {
         LineaDeTiro lineaDeTiro = new LineaDeTiro(origen, direccion);
         lineaDeTiro.explorarEn(tablero);
         return lineaDeTiro.alcanzaA(objetivo);
     }
+ */
 
     @Override
     public void caerAlAguaEn(Casilla casilla) {

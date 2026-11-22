@@ -6,12 +6,12 @@ import edu.fiuba.algo3.modelo.Visitante.Visitante.Proyectil;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Derecha;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProyectilTest {
@@ -22,7 +22,7 @@ public class ProyectilTest {
         Casilla objetivo = new Casilla(new Posicion(2, 0));
         Tablero tablero = new Tablero(List.of(vacia, objetivo));
 
-        Mech mech = new Combate();
+        Mech mech = combate();
         tablero.colocarUnidad(new Posicion(2, 0), mech);
 
         tablero.aplicarEfecto(new Posicion(1, 0), new Proyectil(new Derecha(), new Disparo(1)));
@@ -36,8 +36,8 @@ public class ProyectilTest {
         Casilla segunda = new Casilla(new Posicion(2, 0));
         Tablero tablero = new Tablero(List.of(primera, segunda));
 
-        Mech mechAdelante = new Combate();
-        Mech mechAtras = new Combate();
+        Mech mechAdelante = combate();
+        Mech mechAtras = combate();
         tablero.colocarUnidad(new Posicion(1, 0), mechAdelante);
         tablero.colocarUnidad(new Posicion(2, 0), mechAtras);
 
