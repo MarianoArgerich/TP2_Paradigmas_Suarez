@@ -26,7 +26,7 @@ public class Edificio extends Destruible {
     }
 
     @Override
-    public void agregarPosicionSiTieneEdificio(Posicion posicion, List<Posicion> posiciones) {
+    public void agregarPosicionDeEdificioA(Posicion posicion, List<Posicion> posiciones) {
         posiciones.add(posicion);
     }
 }

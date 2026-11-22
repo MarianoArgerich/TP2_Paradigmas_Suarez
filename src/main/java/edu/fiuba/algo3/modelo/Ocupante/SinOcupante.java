@@ -22,7 +22,7 @@ public class SinOcupante extends Ocupante{
     public void validarEmergencia() {}
 
     @Override
-    public void agregarSiEsAptoParaEmergencia(Posicion posicion, List<Posicion> posiciones) {
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {
         posiciones.add(posicion);
     }
 

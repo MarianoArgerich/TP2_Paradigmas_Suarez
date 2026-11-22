@@ -7,7 +7,6 @@ import edu.fiuba.algo3.modelo.Visitante.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
@@ -100,8 +99,8 @@ public class Casilla {
         this.ocupante.aceptar(movimiento);
     }
 
-    public void agregarPosicionSiTieneEdificio(List<Posicion> posiciones) {
-        this.ocupante.agregarPosicionSiTieneEdificio(this.posicion, posiciones);
+    public void agregarPosicionDeEdificioA(List<Posicion> posiciones) {
+        this.ocupante.agregarPosicionDeEdificioA(this.posicion, posiciones);
     }
 
     public boolean amenazaPosicion(Vek atacante, Direccion direccion, Posicion posicionObjetivo, Tablero tablero) {
@@ -112,8 +111,8 @@ public class Casilla {
         atacante.resolverAtaque(this.posicion, direccion, tablero);
     }
 
-    public void agregarPosicionSiEsAptaParaEmergencia(List<Posicion> posiciones) {
-        this.terreno.agregarSiEsAptoParaEmergencia(this.ocupante, this.posicion, posiciones);
+    public void agregarPosicionCandidataParaEmergenciaA(List<Posicion> posiciones) {
+        this.terreno.agregarCandidataParaEmergenciaA(this.ocupante, this.posicion, posiciones);
     }
 
 

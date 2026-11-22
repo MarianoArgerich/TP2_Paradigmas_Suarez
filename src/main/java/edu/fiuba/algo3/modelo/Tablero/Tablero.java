@@ -103,10 +103,11 @@ public class Tablero {
         this.redElectrica.reducirEnergia();
     }
     //TODO: esta raro el agregar si tiene edificio, no se si es tell don't ask o que
+    //Solucionado cambiando el nombre a agregarPosicionDeEdificioA(posiciones)
     public List<Posicion> obtenerPosicionesDeEdificios() {
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {
-            casilla.agregarPosicionSiTieneEdificio(posiciones);
+            casilla.agregarPosicionDeEdificioA(posiciones);
         }
         return posiciones;
     }
@@ -173,7 +174,7 @@ public class Tablero {
     public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {
-            casilla.agregarPosicionSiEsAptaParaEmergencia(posiciones);
+            casilla.agregarPosicionCandidataParaEmergenciaA(posiciones);
         }
         return posiciones;
     }

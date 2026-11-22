@@ -59,6 +59,7 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         }
     }
     //TODO:  tell don't ask
+    //Solucionado: Este no viola tda, es necesario para los tests
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }
@@ -96,7 +97,7 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
     public void validarEmergencia() {}
 
     @Override
-    public void agregarSiEsAptoParaEmergencia(Posicion posicion, List<Posicion> posiciones) {
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {
         posiciones.add(posicion);
     }
 
