@@ -10,6 +10,7 @@ import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionIA;
+import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionNula;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAcercarseAEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarMech;
@@ -40,12 +41,11 @@ public abstract class Vek extends Unidad implements Atacante {
     }
 
     public void ejecutarTurnoIA(Posicion posicionActual, Tablero tablero) {
+        AccionIA accionFinal = new AccionNula();
         for (ReglaIA regla : reglasPrioridad) {
-            AccionIA accion = regla.evaluar(this, posicionActual, tablero);
-            if(accion.ejecutar(this, tablero)){
-                return;
-            }
+            accionFinal = accionFinal.resolverCon(regla, this, posicionActual, tablero);
         }
+        accionFinal.ejecutar(this, tablero);
     }
 
     public List<Desplazamiento> obtenerDesplazamientosValidos(Posicion origen, Tablero tablero) {

@@ -19,26 +19,23 @@ public abstract class ReglaAtacar extends SegundoVisitante implements ReglaIA {
     private AccionIA accionEncontrada;
 
     @Override
-    public AccionIA evaluar(Vek vek, Posicion origen, Tablero tablero){
-        this.accionEncontrada =new AccionNula();
+    public AccionIA evaluar(Vek vek, Posicion origen, Tablero tablero) {
+        this.accionEncontrada = new AccionNula();
         List<Desplazamiento> desplazamientos = vek.obtenerDesplazamientosValidos(origen, tablero);
-        //TODO: VIola tell don't ask esValida
+
         for (Desplazamiento desplazamiento : desplazamientos) {
             List<Posicion> atacables = vek.obtenerCasillasAtacablesDesde(desplazamiento.destino(), tablero);
             for (Posicion candidataObjetivo : atacables) {
                 this.desplazamientoActual = desplazamiento;
                 this.objetivoActual = candidataObjetivo;
                 tablero.aplicarEnOcupante(candidataObjetivo, this);
-                //lo comento de momento porque no se bien como arreglarlo
-                //if (this.accionEncontrada.esValida()) {
-                    return new AccionAtacar(desplazamiento, candidataObjetivo);
-                //}
             }
         }
-        return new AccionNula();
+        return this.accionEncontrada;
     }
 
-    protected void confirmarObjetivo() {
-        this.accionEncontrada = new AccionAtacar(this.desplazamientoActual, this.objetivoActual);
+    protected void confirmarObjetivo () {
+        AccionIA cantidada = new AccionAtacar(this.desplazamientoActual, this.objetivoActual);
+        this.accionEncontrada = this.accionEncontrada.aceptarCandidata(cantidada);
     }
 }

@@ -18,10 +18,9 @@ public class AccionAtacar extends AccionMover {
     }
 
     @Override
-    public boolean ejecutar(Vek vek, Tablero tablero){
+    public void ejecutar(Vek vek, Tablero tablero){
         super.ejecutar(vek, tablero);
         Direccion direccionAtaque = desplazamiento.destino().calcularDireccionHacia(this.objetivoAtaque);
         tablero.anunciarAtaque(vek, direccionAtaque);
-        return true;
     }
 }
