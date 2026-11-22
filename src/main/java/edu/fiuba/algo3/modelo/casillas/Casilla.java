@@ -41,7 +41,7 @@ public class Casilla {
         return this.posicion.equals(otraPosicion);
     }
 
-    //TODO: tell don't ask, hacerlo volar
+    //TODO: tell don't ask, hacerlo volar. Primero hay que revisar Tablero
     public boolean tieneUnidad(Unidad unidad){
         return this.ocupante.equals(unidad);
     }

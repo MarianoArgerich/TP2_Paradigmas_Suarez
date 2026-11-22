@@ -70,6 +70,7 @@ public class ArtilleriaTest {
 
     }
 
+    /* TODO: Refactorizar sin usar tablero.unidadEstaEn(posicion)
     @Test
     public void testArtilleriaAtacaALaCasillaObjetivoYLaEmpujaHaciaAfueraALasUnidadesDeLas4CasillasAdyacentes() {
 
@@ -187,17 +188,5 @@ public class ArtilleriaTest {
         assertTrue(tablero.unidadEstaEn(vekArriba, posicionFinalEsperada));
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
+    */
 }

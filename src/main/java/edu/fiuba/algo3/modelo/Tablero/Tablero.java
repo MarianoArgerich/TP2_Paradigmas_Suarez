@@ -40,7 +40,7 @@ public class Tablero {
         }
     }
 
-    //TODO: tell don't ask
+    //TODO: posible tell don't ask (Joaquin lo esta revisando)
     private Casilla casillaEn(Posicion posicion) {
         return casillas.stream()
                 .filter(casilla -> casilla.estaEn(posicion))
@@ -77,7 +77,7 @@ public class Tablero {
         catch (CasillaInvalidaException e){
         }
     }
-    //TODO: tell don't ask
+    //TODO: tell don't ask. Hay que refactorizar los test. Depende lo que diga Joaquin si lo borramos tambien o no
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         try {
             return casillaEn(posicion).tieneUnidad(unidad);
@@ -98,10 +98,6 @@ public class Tablero {
         catch (CasillaInvalidaException e){
         }
     }
-    //TODO: tell don't ask
-    public boolean tieneEnergia(int energia) {
-        return this.redElectrica.suEnergiaEsIgualA(energia);
-    }
 
     public void reducirRedElectrica() {
         this.redElectrica.reducirEnergia();
@@ -113,21 +109,6 @@ public class Tablero {
             casilla.agregarPosicionSiTieneEdificio(posiciones);
         }
         return posiciones;
-    }
-
-
-    public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
-        for (AtaqueAnunciado ataque : ataquesAnunciados) {
-            //TODO: posible tell dont askj
-            if (ataque.amenazaA(posicion, this)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hayAtaquesAnunciados() {
-        return !ataquesAnunciados.isEmpty();
     }
 
     public void resolverAtaques() {
@@ -159,10 +140,6 @@ public class Tablero {
         }
         catch (CasillaInvalidaException e){
         }
-    }
-    //TODO: revisar booleano
-    public boolean tieneEmergenciaAnunciadaEn(Posicion posicion){
-        return this.emergenciaActual.estaEn(posicion);
     }
 
     public void resolverEmergencia() {

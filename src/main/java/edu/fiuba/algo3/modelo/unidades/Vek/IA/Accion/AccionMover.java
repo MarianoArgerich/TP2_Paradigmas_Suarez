@@ -18,12 +18,8 @@ public class AccionMover implements AccionIA {
     }
 
     @Override
-    public boolean esValida() {
-        return true;
-    }
-
-    @Override
-    public void ejecutar(Vek vek, Tablero tablero) {
+    public boolean ejecutar(Vek vek, Tablero tablero) {
         desplazamiento.aplicarEn(tablero);
+        return true;
     }
 }

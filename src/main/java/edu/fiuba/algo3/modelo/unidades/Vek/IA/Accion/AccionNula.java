@@ -6,12 +6,7 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 public class AccionNula implements AccionIA{
 
     @Override
-    public boolean esValida() {
-        return false;
-    }
-
-    @Override
-    public void ejecutar(Vek vek, Tablero tablero) {
-
+    public boolean ejecutar(Vek vek, Tablero tablero) {
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.posicion;
 
 import edu.fiuba.algo3.modelo.direccion.*;
+import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 
 import java.util.Objects;
 
@@ -33,14 +34,11 @@ public class Posicion {
         return deltaX <= 1 && deltaY <= 1;
     }
 
-    public boolean esAdyacenteA(Posicion objetivo) {
-        int deltaX = Math.abs(this.x - objetivo.x);
-        int deltaY = Math.abs(this.y - objetivo.y);
-
-        return (deltaX + deltaY) == 1;
-    }
-
     public Direccion calcularDireccionHacia(Posicion objetivo) {
+        if (!estaEnLineaRectaCon(objetivo)){
+            //TODO: Colocar exception correcta
+            throw new AtaqueInvalidoException("El objetivo no esta alineado");
+        }
         int deltaX = objetivo.x - this.x;
         int deltaY = objetivo.y - this.y;
 

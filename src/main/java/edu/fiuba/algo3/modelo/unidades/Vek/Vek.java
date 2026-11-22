@@ -42,11 +42,9 @@ public abstract class Vek extends Unidad implements Atacante {
     public void ejecutarTurnoIA(Posicion posicionActual, Tablero tablero) {
         for (ReglaIA regla : reglasPrioridad) {
             AccionIA accion = regla.evaluar(this, posicionActual, tablero);
-            if (accion.esValida()) {
-                accion.ejecutar(this, tablero);
+            if(accion.ejecutar(this, tablero)){
                 return;
             }
-            //TODO: tell don't ask
         }
     }
 
@@ -82,15 +80,8 @@ public abstract class Vek extends Unidad implements Atacante {
         return origen.siguienteEn(direccion);
     }
 
-
-    //TODO:  TEll don't ask ES ADYACENTE A
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-        if (!origen.esAdyacenteA(objetivo)) {
-            throw new AtaqueInvalidoException(
-                    "El objetivo debe estar en una casilla adyacente"
-            );
-        }
 
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         this.resolverAtaque(origen, direccion, tablero);

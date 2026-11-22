@@ -13,11 +13,8 @@ public class DisparoCanion extends Arma {
     public DisparoCanion() {
         this.danio = 1;
     }
-    //TODO: tell don't ask
+
     public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
-        if (!origen.estaEnLineaRectaCon(objetivo)) {
-            throw new AtaqueInvalidoException("El canion solo puede atacar en linea recta");
-        }
 
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         tablero.aplicarEfecto(origen.siguienteEn(direccion), new Proyectil(direccion, new Golpe(danio, direccion)));
