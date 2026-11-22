@@ -40,7 +40,6 @@ public class Tablero {
         }
     }
 
-    //TODO: posible tell don't ask (Joaquin lo esta revisando)
     private Casilla casillaEn(Posicion posicion) {
         return casillas.stream()
                 .filter(casilla -> casilla.estaEn(posicion))
@@ -77,7 +76,7 @@ public class Tablero {
         catch (CasillaInvalidaException e){
         }
     }
-    //TODO: tell don't ask. Hay que refactorizar los test. Depende lo que diga Joaquin si lo borramos tambien o no
+
     public boolean unidadEstaEn(Unidad unidad, Posicion posicion) {
         try {
             return casillaEn(posicion).tieneUnidad(unidad);
@@ -102,11 +101,11 @@ public class Tablero {
     public void reducirRedElectrica() {
         this.redElectrica.reducirEnergia();
     }
-    //TODO: esta raro el agregar si tiene edificio, no se si es tell don't ask o que
+
     public List<Posicion> obtenerPosicionesDeEdificios() {
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {
-            casilla.agregarPosicionSiTieneEdificio(posiciones);
+            casilla.agregarPosicionDeEdificioA(posiciones);
         }
         return posiciones;
     }
@@ -169,11 +168,10 @@ public class Tablero {
         } catch (CasillaInvalidaException e) {}
     }
 
-    //TODO: esta raro el agregar si es apto
     public List<Posicion> obtenerPosicionesDisponiblesParaEmergencia(){
         List<Posicion> posiciones = new ArrayList<>();
         for (Casilla casilla : casillas) {
-            casilla.agregarPosicionSiEsAptaParaEmergencia(posiciones);
+            casilla.agregarPosicionCandidataParaEmergenciaA(posiciones);
         }
         return posiciones;
     }

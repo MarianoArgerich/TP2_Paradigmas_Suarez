@@ -24,7 +24,7 @@ public abstract class Ocupante {
         throw new CasillaInvalidaException("No se puede anunciar una emergencia en esa casilla");
     }
 
-    public void agregarSiEsAptoParaEmergencia(Posicion posicion, List<Posicion> posiciones) {}
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {}
 
 
 
@@ -39,5 +39,6 @@ public abstract class Ocupante {
 
     public void verificarAtaqueEn(Terreno terreno) {}
     //TODO: esta raro el si tiene
-    public void agregarPosicionSiTieneEdificio(Posicion posicion, List<Posicion> posiciones) {}
+    //Solucionado cambiando el nombre a agregarPosicionDeEdificioA(posiciones)
+    public void agregarPosicionDeEdificioA(Posicion posicion, List<Posicion> posiciones) {}
 }

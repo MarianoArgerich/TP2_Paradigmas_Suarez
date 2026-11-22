@@ -58,7 +58,7 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
             throw new DistanciaInvalidaException("Fuera de rango");
         }
     }
-    //TODO:  tell don't ask
+    //TODO:  OPCIONAL-Decidir si cambiarlo por un getVidaActual(), no jode porque solo se USA EN LOS TESTS, o dejarlo asi
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }
@@ -96,7 +96,7 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
     public void validarEmergencia() {}
 
     @Override
-    public void agregarSiEsAptoParaEmergencia(Posicion posicion, List<Posicion> posiciones) {
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {
         posiciones.add(posicion);
     }
 

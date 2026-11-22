@@ -32,6 +32,8 @@ public class LineaDeTiro extends Visitante {
     }
 
     //TODO:Tell don't ask
+    // No se si quieren cambiar este booleano por otra cosa, pero no viola tda.
+    // Estas preguntando si una posicion se encuentra dentro de una lista de posiciones. Eso no viola tda entiendo yo.
     public boolean alcanzaA(Posicion objetivo) {
         return this.casillasValidas.contains(objetivo);
     }

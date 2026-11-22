@@ -20,8 +20,8 @@ public class Suelo extends Terreno {
     public void validarEmergencia() {}
 
     @Override
-    public void agregarSiEsAptoParaEmergencia(Ocupante ocupante, Posicion posicion, List<Posicion> posiciones) {
-        ocupante.agregarSiEsAptoParaEmergencia(posicion, posiciones);
+    public void agregarCandidataParaEmergenciaA(Ocupante ocupante, Posicion posicion, List<Posicion> posiciones) {
+        ocupante.agregarCandidataParaEmergenciaA(posicion, posiciones);
     }
 
     @Override

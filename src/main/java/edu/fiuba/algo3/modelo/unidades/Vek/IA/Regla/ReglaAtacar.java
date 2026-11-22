@@ -29,9 +29,10 @@ public abstract class ReglaAtacar extends SegundoVisitante implements ReglaIA {
                 this.desplazamientoActual = desplazamiento;
                 this.objetivoActual = candidataObjetivo;
                 tablero.aplicarEnOcupante(candidataObjetivo, this);
-                if (this.accionEncontrada.esValida()) {
+                //lo comento de momento porque no se bien como arreglarlo
+                //if (this.accionEncontrada.esValida()) {
                     return new AccionAtacar(desplazamiento, candidataObjetivo);
-                }
+                //}
             }
         }
         return new AccionNula();
