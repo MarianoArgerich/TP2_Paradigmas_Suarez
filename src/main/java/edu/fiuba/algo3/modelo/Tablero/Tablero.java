@@ -185,4 +185,16 @@ public class Tablero {
         }catch (CasillaInvalidaException e){
         }
     }
+
+/**
+    SEGURAMENTE SE USE PARA TEST, Y SEA NECESARIO PARA NAHUE, Atte. Alex
+    public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
+        for (AtaqueAnunciado ataque : ataquesAnunciados) {
+            if (ataque.amenazaA(posicion, this)) {
+                return true;
+            }
+        }
+        return false;
+    }
+ */
 }

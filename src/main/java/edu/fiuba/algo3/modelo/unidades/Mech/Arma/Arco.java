@@ -33,5 +33,7 @@ public class Arco extends Arma{
         }
 
     }
-
+//TODO: revisar ambos if
+    //Solucionado: Ambos if son necesarios. Delegan en Posicion la logica de si esta en area y si esta en linea
+    // recta, arco no sabe que significa eso ni deberia saberlo.
 }

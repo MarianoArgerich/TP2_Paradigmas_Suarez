@@ -620,7 +620,6 @@ public class VekTest {
     }
 
 
-
     @Test
     public void testAtaqueAnunciadosDelAvisponSeEjecutaEnFaseDeResolucion() {
         Vek avispon = new Avispon();
