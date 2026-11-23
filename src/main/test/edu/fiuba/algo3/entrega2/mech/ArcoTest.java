@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.entrega2.mech;
 
+import edu.fiuba.algo3.TableroTestFactory;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
+import edu.fiuba.algo3.modelo.excepciones.ObjetivoDesalineadoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arco;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
@@ -10,29 +11,18 @@ import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.artilleria;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public class ArcoTest {
+
     private Tablero tablero;
     private Arco arco;
 
     @BeforeEach
     public void setUp() {
-        List<Casilla> mapa = new ArrayList<>();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                mapa.add(new Casilla(new Posicion(i, j)));
-            }
-        }
-
-        tablero = new Tablero(mapa);
+        tablero = TableroTestFactory.crearVacio();
         arco = new Arco();
     }
 
@@ -41,7 +31,24 @@ public class ArcoTest {
         Posicion origen = new Posicion(4, 4);
         Posicion objetivo = new Posicion(4, 5);
 
-        assertThrows(AtaqueInvalidoException.class,
+        assertThrows(DistanciaInvalidaException.class,
+                () -> arco.ejecutarAtaque(origen, objetivo, tablero));
+    }
+    //medio gaga pero por si acaso
+    @Test
+    public void noPuedeAtacarSuPropiaCasilla() {
+        Posicion origen = new Posicion(4, 4);
+
+        assertThrows(DistanciaInvalidaException.class,
+                () -> arco.ejecutarAtaque(origen, origen, tablero));
+    }
+
+    @Test
+    public void noPuedeAtacarUnaCasillaDiagonalFueraDelAreaProhibida() {
+        Posicion origen = new Posicion(2, 2);
+        Posicion objetivo = new Posicion(4, 4);
+
+        assertThrows(ObjetivoDesalineadoException.class,
                 () -> arco.ejecutarAtaque(origen, objetivo, tablero));
     }
 
@@ -58,15 +65,6 @@ public class ArcoTest {
     }
 
     @Test
-    public void noPuedeAtacarUnaCasillaDiagonalFueraDelAreaProhibida() {
-        Posicion origen = new Posicion(2, 2);
-        Posicion objetivo = new Posicion(4, 4);
-
-        assertThrows(AtaqueInvalidoException.class,
-                () -> arco.ejecutarAtaque(origen, objetivo, tablero));
-    }
-
-    @Test
     public void puedeAtacarEnLineaRectaAMasDeDosCasillas() {
         Posicion origen = new Posicion(1, 4);
         Posicion posicionObjetivo = new Posicion(5, 4);
@@ -79,6 +77,37 @@ public class ArcoTest {
     }
 
     @Test
+    public void empujaHaciaAfueraAUnidadesAdyacentes() {
+        Posicion origen = new Posicion(1, 4);
+        Posicion posicionObjetivo = new Posicion(4, 4);
+        Posicion posicionAdyacente = new Posicion(5, 4);
+        Luciernaga objetivo = new Luciernaga();
+        Luciernaga adyacente = new Luciernaga();
+        tablero.colocarUnidad(posicionObjetivo, objetivo);
+        tablero.colocarUnidad(posicionAdyacente, adyacente);
+
+        arco.ejecutarAtaque(origen, posicionObjetivo, tablero);
+
+        assertTrue(tablero.unidadEstaEn(adyacente, new Posicion(6, 4)));
+    }
+
+
+    @Test
+    public void empujaHaciaAfueraAUnidadesAdyacentesSinEmpujarAlObjetivo() {
+        Posicion origen = new Posicion(1, 4);
+        Posicion posicionObjetivo = new Posicion(4, 4);
+        Posicion posicionAdyacente = new Posicion(5, 4);
+        Luciernaga objetivo = new Luciernaga();
+        Luciernaga adyacente = new Luciernaga();
+        tablero.colocarUnidad(posicionObjetivo, objetivo);
+        tablero.colocarUnidad(posicionAdyacente, adyacente);
+
+        arco.ejecutarAtaque(origen, posicionObjetivo, tablero);
+
+        assertTrue(tablero.unidadEstaEn(objetivo, posicionObjetivo));
+    }
+
+    @Test
     public void puedeVolverAAtacarLuegoDeUnAtaqueInvalido() {
         Posicion origen = new Posicion(4, 4);
         Posicion objetivoAdyacente = new Posicion(4, 5);
@@ -88,14 +117,12 @@ public class ArcoTest {
 
         tablero.colocarUnidad(origen, artillero);
         tablero.colocarUnidad(objetivoValido, vek);
-
         //este tiene que ir si o si, porque sino el test contempla que hubo un error y corta ahi.
-        assertThrows(AtaqueInvalidoException.class,
+        assertThrows(DistanciaInvalidaException.class,
                 () -> tablero.atacar(origen, objetivoAdyacente));
 
         tablero.atacar(origen, objetivoValido);
 
-        assertTrue(vek.suVidaEsIgualA(2),
-                "El ataque válido posterior debe ejecutarse");
+        assertTrue(vek.suVidaEsIgualA(2));
     }
 }

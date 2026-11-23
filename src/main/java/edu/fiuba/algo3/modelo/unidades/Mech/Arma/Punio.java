@@ -13,13 +13,13 @@ public class Punio extends Arma {
     }
 
     public void ejecutarAtaque(Posicion origen, Posicion objetivo, Tablero tablero) {
-        /*
+        Direccion direccionGolpe = origen.calcularDireccionHacia(objetivo);
+        origen.validarAdyacenciaCon(objetivo);
+        tablero.aplicarEfecto(objetivo, new Golpe(danio, direccionGolpe));
+    }
+}
+/*
         if (!origen.esAdyacenteA(objetivo)){
             throw new AtaqueInvalidoException("El punio solo puede atacar a casillas adyacentes.");
         }
          */
-
-        Direccion direccionGolpe = origen.calcularDireccionHacia(objetivo);
-        tablero.aplicarEfecto(objetivo, new Golpe(danio, direccionGolpe));
-    }
-}

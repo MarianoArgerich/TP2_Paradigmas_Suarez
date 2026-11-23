@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.posicion;
 
 import edu.fiuba.algo3.modelo.direccion.*;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.excepciones.ObjetivoDesalineadoException;
 
 import java.util.Objects;
@@ -23,21 +24,37 @@ public class Posicion {
         return direccion.calcularSiguientePosicion(this);
     }
 
-    public boolean estaEnLineaRectaCon(Posicion otra) {
+    private boolean estaEnLineaRectaCon(Posicion otra) {
         return (this.x == otra.x) || (this.y == otra.y);
     }
 
-    public boolean estaEnArea(Posicion otra) {
+    private boolean estaEnArea(Posicion otra) {
         int deltaX = Math.abs(this.x - otra.x);
         int deltaY = Math.abs(this.y - otra.y);
 
         return deltaX <= 1 && deltaY <= 1;
     }
 
-    public Direccion calcularDireccionHacia(Posicion objetivo) {
-        if (!estaEnLineaRectaCon(objetivo)){
+    public void validarAdyacenciaCon(Posicion otra) {
+        if (this.distanciaA(otra) != 1) {
+            throw new DistanciaInvalidaException("El objetivo debe estar en una casilla adyacente.");
+        }
+    }
+
+    public void validarAlineacionCon(Posicion otra) {
+        if (!estaEnLineaRectaCon(otra)) {
             throw new ObjetivoDesalineadoException("El objetivo no esta alineado para atacar");
         }
+    }
+
+    public void validarFueraDeAreaDe(Posicion otra) {
+        if (estaEnArea(otra)) {
+            throw new DistanciaInvalidaException("No se puede atacar a una casilla dentro del rango prohibido 3x3");
+        }
+    }
+
+    public Direccion calcularDireccionHacia(Posicion objetivo) {
+        validarAlineacionCon(objetivo);
         int deltaX = objetivo.x - this.x;
         int deltaY = objetivo.y - this.y;
 
