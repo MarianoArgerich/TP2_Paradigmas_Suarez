@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Destruible;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class DisparoAcido implements Visitante {
+public class DisparoAcido extends Visitante {
 
     private final int danio;
 

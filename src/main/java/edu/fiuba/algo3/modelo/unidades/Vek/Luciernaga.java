@@ -1,13 +1,12 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.LineaDeTiro;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Proyectil;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-
-import java.util.ArrayList;
-import java.util.List;
+import edu.fiuba.algo3.modelo.unidades.Vek.Ataque.DisparoAcido;
 
 public class Luciernaga extends Vek {
     public Luciernaga() {
@@ -18,71 +17,36 @@ public class Luciernaga extends Vek {
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
 
-        if (!origen.estaEnLineaRectaCon(objetivo)) {
-            throw new AtaqueInvalidoException("La luciernaga solo puede atacar en linea recta");
-        }
-
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
-        Posicion actual = origen.siguienteEn(direccion);
-
-        while (!tablero.detieneDisparoEn(actual)){
-            actual = actual.siguienteEn(direccion);
-        }
-        tablero.aplicarDisparoAcido(actual, this.danio);
-
-        tablero.contaminar(objetivo);
+        this.resolverAtaque(origen, direccion, tablero);
     }
+
+    @Override
+    public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
+        tablero.aplicarEfecto(posicionActual.siguienteEn(direccion), new Proyectil(direccion, new DisparoAcido(danio)));
+    }
+
+
+    @Override
+    protected Posicion calcularObjetivoEn(Posicion origen, Direccion direccion, Tablero tablero) {
+        LineaDeTiro lineaDeTiro = new LineaDeTiro(origen, direccion);
+        lineaDeTiro.explorarEn(tablero);
+        return lineaDeTiro.destinoFinal();
+    }
+
+/**
+    SEGURAMENTE PARA EL METODO DEL METODO DEL METODO DEL METODO DEL TEST, Atte Alex.
+    @Override
+    public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo, Tablero tablero) {
+        LineaDeTiro lineaDeTiro = new LineaDeTiro(origen, direccion);
+        lineaDeTiro.explorarEn(tablero);
+        return lineaDeTiro.alcanzaA(objetivo);
+    }
+ */
 
     @Override
     public void caerAlAguaEn(Casilla casilla) {
         this.vidaActual = 0;
         super.caerAlAguaEn(casilla);
-    }
-
-
-    @Override
-    public List<Posicion> obtenerCasillasAtacablesDesde(Posicion origen, Tablero tablero) {
-        List<Posicion> atacables = new ArrayList<>();
-
-        for (Direccion direccion : direccionesOrtogonales()) {
-            Posicion actual = origen.siguienteEn(direccion);
-
-            while (!tablero.detieneDisparoEn(actual)) {
-                actual = actual.siguienteEn(direccion);
-            }
-
-            atacables.add(actual);
-        }
-
-        ordenarDeterministicamente(atacables);
-        return atacables;
-    }
-
-    @Override
-    public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo, Tablero tablero) {
-        Posicion actual = origen.siguienteEn(direccion);
-        while (!tablero.detieneDisparoEn(actual)) {
-            if (actual.equals(objetivo)) {
-                return true;
-            }
-            actual = actual.siguienteEn(direccion);
-        }
-        return tablero.posicionValida(actual) && actual.equals(objetivo);
-    }
-
-    private Posicion buscarPrimerImpactoEnLinea(Posicion origen, Direccion direccion, Tablero tablero) {
-        Posicion actual = origen.siguienteEn(direccion);
-
-        while (!tablero.detieneDisparoEn(actual)) {
-            actual = actual.siguienteEn(direccion);
-        }
-
-        return actual;
-    }
-
-    @Override
-    public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
-        Posicion objetivo = buscarPrimerImpactoEnLinea(posicionActual, direccion, tablero);
-        tablero.aplicarDisparoAcido(objetivo, this.danio);
     }
 }

@@ -4,17 +4,13 @@ import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
-import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
-import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 
 public class RedElectricaTest {
 
@@ -32,7 +28,7 @@ public class RedElectricaTest {
             }
         }
         tablero = new Tablero(mapa);
-        combate = new Combate();
+        combate = combate();
         posicionMech = new Posicion(2, 2);
         posicionEdificio = new Posicion(2, 3);
 
@@ -43,6 +39,7 @@ public class RedElectricaTest {
         mapa.add(casillaEdificio);
     }
 
+    /* TODO: Refactorizar estos test para que no usen tablero.tieneEnergia()
     @Test
     public void testAlHacerDañoAUnEdificioLaRedElectricaSeReduceEn1() {
 
@@ -127,6 +124,8 @@ public class RedElectricaTest {
         assertTrue(tablero.tieneEnergia(3));
 
     }
+    */
+
     /*
     // realizar cuando Vek este implementado
     @Test

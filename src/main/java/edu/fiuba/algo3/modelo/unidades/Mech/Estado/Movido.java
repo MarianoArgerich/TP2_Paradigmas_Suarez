@@ -30,9 +30,8 @@ public class Movido implements Estado {
 
     @Override
     public void deshacerMovimiento(Mech mech, Casilla casillaActual, Tablero tablero) {
-        Casilla casillaAnterior = tablero.casillaEn(this.posicionAnterior);
         try {
-            casillaActual.transferirOcupanteA(casillaAnterior);
+            tablero.transferirOcupanteA(casillaActual, this.posicionAnterior);
             mech.salirDeAcido();
             mech.cambiarEstado(new MovimientoDeshecho());
         } catch (CasillaInvalidaException e) {

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.Turno.Fases;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.EmergenciaVek;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
@@ -20,7 +21,7 @@ public class EmergenciaAnunciada implements AparicionVek {
 
     @Override
     public void resolver(Tablero tablero) {
-        tablero.intentarEmergenciaEn(posicion,vek);
+        tablero.aplicarEfecto(this.posicion, new EmergenciaVek(this.vek));
     }
 
 }

@@ -1,18 +1,9 @@
 package edu.fiuba.algo3.Unitarios.RedElectrica;
 
-import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.excepciones.NoHayMasEnergia;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
-import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -11,7 +11,7 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Movible;
 
-public class MoverDesdeCasilla implements SegundoVisitante {
+public class MoverDesdeCasilla extends SegundoVisitante {
 
     private final Casilla origen;
     private final Direccion direccion;

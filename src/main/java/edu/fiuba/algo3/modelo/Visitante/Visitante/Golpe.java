@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 
-public class Golpe implements Visitante {
+public class Golpe extends Visitante {
 
     private final int danio;
     private final Direccion direccion;

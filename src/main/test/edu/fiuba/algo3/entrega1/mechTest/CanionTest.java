@@ -3,12 +3,10 @@ package edu.fiuba.algo3.entrega1.mechTest;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Suelo;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Edificio;
 import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
-import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
+import edu.fiuba.algo3.modelo.excepciones.ObjetivoDesalineadoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
@@ -18,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.canion;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,7 +36,7 @@ public class CanionTest {
             }
         }
         tablero = new Tablero(mapa);
-        canion = new Canion();
+        canion = canion();
     }
 
     private void colocarObstaculo(Posicion posicion, Ocupante obstaculo) {
@@ -121,6 +120,6 @@ public class CanionTest {
     public void testCanionNoPuedeDispararFueraDeLineaRecta() {
         tablero.colocarUnidad(new Posicion(2, 2), canion);
 
-        assertThrows(AtaqueInvalidoException.class, () -> tablero.atacar(new Posicion(2, 2), new Posicion(4, 3)));
+        assertThrows(ObjetivoDesalineadoException.class, () -> tablero.atacar(new Posicion(2, 2), new Posicion(4, 3)));
     }
 }

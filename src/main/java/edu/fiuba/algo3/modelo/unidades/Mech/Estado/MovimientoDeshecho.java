@@ -11,8 +11,7 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 public class MovimientoDeshecho implements Estado {
     @Override
     public void mover(Mech mech, Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
-        mech.verificarRangoDeMovimiento(distancia);
-        tablero.desplazarUnidad(origen, mech, direccion, distancia);
+        mech.ejecutarDesplazamiento(origen, direccion, distancia, tablero);
     }
 
     @Override

@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.casillas.obstaculo.Montania;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
-public class EmergenciaVek implements Visitante {
+public class EmergenciaVek extends Visitante {
 
     private final Vek vekAEmerger;
 
@@ -24,7 +24,7 @@ public class EmergenciaVek implements Visitante {
 
     @Override
     public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
-        casillaActual.colocarUnidad(vekAEmerger);
+        casillaActual.colocarOcupante(vekAEmerger);
     }
 
     @Override

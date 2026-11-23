@@ -7,7 +7,7 @@ import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Contaminable;
 
-public class ContaminarOcupante implements SegundoVisitante {
+public class ContaminarOcupante extends SegundoVisitante {
 
     private void contaminar(Contaminable contaminable) {
         contaminable.contaminar();

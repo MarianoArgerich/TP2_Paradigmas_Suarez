@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.unidades;
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 
+import edu.fiuba.algo3.modelo.Visitante.Visitante.DesplazamientoUnidad;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
@@ -14,12 +15,13 @@ import edu.fiuba.algo3.modelo.unidades.capacidades.Movible;
 import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.EstadoContaminacion;
 import edu.fiuba.algo3.modelo.unidades.estadoContaminacion.NoContaminado;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Unidad extends Ocupante implements Movible, Contaminable {
 
     private final int vidaMax;
-    private final int rangoDeMovimiento;
+    protected final int rangoDeMovimiento;
     protected int vidaActual;
     private EstadoContaminacion estadoContaminacion;
 
@@ -40,16 +42,6 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         return Objects.hash(vidaMax, rangoDeMovimiento, vidaActual);
     }
 
-    @Override
-    public boolean puedeIngresar() {
-        return false;
-    }
-
-    @Override
-    public boolean detieneDisparo() {
-        return true;
-    }
-
     public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
         visitante.visitar(this,  terreno, casillaActual, tablero);
     }
@@ -67,10 +59,6 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         }
     }
 
-    public boolean estaDentroDelRango(int distancia){
-        return(distancia <= rangoDeMovimiento);
-    }
-
     public boolean suVidaEsIgualA(int comparacion) {
         return vidaActual == comparacion;
     }
@@ -81,7 +69,7 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
     @Override
     public void moverDesde(Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
         this.verificarRangoDeMovimiento(distancia);
-        tablero.desplazarUnidad(origen, this, direccion, distancia);
+        tablero.aplicarEfecto(origen.siguienteEn(direccion), new DesplazamientoUnidad(origen, this, direccion, distancia));
     }
 
     @Override
@@ -104,7 +92,13 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
         estadoContaminacion.recibirDanio(this, danio, casillaActual);
     }
 
+    @Override
+    public void validarEmergencia() {}
 
+    @Override
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {
+        posiciones.add(posicion);
+    }
 
     public void reaccionarAlTerreno(Terreno terreno, Casilla casilla) {
         terreno.reaccionarAlIngresoDe(this,casilla);
@@ -118,9 +112,4 @@ public abstract class Unidad extends Ocupante implements Movible, Contaminable {
     }
 
     public void verificarAtaqueEnAgua() {}
-
-    @Override
-    public boolean esAptoParaEmergencia(){
-        return true;
-    }
 }

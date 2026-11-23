@@ -6,7 +6,10 @@ import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arco;
 import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Arma;
+import edu.fiuba.algo3.modelo.unidades.Mech.Arma.DisparoCanion;
+import edu.fiuba.algo3.modelo.unidades.Mech.Arma.Punio;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Estado;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.InicioTurno;
 import edu.fiuba.algo3.modelo.unidades.Mech.Estado.Movido;
@@ -14,15 +17,27 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.capacidades.Atacante;
 import edu.fiuba.algo3.modelo.unidades.capacidades.DeshaceMovimiento;
 
-public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante {
+public class Mech extends Unidad implements DeshaceMovimiento, Atacante {
 
     private final Arma arma;
     private Estado estado;
 
-    protected Mech(int vidaMax, int movimiento, Arma arma) {
+    private Mech(int vidaMax, int movimiento, Arma arma) {
         super(vidaMax, movimiento);
         this.arma = arma;
         this.estado = new InicioTurno();
+    }
+
+    public static Mech combate() {
+        return new Mech(3, 3, new Punio());
+    }
+
+    public static Mech canion() {
+        return new Mech(3, 3, new DisparoCanion());
+    }
+
+    public static Mech artilleria() {
+        return new Mech(3, 3, new Arco());
     }
 
     public void cambiarEstado(Estado estado) {
@@ -48,9 +63,8 @@ public abstract class Mech extends Unidad implements DeshaceMovimiento, Atacante
         this.estado.mover(this, origen, direccion, distancia, tablero);
     }
 
-    @Override
-    public boolean esMech() {
-        return true;
+    public void ejecutarDesplazamiento(Casilla origen, Direccion direccion, int distancia, Tablero tablero){
+        super.moverDesde(origen, direccion, distancia, tablero);
     }
 
     @Override
