@@ -21,8 +21,9 @@ public class RedElectrica {
         return this.energia > 0;
     }
 
-    public boolean suEnergiaEsIgualA(int energiaEsperada) {
-        return this.energia == energiaEsperada;
+    //se usa pa los test, NO BORRAR
+    public int getEnergia(){
+        return this.energia;
     }
 
     

@@ -1,11 +1,9 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.ExploradorMovimientoVek;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
-import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
 
 public class Avispon extends Vek {
 
@@ -22,8 +20,13 @@ public class Avispon extends Vek {
     }
 
     @Override
-    public boolean puedeTerminarEn(Terreno terreno) {
-        return true;
+    public void alExplorarAgua(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {
+        explorador.aceptarPasoYContinuar(casillaActual, tablero);
+    }
+
+    @Override
+    public void alExplorarAcido(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {
+        explorador.aceptarPasoYContinuar(casillaActual, tablero);
     }
 
 }

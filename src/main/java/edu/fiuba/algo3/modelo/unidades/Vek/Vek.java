@@ -1,14 +1,16 @@
 package edu.fiuba.algo3.modelo.unidades.Vek;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante;
-import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Disparo;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.ExploradorMovimientoVek;
 import edu.fiuba.algo3.modelo.direccion.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
+import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.Vek.IA.*;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionIA;
+import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionNula;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAcercarseAEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarEdificio;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla.ReglaAtacarMech;
@@ -39,134 +41,59 @@ public abstract class Vek extends Unidad implements Atacante {
     }
 
     public void ejecutarTurnoIA(Posicion posicionActual, Tablero tablero) {
+        AccionIA accionFinal = new AccionNula();
         for (ReglaIA regla : reglasPrioridad) {
-            AccionIA accion = regla.evaluar(this, posicionActual, tablero);
-            if (accion.esValida()) {
-                accion.ejecutar(this, tablero);
-                return;
-            }
+            accionFinal = accionFinal.resolverCon(regla, this, posicionActual, tablero);
         }
+        accionFinal.ejecutar(this, tablero);
     }
 
-    public List<Posicion> obtenerDestinosValidos(Posicion origen, Tablero tablero) {
-        List<Posicion> visitadas = new ArrayList<>();
-        List<Integer> distancias = new ArrayList<>();
-        visitadas.add(origen);
-        distancias.add(0);
+    public List<Desplazamiento> obtenerDesplazamientosValidos(Posicion origen, Tablero tablero) {
+        List<Desplazamiento> desplazamientos = new ArrayList<>();
+        desplazamientos.add(Desplazamiento.sinMover(origen));
 
-        int indice = 0;
-        while (indice < visitadas.size()) {
-            Posicion actual = visitadas.get(indice);
-            int distanciaActual = distancias.get(indice);
-            indice++;
-
-            if (estaDentroDelRango(distanciaActual + 1)) {
-                for (Direccion direccion : direccionesOrtogonales()) {
-                    Posicion vecina = actual.siguienteEn(direccion);
-                    if (!visitadas.contains(vecina)){
-                        visitadas.add(vecina);
-                        distancias.add(distanciaActual + 1);
-                    }
-                }
-            }
+        List<Desplazamiento> movimientosRectos = new ArrayList<>();
+        for (Direccion direccion : direccionesOrtogonales()) {
+            ExploradorMovimientoVek explorador = new ExploradorMovimientoVek(this, origen, direccion, this.rangoDeMovimiento, movimientosRectos);
+            explorador.explorarDesde(origen, tablero);
         }
 
-        List<Posicion> destinosValidos = new ArrayList<>();
-        for (Posicion candidata : visitadas) {
-            if (candidata.equals(origen) || tablero.puedeTerminarVekEn(this, candidata)) {
-                destinosValidos.add(candidata);
-            }
-        }
-
-        ordenarDeterministicamente(destinosValidos);
-        return destinosValidos;
+        movimientosRectos.sort((a, b) -> a.esMenorQue(b) ? -1 : (b.esMenorQue(a) ? 1 : 0));
+        desplazamientos.addAll(movimientosRectos);
+        return desplazamientos;
     }
 
-    protected void ordenarDeterministicamente(List<Posicion> posiciones) {
-        for (int i = 0; i < posiciones.size() - 1; i++) {
-            int indiceMenor = i;
-            for (int j = i + 1; j < posiciones.size(); j++) {
-                if (posiciones.get(j).esMenorQue(posiciones.get(indiceMenor))) {
-                    indiceMenor = j;
-                }
-            }
-            Posicion temporal = posiciones.get(i);
-            posiciones.set(i, posiciones.get(indiceMenor));
-            posiciones.set(indiceMenor, temporal);
-        }
-    }
+    public void alExplorarAgua(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {}
 
-    public List<Direccion> calcularCaminoHasta(Posicion origen, Posicion destino, Tablero tablero) {
-        List<Posicion> visitadas = new ArrayList<>();
-        List<List<Direccion>> caminos = new ArrayList<>();
-        visitadas.add(origen);
-        caminos.add(new ArrayList<>());
-
-        int indice = 0;
-        while (indice < visitadas.size()) {
-            Posicion actual = visitadas.get(indice);
-            List<Direccion> caminoActual = caminos.get(indice);
-            indice++;
-
-            if (actual.equals(destino)) {
-                return caminoActual;
-            }
-
-            if (estaDentroDelRango(caminoActual.size() + 1)) {
-                for (Direccion direccion: direccionesOrtogonales()) {
-                    Posicion vecina = actual.siguienteEn(direccion);
-                    if (!visitadas.contains(vecina)) {
-                        List<Direccion> nuevoCamino = new ArrayList<>(caminoActual);
-                        nuevoCamino.add(direccion);
-                        visitadas.add(vecina);
-                        caminos.add(nuevoCamino);
-                    }
-                }
-            }
-
-        }
-        return new ArrayList<>();
-    }
+    public void alExplorarAcido(ExploradorMovimientoVek explorador, Casilla casillaActual, Tablero tablero) {}
 
     public List<Posicion> obtenerCasillasAtacablesDesde(Posicion origen, Tablero tablero){
         List<Posicion> atacables = new ArrayList<>();
         for (Direccion direccion : direccionesOrtogonales()) {
-            atacables.add(origen.siguienteEn(direccion));
+            atacables.add(calcularObjetivoEn(origen, direccion, tablero));
         }
-        ordenarDeterministicamente(atacables);
+        atacables.sort((a, b) -> a.esMenorQue(b) ? -1 : (b.esMenorQue(a) ? 1 : 0));
         return atacables;
     }
 
-
-    public boolean puedeTerminarEn(Terreno terreno){
-        return terreno.esSeguroParaTerrestre();
+    protected Posicion calcularObjetivoEn(Posicion origen, Direccion direccion, Tablero tablero) {
+        return origen.siguienteEn(direccion);
     }
-
 
     @Override
     public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-        if (!origen.esAdyacenteA(objetivo)) {
-            throw new AtaqueInvalidoException(
-                    "El objetivo debe estar en una casilla adyacente"
-            );
-        }
 
         Direccion direccion = origen.calcularDireccionHacia(objetivo);
         this.resolverAtaque(origen, direccion, tablero);
     }
 
-    @Override
-    public boolean esVek() {
-        return true;
-    }
-
     public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo,Tablero tablero) {
-        return origen.siguienteEn(direccion).equals(objetivo);
+        return calcularObjetivoEn(origen, direccion, tablero).equals(objetivo);
     }
 
     public void resolverAtaque(Posicion posicionActual, Direccion direccion, Tablero tablero) {
         Posicion objetivo = posicionActual.siguienteEn(direccion);
-        tablero.aplicarDisparo(objetivo, this.danio);
+        tablero.aplicarEfecto(objetivo, new Disparo(danio));
     }
 
     @Override

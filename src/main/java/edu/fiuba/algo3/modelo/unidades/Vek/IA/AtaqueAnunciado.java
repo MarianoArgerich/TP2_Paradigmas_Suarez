@@ -14,7 +14,7 @@ public class AtaqueAnunciado {
         this.atacante = atacante;
         this.direccion = direccion;
     }
-
+    //se usa SOLO PARA LOS TESTS, NO BORRAR
     public boolean amenazaA(Posicion posicionObjetivo, Tablero tablero) {
         return tablero.vekAmenazaEnDireccion(atacante, direccion, posicionObjetivo);
     }

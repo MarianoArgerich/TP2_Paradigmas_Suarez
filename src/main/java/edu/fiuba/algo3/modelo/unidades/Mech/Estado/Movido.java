@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.unidades.Mech.Estado;
 
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -19,7 +18,7 @@ public class Movido implements Estado {
     }
 
     @Override
-    public void mover(Mech mech, Casilla origen, Direccion direccion, int distancia, Mapa mapa) {
+    public void mover(Mech mech, Casilla origen, Direccion direccion, int distancia, Tablero tablero) {
         throw new YaSeMovioException("El mech no debería poder moverse dos veces en un turno");
     }
 
@@ -30,10 +29,9 @@ public class Movido implements Estado {
     }
 
     @Override
-    public void deshacerMovimiento(Mech mech, Casilla casillaActual, Mapa mapa) {
-        Casilla casillaAnterior = mapa.casillaEn(this.posicionAnterior);
+    public void deshacerMovimiento(Mech mech, Casilla casillaActual, Tablero tablero) {
         try {
-            casillaActual.transferirOcupanteA(casillaAnterior);
+            tablero.transferirOcupanteA(casillaActual, this.posicionAnterior);
             mech.salirDeAcido();
             mech.cambiarEstado(new MovimientoDeshecho());
         } catch (CasillaInvalidaException e) {

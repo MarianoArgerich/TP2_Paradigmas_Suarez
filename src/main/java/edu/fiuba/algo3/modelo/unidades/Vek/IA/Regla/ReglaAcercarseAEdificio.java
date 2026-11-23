@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades.Vek.IA.Regla;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
+import edu.fiuba.algo3.modelo.posicion.Desplazamiento;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionIA;
 import edu.fiuba.algo3.modelo.unidades.Vek.IA.Accion.AccionMover;
@@ -18,24 +19,23 @@ public class ReglaAcercarseAEdificio implements ReglaIA {
         if(edificios.isEmpty()){
             return new AccionNula();
         }
-        List<Posicion> destinos = vek.obtenerDestinosValidos(origen, tablero);
-        Posicion mejorDestino = origen;
+        List<Desplazamiento> desplazamientos = vek.obtenerDesplazamientosValidos(origen, tablero);
+        Desplazamiento mejorDesplazamiento = desplazamientos.get(0);
         int menorDistancia = distanciaAlEdificioMasCercano(origen, edificios);
 
-        for (Posicion candidato : destinos){
-            int distancia = distanciaAlEdificioMasCercano(candidato, edificios);
+        for (Desplazamiento candidato : desplazamientos){
+            int distancia = distanciaAlEdificioMasCercano(candidato.destino(), edificios);
             if (distancia < menorDistancia){
-                mejorDestino = candidato;
+                mejorDesplazamiento = candidato;
                 menorDistancia = distancia;
             }
         }
 
-        if (mejorDestino.equals(origen)) {
+        if (mejorDesplazamiento.destino().equals(origen)) {
             return new AccionNula();
         }
 
-        List<Direccion> camino = vek.calcularCaminoHasta(origen, mejorDestino, tablero);
-        return new AccionMover(origen, camino);
+        return new AccionMover(mejorDesplazamiento);
     }
 
     private int distanciaAlEdificioMasCercano(Posicion posicion, List<Posicion> edificios){

@@ -17,13 +17,7 @@ public class GeneradorEmergenciasAleatorio implements GeneradorEmergencias {
 
     @Override
     public void generarEn(Tablero tablero) {
-        List<Posicion> candidatas = tablero.obtenerPosicionesDisponiblesParaEmergencia();
-        if(candidatas.isEmpty()){
-            return;
-        }
-        //Mezcla las posiciones de candidatas
-        Collections.shuffle(candidatas, random);
-        tablero.anunciarEmergencia(candidatas.get(0), crearVekAleatorio());
+        tablero.anunciarEmergencia(crearVekAleatorio());
     }
 
     private Vek crearVekAleatorio() {

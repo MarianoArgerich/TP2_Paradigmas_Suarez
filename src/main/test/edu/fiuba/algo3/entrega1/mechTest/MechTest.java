@@ -11,8 +11,6 @@ import edu.fiuba.algo3.modelo.direccion.Derecha;
 import edu.fiuba.algo3.modelo.excepciones.*;
 
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Canion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Combate;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.canion;
+import static edu.fiuba.algo3.modelo.unidades.Mech.Mech.combate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MechTest {
@@ -39,13 +39,13 @@ public class MechTest {
             }
         }
         tablero = new Tablero(mapa);
-        mech1 = new Combate();
-        mech2 = new Canion();
+        mech1 = combate();
+        mech2 = canion();
     }
 
     @Test
     public void testMechNoPuedeMoverseMasAllaDeSuRango() {
-        // Mech en (0, 0). Intenta moverse a (4, 0) solo tiene 3 pasos
+
         Posicion coordenadas = new Posicion(0, 0);
         tablero.colocarUnidad(coordenadas, mech1);
 
@@ -67,7 +67,7 @@ public class MechTest {
     public void testMechNoPuedeAtravesarUnidades() {
         Posicion posicionInicial = new Posicion(1, 1);
         tablero.colocarUnidad(posicionInicial, mech1);
-        tablero.colocarUnidad(new Posicion(1, 2), new Combate());
+        tablero.colocarUnidad(new Posicion(1, 2), combate());
 
         tablero.mover(new Posicion(1, 1), new Arriba(), 2);
 
