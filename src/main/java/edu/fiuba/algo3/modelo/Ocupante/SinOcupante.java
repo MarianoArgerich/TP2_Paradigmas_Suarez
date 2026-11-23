@@ -1,45 +1,37 @@
 package edu.fiuba.algo3.modelo.Ocupante;
 
-import edu.fiuba.algo3.modelo.Tablero.Mapa;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Visitante.Visitante;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
+import edu.fiuba.algo3.modelo.Visitante.Visitante.Visitante;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Terreno;
-import edu.fiuba.algo3.modelo.direccion.Direccion;
-import edu.fiuba.algo3.modelo.excepciones.UnidadInvalidaException;
+import edu.fiuba.algo3.modelo.excepciones.CasillaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Unidad;
+
+import java.util.List;
+
 
 public class SinOcupante extends Ocupante{
 
+
     @Override
-    public boolean puedeIngresar() {
-        return true;
+    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Tablero tablero) {
+        visitante.visitar(this, terreno, casillaActual, tablero);
     }
 
+    public void validarEmergencia() {}
 
     @Override
-    public boolean detieneDisparo() {
-        return false;
-    }
-
-    @Override
-    public void aceptar(Visitante visitante, Terreno terreno, Casilla casillaActual, Mapa mapa) {
-        visitante.visitar(this, terreno, casillaActual, mapa);
+    public void agregarCandidataParaEmergenciaA(Posicion posicion, List<Posicion> posiciones) {
+        posiciones.add(posicion);
     }
 
     @Override
-    public void atacar(Posicion origen, Posicion objetivo, Tablero tablero) {
-
+    public void aceptar(SegundoVisitante visitante) {
+        visitante.visitar(this);
     }
 
     @Override
-    public void deshacerMovimientoDesde(Casilla casilla, Mapa mapa) {
-
-    }
-
-    @Override
-    public void moverDesde(Casilla casilla, Direccion direccion, int distancia, Mapa mapa) {
-        throw new UnidadInvalidaException("No hay una unidad en la casilla de origen");
+    public void verificarPuedeRecibirOcupante() {
     }
 }
