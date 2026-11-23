@@ -18,8 +18,3 @@ public class Punio extends Arma {
         tablero.aplicarEfecto(objetivo, new Golpe(danio, direccionGolpe));
     }
 }
-/*
-        if (!origen.esAdyacenteA(objetivo)){
-            throw new AtaqueInvalidoException("El punio solo puede atacar a casillas adyacentes.");
-        }
-         */

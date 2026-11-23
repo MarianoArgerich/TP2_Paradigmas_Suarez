@@ -2,9 +2,9 @@ package edu.fiuba.algo3.entrega2.vek;
 
 import edu.fiuba.algo3.modelo.Ocupante.Ocupante;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia;
+import edu.fiuba.algo3.modelo.Turno.Fases.FaseEmergencia;
 import edu.fiuba.algo3.modelo.Turno.Fases.FaseVek;
-import edu.fiuba.algo3.modelo.Turno.Fases.Resolucion;
+import edu.fiuba.algo3.modelo.Turno.Fases.FaseResolucion;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.Empuje;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.Acido;
@@ -44,7 +44,7 @@ public class VekTest {
     private Avispon avispon;
     private Posicion posicionAgua;
     private FaseVek faseVek;
-    private Resolucion faseResolucion;
+    private FaseResolucion faseResolucion;
 
 
     @BeforeEach
@@ -58,7 +58,7 @@ public class VekTest {
 
         tablero = new Tablero(mapa);
         faseVek = new FaseVek();
-        faseResolucion = new Resolucion();
+        faseResolucion = new FaseResolucion();
         luciernaga1 = new Luciernaga();
         mech1 = combate();
         saltador = new Saltador();
@@ -192,7 +192,7 @@ public class VekTest {
     public void test10AlColocarseUnMechSobreLaCasillaDeEmergenciaRecibeUnoDeDaño(){
         Posicion posicionEmergencia = new Posicion(4, 4);
 
-        Emergencia faseEmergencia = new Emergencia();
+        FaseEmergencia faseEmergencia = new FaseEmergencia();
 
         tablero.anunciarEmergencia(posicionEmergencia, saltador);
         tablero.colocarUnidad(posicionEmergencia, mech1);
