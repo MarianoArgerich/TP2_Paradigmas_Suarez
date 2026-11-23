@@ -124,17 +124,7 @@ public class Tablero {
                 .orElseThrow(() -> new CasillaInvalidaException("No se encontro la casilla con esa unidad"));
     }
 
-/**
-    SEGURAMENTE SE USE PARA EL METODO DEL METODO QUE SE USA PARA TEST, Atte. Alex
-    public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo) {
-        try {
-            return casillaDe(atacante).amenazaPosicion(atacante, direccion, posicionObjetivo, this);
-        }
-        catch (CasillaInvalidaException e){
-            return false;
-        }
-    }
-     */
+
 
     public void ejecutarAtaqueVek(Vek atacante, Direccion direccion) {
         try {
@@ -182,12 +172,27 @@ public class Tablero {
     public void aplicarEnOcupante(Posicion posicion, SegundoVisitante visitante) {
         try {
             casillaEn(posicion).aceptar(visitante);
-        }catch (CasillaInvalidaException e){
+        } catch (CasillaInvalidaException e){
         }
     }
 
-/**
-    SEGURAMENTE SE USE PARA TEST, Y SEA NECESARIO PARA NAHUE, Atte. Alex
+    //se usa pa los test, NO BORRAR
+    public int getEnergia(){
+        return this.redElectrica.getEnergia();
+    }
+
+    //se usa SOLO PARA LOS TESTS, NO BORRAR
+     public boolean vekAmenazaEnDireccion(Vek atacante, Direccion direccion, Posicion posicionObjetivo) {
+        try {
+            return casillaDe(atacante).amenazaPosicion(atacante, direccion, posicionObjetivo, this);
+        }
+        catch (CasillaInvalidaException e){
+            return false;
+        }
+    }
+
+
+    //se usa SOLO PARA LOS TESTS, NO BORRAR
     public boolean tieneAtaqueAnunciadoEn(Posicion posicion) {
         for (AtaqueAnunciado ataque : ataquesAnunciados) {
             if (ataque.amenazaA(posicion, this)) {
@@ -196,5 +201,9 @@ public class Tablero {
         }
         return false;
     }
- */
+
+    //se usa SOLO PARA LOS TESTS, NO BORRAR
+    public boolean tieneEmergenciaAnunciadaEn(Posicion posicion) {
+        return this.emergenciaActual.estaEn(posicion);
+    }
 }

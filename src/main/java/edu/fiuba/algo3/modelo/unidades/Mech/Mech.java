@@ -37,7 +37,7 @@ public class Mech extends Unidad implements DeshaceMovimiento, Atacante {
     }
 
     public static Mech artilleria() {
-        return new Mech(3, 3, new Arco());
+        return new Mech(2, 3, new Arco());
     }
 
     public void cambiarEstado(Estado estado) {

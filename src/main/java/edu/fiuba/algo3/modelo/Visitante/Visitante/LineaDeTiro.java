@@ -32,12 +32,11 @@ public class LineaDeTiro extends Visitante {
     }
 
 
-/**
-    SEGURAMENTE METODO DEL METODO DEL METODO DEL METODO DEL TEST, Atte. Alex
+    //No borrar, se usa para los tests
     public boolean alcanzaA(Posicion objetivo) {
         return this.casillasValidas.contains(objetivo);
     }
-*/ 
+
 
     @Override
     public void visitar(SinOcupante sinOcupante, Terreno terreno, Casilla casillaActual, Tablero tablero) {

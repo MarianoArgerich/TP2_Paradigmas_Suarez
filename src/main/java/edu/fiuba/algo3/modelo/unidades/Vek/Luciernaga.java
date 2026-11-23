@@ -34,15 +34,14 @@ public class Luciernaga extends Vek {
         return lineaDeTiro.destinoFinal();
     }
 
-/**
-    SEGURAMENTE PARA EL METODO DEL METODO DEL METODO DEL METODO DEL TEST, Atte Alex.
+    //No borrar, se usa para los tests
     @Override
     public boolean amenazaDesde(Posicion origen, Direccion direccion, Posicion objetivo, Tablero tablero) {
         LineaDeTiro lineaDeTiro = new LineaDeTiro(origen, direccion);
         lineaDeTiro.explorarEn(tablero);
         return lineaDeTiro.alcanzaA(objetivo);
     }
- */
+
 
     @Override
     public void caerAlAguaEn(Casilla casilla) {

@@ -102,12 +102,11 @@ public class Casilla {
         this.ocupante.agregarPosicionDeEdificioA(this.posicion, posiciones);
     }
 
-/**
-    SEGURAMENTE PARA EL METODO DEL METODO DEL METODO PARA TEST, Atte. Alex
+
+    //se usa pa los test, NO BORRAR
     public boolean amenazaPosicion(Vek atacante, Direccion direccion, Posicion posicionObjetivo, Tablero tablero) {
         return atacante.amenazaDesde(this.posicion, direccion, posicionObjetivo, tablero);
     }
-     */
 
     public void ejecutarAtaqueVek(Vek atacante, Direccion direccion, Tablero tablero) {
         atacante.resolverAtaque(this.posicion, direccion, tablero);

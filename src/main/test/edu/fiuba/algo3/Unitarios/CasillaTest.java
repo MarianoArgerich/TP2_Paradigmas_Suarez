@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.Unitarios.Casilla;
+package edu.fiuba.algo3.Unitarios;
 
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.casillas.Terreno.*;

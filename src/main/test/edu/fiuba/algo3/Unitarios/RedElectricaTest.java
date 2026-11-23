@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.Unitarios.RedElectrica;
+package edu.fiuba.algo3.Unitarios;
 
 import edu.fiuba.algo3.modelo.excepciones.NoHayMasEnergia;
 import edu.fiuba.algo3.modelo.redElectrica.RedElectrica;
@@ -21,13 +21,13 @@ public class RedElectricaTest {
 
     @Test
     public void testLaRedElectricaSeCreaCon5DeEnergia(){
-        assertTrue(redElectrica.suEnergiaEsIgualA(5));
+        assertEquals(5, redElectrica.getEnergia());
     }
 
     @Test
     public void testLaEnergiaSeReduceEn1(){
         redElectrica.reducirEnergia();
-        assertTrue(redElectrica.suEnergiaEsIgualA(4));
+        assertEquals(4, redElectrica.getEnergia());
     }
 
     @Test
