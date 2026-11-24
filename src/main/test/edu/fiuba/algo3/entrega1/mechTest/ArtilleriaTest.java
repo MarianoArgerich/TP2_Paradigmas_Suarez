@@ -3,6 +3,7 @@ package edu.fiuba.algo3.entrega1.mechTest;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
 import edu.fiuba.algo3.modelo.excepciones.AtaqueInvalidoException;
+import edu.fiuba.algo3.modelo.excepciones.DistanciaInvalidaException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
@@ -60,7 +61,7 @@ public class ArtilleriaTest {
 
         tablero.colocarUnidad(posArtilleria, artillero);
 
-        assertThrows(AtaqueInvalidoException.class, () ->
+        assertThrows(DistanciaInvalidaException.class, () ->
             tablero.atacar(posArtilleria, posObjetivoAdyacente)
         , "El Mech de Artillería no debe poder atacar casillas adyacentes");
 
