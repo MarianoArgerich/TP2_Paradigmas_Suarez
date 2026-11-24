@@ -4,6 +4,7 @@ package edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.EmergenciaAnunciada;
 import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.SinEmergencia;
 import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.AparicionVek;
+import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.ContadorMechs;
 import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
@@ -218,5 +219,13 @@ public class Tablero {
         for (Casilla casilla : casillas) {
             casilla.reiniciarTurnoMech();
         }
+    }
+
+    public int cantidadDeMechsVivos() {
+        ContadorMechs contador = new ContadorMechs();
+        for (Casilla casilla : casillas) {
+            casilla.aceptar(contador);
+        }
+        return contador.cantidad();
     }
 }

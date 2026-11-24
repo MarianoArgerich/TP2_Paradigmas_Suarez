@@ -1,14 +1,10 @@
 package edu.fiuba.algo3.modelo.Turno.Fases;
 
+import edu.fiuba.algo3.modelo.Juego.Juego;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
 import edu.fiuba.algo3.modelo.excepciones.AccionInvalidaEnFaseException;
 import edu.fiuba.algo3.modelo.posicion.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Mech.Mech;
-import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
-
-import java.util.List;
 
 public abstract class Fase {
     public void mover(Tablero tablero, Posicion origen, Direccion direccion, int distancia) {
@@ -24,4 +20,7 @@ public abstract class Fase {
     }
 
     public abstract Fase avanzar(Tablero tablero);
+
+    public void alFinalizar(Juego juego) {
+    }
 } 
