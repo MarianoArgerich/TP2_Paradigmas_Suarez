@@ -173,7 +173,7 @@ public class VekTest {
         tablero.anunciarEmergencia(posicionEmergencia, vekEntrante);
         tablero.colocarUnidad(posicionEmergencia, vekBloqueador);
 
-        faseEmergencia.ejecutar(List.of(posicionEmergencia), List.of(vekBloqueador), List.of(), List.of(), tablero);
+       faseEmergencia.avanzar(tablero);
 
         assertFalse(tablero.tieneEmergenciaAnunciadaEn(posicionEmergencia));
         assertTrue(tablero.unidadEstaEn(vekBloqueador, posicionEmergencia));
@@ -188,8 +188,7 @@ public class VekTest {
         tablero.anunciarEmergencia(posicionEmergencia, saltador);
         tablero.colocarUnidad(posicionEmergencia, mech1);
 
-        faseEmergencia.ejecutar(List.of(posicionEmergencia), List.of(saltador), List.of(), List.of(), tablero);
-
+        faseEmergencia.avanzar(tablero);
         assertTrue(mech1.suVidaEsIgualA(2));
     }
 
@@ -201,8 +200,7 @@ public class VekTest {
         tablero.anunciarEmergencia(posicionEmergencia, saltador);
         tablero.colocarUnidad(posicionEmergencia, mech1);
 
-        faseEmergencia.ejecutar(List.of(posicionEmergencia), List.of(saltador), List.of(), List.of(), tablero);
-
+        faseEmergencia.avanzar(tablero);
         assertFalse(tablero.tieneEmergenciaAnunciadaEn(posicionEmergencia));
         assertTrue(tablero.unidadEstaEn(mech1, posicionEmergencia));
         assertFalse(tablero.unidadEstaEn(saltador, posicionEmergencia));
@@ -285,8 +283,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 3), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 3)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(4, 2)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(4, 5)));
@@ -301,8 +298,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(1, 1), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(1, 1)), List.of(luciernaga),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 1)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 4)));
@@ -323,9 +319,7 @@ public class VekTest {
         Vek luciernaga = new Luciernaga();
         tablero.colocarUnidad(new Posicion(1, 1), luciernaga);
 
-        faseVek.ejecutar(List.of(new Posicion(1, 1)), List.of(luciernaga),
-                List.of(), List.of(), tablero);
-
+        faseVek.avanzar(tablero);
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(1, 3)));
         assertFalse(tablero.tieneAtaqueAnunciadoEn(edificioCercano));
         assertFalse(tablero.tieneAtaqueAnunciadoEn(edificioLejano));
@@ -342,8 +336,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
@@ -363,8 +356,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
         tablero.aplicarEfecto(new Posicion(2, 2), new Empuje(new Derecha()));
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(3, 2)));
@@ -378,8 +370,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
         tablero.aplicarEfecto(new Posicion(2, 2), new Empuje(new Derecha()));
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
@@ -393,8 +384,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 3), saltadorLocal);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
         tablero.aplicarEfecto(new Posicion(2, 4), new Empuje(new Derecha()));
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
@@ -408,8 +398,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 3), saltadorLocal);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
         tablero.aplicarEfecto(new Posicion(2, 4), new Empuje(new Derecha()));
 
         assertTrue(tablero.unidadEstaEn(saltadorLocal, new Posicion(3, 4)));
@@ -423,8 +412,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 3), avisponLocal);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(avisponLocal),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
         tablero.aplicarEfecto(new Posicion(2, 4), new Empuje(new Derecha()));
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
@@ -438,8 +426,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 3), avisponLocal);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 3)), List.of(avisponLocal),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.unidadEstaEn(avisponLocal, new Posicion(2, 4)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
@@ -461,8 +448,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 5), mech);
         tablero.colocarUnidad(new Posicion(3, 5), otroMech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5), new Posicion(3, 5)), List.of(mech, otroMech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
@@ -473,8 +459,7 @@ public class VekTest {
         assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
 
-        faseResolucion.ejecutar(List.of(new Posicion(3, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5), new Posicion(3, 5)), List.of(mech, otroMech), tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(otroMech.suVidaEsIgualA(2));
     }
 
@@ -486,10 +471,9 @@ public class VekTest {
 
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
-        tablero.colocarUnidad(new Posicion(3, 5), otraLuciernaga);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
+        tablero.colocarUnidad(new Posicion(3, 5), otraLuciernaga);
 
         assertTrue(tablero.unidadEstaEn(luciernaga, new Posicion(2, 2)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
@@ -500,8 +484,7 @@ public class VekTest {
         assertFalse(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(3, 5)));
 
-        faseResolucion.ejecutar(List.of(new Posicion(3, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(otraLuciernaga.suVidaEsIgualA(2));
     }
 
@@ -513,8 +496,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), saltadorLocal);
         tablero.colocarUnidad(new Posicion(2, 3), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 3)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 3)));
     }
@@ -527,8 +509,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), saltadorLocal);
         tablero.colocarUnidad(new Posicion(2, 3), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 3)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(mech.suVidaEsIgualA(3));
     }
@@ -541,8 +522,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), avisponLocal);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avisponLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 4)));
     }
@@ -555,8 +535,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), avisponLocal);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avisponLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(mech.suVidaEsIgualA(3));
     }
@@ -569,8 +548,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(tablero.tieneAtaqueAnunciadoEn(new Posicion(2, 5)));
     }
@@ -583,8 +561,7 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
+        faseVek.avanzar(tablero);
 
         assertTrue(mech.suVidaEsIgualA(3));
     }
@@ -597,11 +574,8 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), luciernaga);
         tablero.colocarUnidad(new Posicion(2, 5), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
-        faseResolucion.ejecutar(List.of(new Posicion(2, 0)), List.of(luciernaga),
-                List.of(new Posicion(2, 5)), List.of(mech), tablero);
-
+        faseVek.avanzar(tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(mech.suVidaEsIgualA(2));
     }
 
@@ -613,11 +587,8 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), avisponLocal);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(avisponLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
-        faseResolucion.ejecutar(List.of(new Posicion(2, 3)), List.of(avisponLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
-
+        faseVek.avanzar(tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(mech.suVidaEsIgualA(2));
     }
 
@@ -629,11 +600,8 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(2, 2), saltadorLocal);
         tablero.colocarUnidad(new Posicion(2, 4), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(2, 2)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
-        faseResolucion.ejecutar(List.of(new Posicion(2, 3)), List.of(saltadorLocal),
-                List.of(new Posicion(2, 4)), List.of(mech), tablero);
-
+        faseVek.avanzar(tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(mech.suVidaEsIgualA(1));
     }
 
@@ -647,11 +615,8 @@ public class VekTest {
         tablero.colocarUnidad(new Posicion(4, 2), avisponB);
         tablero.colocarUnidad(new Posicion(3, 2), mech);
 
-        faseVek.ejecutar(List.of(new Posicion(0, 2), new Posicion(4, 2)), List.of(luciernagaA, avisponB),
-                List.of(new Posicion(3, 2)), List.of(mech), tablero);
-        faseResolucion.ejecutar(List.of(new Posicion(0, 2), new Posicion(3, 1)), List.of(luciernagaA, avisponB),
-                List.of(new Posicion(3, 2)), List.of(mech), tablero);
-
+        faseVek.avanzar(tablero);
+        faseResolucion.avanzar(tablero);
         assertTrue(mech.suVidaEsIgualA(0));
     }
 
