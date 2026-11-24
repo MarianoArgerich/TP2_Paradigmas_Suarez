@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.Turno;
 
+import edu.fiuba.algo3.modelo.Juego.Juego;
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.Turno.Fases.*;
 import edu.fiuba.algo3.modelo.direccion.Direccion;
@@ -21,6 +22,12 @@ public class Turno {
 
     public void avanzarFase() {
         this.faseActual = this.faseActual.avanzar(this.tablero);
+    }
+
+    public void avanzarFase(Juego juego) {
+        Fase faseEjecutada = this.faseActual;
+        this.avanzarFase();
+        faseEjecutada.alFinalizar(juego);
     }
 
     public void mover(Posicion origen, Direccion direccion, int distancia) {
