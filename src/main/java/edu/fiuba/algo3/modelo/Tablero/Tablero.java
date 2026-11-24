@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.Tablero;
 
 
-import edu.fiuba.algo3.modelo.Turno.Fases.EmergenciaAnunciada;
-import edu.fiuba.algo3.modelo.Turno.Fases.SinEmergencia;
-import edu.fiuba.algo3.modelo.Turno.Fases.AparicionVek;
+import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.EmergenciaAnunciada;
+import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.SinEmergencia;
+import edu.fiuba.algo3.modelo.Turno.Fases.Emergencia.AparicionVek;
 import edu.fiuba.algo3.modelo.Visitante.SegundoVisitante.SegundoVisitante;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.*;
 import edu.fiuba.algo3.modelo.casillas.Casilla;
@@ -205,5 +205,18 @@ public class Tablero {
     //se usa SOLO PARA LOS TESTS, NO BORRAR
     public boolean tieneEmergenciaAnunciadaEn(Posicion posicion) {
         return this.emergenciaActual.estaEn(posicion);
+    }
+
+    public void ejecutarTurnoVeks() {
+        List<Vek> yaActuaron = new ArrayList<>();
+        for (Casilla casilla : casillas) {
+            casilla.ejecutarTurnoVek(this, yaActuaron);
+        }
+    }
+
+    public void reiniciarTurnoMechs() {
+        for (Casilla casilla : casillas) {
+            casilla.reiniciarTurnoMech();
+        }
     }
 }

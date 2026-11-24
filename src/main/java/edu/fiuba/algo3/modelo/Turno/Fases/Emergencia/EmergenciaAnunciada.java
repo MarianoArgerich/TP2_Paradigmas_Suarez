@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.Turno.Fases;
+package edu.fiuba.algo3.modelo.Turno.Fases.Emergencia;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
 import edu.fiuba.algo3.modelo.Visitante.Visitante.EmergenciaVek;

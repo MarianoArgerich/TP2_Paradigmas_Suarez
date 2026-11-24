@@ -121,4 +121,12 @@ public class Casilla {
         this.terreno.validarEmergencia();
         this.ocupante.validarEmergencia();
     }
+
+    public void ejecutarTurnoVek(Tablero tablero, List<Vek> yaActuaron) {
+        this.ocupante.aceptar(new EjecutarTurnoVek(this.posicion, tablero, yaActuaron));
+    }
+
+    public void reiniciarTurnoMech() {
+        this.ocupante.aceptar(new ReiniciarTurnoMech());
+    }
 }

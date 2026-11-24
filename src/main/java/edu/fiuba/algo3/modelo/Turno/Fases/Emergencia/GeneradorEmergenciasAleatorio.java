@@ -1,14 +1,11 @@
-package edu.fiuba.algo3.modelo.Turno.Fases;
+package edu.fiuba.algo3.modelo.Turno.Fases.Emergencia;
 
 import edu.fiuba.algo3.modelo.Tablero.Tablero;
-import edu.fiuba.algo3.modelo.posicion.Posicion;
 import edu.fiuba.algo3.modelo.unidades.Vek.Avispon;
 import edu.fiuba.algo3.modelo.unidades.Vek.Luciernaga;
 import edu.fiuba.algo3.modelo.unidades.Vek.Saltador;
 import edu.fiuba.algo3.modelo.unidades.Vek.Vek;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class GeneradorEmergenciasAleatorio implements GeneradorEmergencias {

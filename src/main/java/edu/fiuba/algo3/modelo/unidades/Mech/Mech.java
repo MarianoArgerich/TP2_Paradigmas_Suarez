@@ -77,4 +77,7 @@ public class Mech extends Unidad implements DeshaceMovimiento, Atacante {
         visitante.visitar(this);
     }
 
+    public void reiniciarTurno() {
+        this.estado = new InicioTurno();
+    }
 }
